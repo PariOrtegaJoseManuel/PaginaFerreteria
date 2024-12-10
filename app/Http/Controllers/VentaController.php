@@ -69,6 +69,14 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
+        // Validar que no exista otra venta con el mismo cliente y fecha
+        $ventaExistente = Venta::where('clientes_id', $request->clientes_id)
+                              ->where('fecha', $request->fecha)
+                              ->first();
+        if ($ventaExistente) {
+            return redirect()->route('ventas.index')
+                    ->with(['error' => 'Ya existe una venta para este cliente en la fecha indicada']);
+        }
         $request['users_id'] = Auth::user()->id;
         $this->validarForm($request, false);
         try {
@@ -128,6 +136,10 @@ class VentaController extends Controller
         //
         try {
             $venta = Venta::findOrFail($id);
+            // Verificar si tiene detalles relacionados
+            if ($venta->RelDetalle()->count() > 0)
+                return redirect()->route('ventas.index')->with(['error' => 'No se puede eliminar una venta con detalles relacionados']);
+
             $venta->delete();
             return redirect()->route('ventas.index')->with(['mensaje' => 'Venta eliminada']);
         } catch (\Exception $e) {

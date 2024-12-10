@@ -15,6 +15,10 @@
                     <div class="alert alert-danger" role="alert">{{session("error")}}</div>
                 @endif
                 <div class="table-responsive">
+                    <h3>Cliente: {{$venta->relCliente->razon}}</h3>
+                    <h3>Fecha: {{$venta->fecha}}</h3>
+                    <h3>Usuario: {{$venta->relUser->name}}</h3>
+                    <h3>Id Venta: {{$venta->id}}</h3>
                     <table class="table table-hover table-striped-columns table table-bordered border-light">
                         <thead class="text-center table-light">
                         <tr class="align-middle">
@@ -24,8 +28,7 @@
                             <th>Precio</th>
                             <th>Total</th>
                             <th>
-                                <a href="{{route("detalles.create")}}" class="btn btn-primary">Nuevo</a>
-                                <a href="{{route("detalles.createVenta")}}" class="btn btn-primary">Nuevo Articulo</a>
+                                <a href="{{route("detalles.create")}}" class="btn btn-primary">Añadir Articulo</a>
                             </th>
                         </tr>
                         </thead>
@@ -39,16 +42,12 @@
                                 <td class="text-end">{{$detalle->cantidad * $detalle->relArticulo->precio_unitario}}</td>
                                 <td class="text-center">
                                     <a href="{{ route('detalles.editVenta', $detalle) }}" class="btn btn-primary">
-                                        Cantidad
-                                    </a>
-                                    <a href="{{ route('detalles.edit', $detalle) }}" class="btn btn-primary">
                                         Editar
                                     </a>
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                         data-bs-target="#exampleModal{{ $detalle->id }}">
                                         Eliminar
                                     </button>
-
                                 </td>
                             </tr>
                             <div class="modal fade" id="exampleModal{{ $detalle->id }}" tabindex="-1"

@@ -71,9 +71,7 @@ class DetalleController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(string $id)
     {
         //
@@ -90,6 +88,7 @@ class DetalleController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, string $id)
     {
         //
@@ -115,6 +114,66 @@ class DetalleController extends Controller
         return redirect()->route('detalles.index')->with(['mensaje' => 'Detalle eliminado']);
         } catch (\Exception $e) {
             return redirect()->route('detalles.index')->with(['error' => 'Ocurrió un error al eliminar el detalle: '.$e->getMessage()]);
+        }
+    }
+    public function indexVenta($ventaId)
+    {
+        $venta = Venta::findOrFail($ventaId);
+        $detalles = $venta->relDetalle; // Asumiendo que tienes una relación definida
+        return view('detalleVenta_index', compact('venta', 'detalles'));
+    }
+    public function editVenta(string $id)
+    {
+        try {
+            $detalle = Detalle::find($id);
+            return view("detalle_cantidad", ["detalle" => $detalle]);
+        } catch (\Exception $e) {
+            $detalle = Detalle::find($id);
+            return redirect()->route('detalles.index')->with(['error' => 'Ocurrió un error al mostrar la cantidad: ' . $e->getMessage()]);
+        }
+    }
+    public function updateVenta(Request $request, string $id)
+    {
+        $request->validate([
+            "cantidad"=>"required|numeric|min:1"
+        ]);
+        try {
+            $detalle = Detalle::find($id);
+            $detalle->cantidad = $request->cantidad;
+            $detalle->save();
+            return redirect()->route("detalles.index")
+            ->with(["mensaje"=>"Cantidad modificada"]);
+        } catch (\Exception $e) {
+            return redirect()->route('detalles.index')->with(['error' => 'Ocurrió un error al modificar la cantidad: ' . $e->getMessage()]);
+        }
+    }
+    public function createVenta()
+    {
+        //
+        $articulos = Articulo::all();
+        $venta = Venta::findOrFail(request()->ventas_id);
+        return view('detalle_createVenta', ['venta' => $venta, 'articulos' => $articulos]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function storeVenta(Request $request)
+    {
+        //
+        $request->validate([
+            'cantidad' => 'required|numeric|min:1',
+            'articulos_id' => 'required|exists:articulos,id'
+        ]);
+        try {
+            Detalle::create([
+                'cantidad' => $request->cantidad,
+                'articulos_id' => $request->articulos_id,
+                'ventas_id' => request()->ventas_id
+            ]);
+            return redirect()->route('detalles.index')->with(['mensaje' => 'Detalle creado']);
+        } catch (\Exception $e) {
+            return redirect()->route('detalles.index')->with(['error' => 'Ocurrió un error al crear el detalle: '.$e->getMessage()]);
         }
     }
 }

@@ -59,6 +59,9 @@
                                 <td class="text-start">{{$venta->razon}}</td>
                                 <td class="text-start">{{$venta->relUser->name}}</td>
                                 <td class="text-center">
+                                    <a href="{{ route('detalles.indexVenta', ['detalle' => $venta->id]) }}" class="btn btn-primary">
+                                        Detalles
+                                    </a>
                                     <a href="{{ route('ventas.edit', $venta) }}" class="btn btn-primary">
                                         Editar
                                     </a>

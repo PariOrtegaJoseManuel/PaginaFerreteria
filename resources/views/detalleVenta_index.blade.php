@@ -42,7 +42,7 @@
                                 <td class="text-end">{{$detalle->relArticulo->precio_unitario}}</td>
                                 <td class="text-end">{{$detalle->cantidad * $detalle->relArticulo->precio_unitario}}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('detalles.editVenta', $detalle) }}" class="btn btn-primary">
+                                    <a href="{{ route('detalles.editVenta', [$detalle, $ventaId => $venta->id]) }}" class="btn btn-primary">
                                         Editar
                                     </a>
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"

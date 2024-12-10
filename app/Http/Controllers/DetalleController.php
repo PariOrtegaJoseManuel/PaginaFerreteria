@@ -123,20 +123,20 @@ class DetalleController extends Controller
         $detalles = $venta->relDetalle; // Asumiendo que tienes una relación definida
         return view('detalleVenta_index', compact('venta', 'detalles'));
     }
-    public function editVenta(string $id)
+    public function editVenta(string $id, string $ventaId)
     {
-        $direccion = $id;
+        $direccion = $ventaId;
         try {
             $detalle = Detalle::find($id);
-            return view("detalle_cantidad", ["detalle" => $detalle]);
+            return view("detalle_cantidad", ["detalle" => $detalle, "ventaId" => $ventaId]);
         } catch (\Exception $e) {
             $detalle = Detalle::find($id);
             return redirect()->route('detalles.indexVenta', $direccion)->with(['error' => 'Ocurrió un error al mostrar la cantidad: ' . $e->getMessage()]);
         }
     }
-    public function updateVenta(Request $request, string $id)
+    public function updateVenta(Request $request, string $id, string $ventaId)
     {
-        $direccion = $id;
+        $direccion = $ventaId;
         $request->validate([
             "cantidad"=>"required|numeric|min:1"
         ]);

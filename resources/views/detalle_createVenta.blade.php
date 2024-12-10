@@ -19,6 +19,7 @@
             <div class="card-body">
                 <form action="{{ route('detalles.storeVenta', ['ventas_id' => $venta->id]) }}" method="POST">
                     @csrf
+
                     <div class="mb-3">
                         <label for="cantidad" class="form-label">Cantidad</label>
                         <input type="number" name="cantidad" id="cantidad" value="{{ old('cantidad') }}" class="form-control">

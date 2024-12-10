@@ -19,9 +19,10 @@
                         <thead class="text-center table-light">
                         <tr class="align-middle">
                             <th>Id</th>
-                            <th>Cantidad</th>
-                            <th>Venta</th>
                             <th>Articulo</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Total</th>
                             <th>
                                 <a href="{{route("detalles.create")}}" class="btn btn-primary">Nuevo</a>
                             </th>
@@ -31,9 +32,10 @@
                         @foreach($detalles as $detalle)
                             <tr class="align-middle">
                                 <td class="text-end">{{$detalle->id}}</td>
-                                <td class="text-start">{{$detalle->cantidad}}</td>
-                                <td class="text-start">{{$detalle->relVenta->fecha}}</td>
                                 <td class="text-start">{{$detalle->relArticulo->descripcion}}</td>
+                                <td class="text-end">{{$detalle->cantidad}}</td>
+                                <td class="text-end">{{$detalle->relArticulo->precio_unitario}}</td>
+                                <td class="text-end">{{$detalle->cantidad * $detalle->relArticulo->precio_unitario}}</td>
                                 <td class="text-center">
                                     <a href="{{ route('detalles.edit', $detalle) }}" class="btn btn-primary">
                                         Editar

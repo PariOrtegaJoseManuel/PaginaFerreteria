@@ -8,23 +8,47 @@
                 <h1>Ventas</h1>
             </div>
             <div class="card-body">
-                @if(session("mensaje"))
-                    <div class="alert alert-success" role="alert">{{session("mensaje")}}</div>
-                @endif
-                @if(session("error"))
-                    <div class="alert alert-danger" role="alert">{{session("error")}}</div>
-                @endif
+                <div class="container-fluid">
+                    <form action="{{ route('ventas.index') }}" method="GET">
+                        <div class="row">
+                            <div class="container col-4">
+                                <label for="razon" class="form-label">Razon Social:</label>
+                                <input type="text" list="razon" class="form-control" placeholder="Ingrese la razon social" name="razon" value="{{ old('razon') }}">
+                                <datalist id="razon">
+                                    @foreach ($clientes as $cliente)
+                                    <option value="{{ $cliente->razon }}"></option>
+                                    @endforeach
+                                  </datalist>
+                                </div>
+                            <div class="container col-3">
+                                <label for="fecha" class="form-label">Fecha:</label>
+                                <input type="date" class="form-control" name="fecha" value="{{ old('fecha') }}">
+                            </div>
+                            <div class="container col-1 align-self-end">
+                                <button type="submit" class="btn btn-primary">Buscar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="container">
+                    @if(session("mensaje"))
+                        <div class="alert alert-success" role="alert">{{session("mensaje")}}</div>
+                    @endif
+                    @if(session("error"))
+                        <div class="alert alert-danger" role="alert">{{session("error")}}</div>
+                    @endif
+                </div>
                 <div class="table-responsive">
                     <table class="table table-hover table-striped-columns table table-bordered border-light">
                         <thead class="text-center table-light">
-                        <tr class="align-middle">
-                            <th>Id</th>
-                            <th>Fecha</th>
-                            <th>Cliente</th>
-                            <th>Vendedor</th>
-                            <th>
-                                <a href="{{route("ventas.create")}}" class="btn btn-primary">Nuevo</a>
-                            </th>
+                            <tr class="align-middle">
+                                <th>Id</th>
+                                <th>Fecha</th>
+                                <th>Cliente</th>
+                                <th>Vendedor</th>
+                                <th>
+                                    <a href="{{route("ventas.create")}}" class="btn btn-primary">Nuevo</a>
+                                </th>
                         </tr>
                         </thead>
                         <tbody class="table-group-divider">
@@ -32,7 +56,7 @@
                             <tr class="align-middle">
                                 <td class="text-end">{{$venta->id}}</td>
                                 <td class="text-start">{{$venta->fecha}}</td>
-                                <td class="text-start">{{$venta->relCliente->razon}}</td>
+                                <td class="text-start">{{$venta->razon}}</td>
                                 <td class="text-start">{{$venta->relUser->name}}</td>
                                 <td class="text-center">
                                     <a href="{{ route('ventas.edit', $venta) }}" class="btn btn-primary">

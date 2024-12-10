@@ -118,7 +118,7 @@ class DetalleController extends Controller
     }
     public function indexVenta(string $ventaId)
     {
-        $direccion = $ventaId;
+        $ventaId = $ventaId;
         $venta = Venta::findOrFail($ventaId);
         $detalles = $venta->relDetalle; // Asumiendo que tienes una relación definida
         return view('detalleVenta_index', compact('venta', 'detalles'));
@@ -150,65 +150,40 @@ class DetalleController extends Controller
             return redirect()->route('detalles.indexVenta', $direccion)->with(['error' => 'Ocurrió un error al modificar la cantidad: ' . $e->getMessage()]);
         }
     }
-    /*public function createVenta(string $ventas_id)
+
+    public function createVentaDetalle(string $ventaId)
     {
-        //
-        // Este código obtiene todos los artículos disponibles
-        $articulos = Articulo::all();
-
-        // Busca la venta específica usando el ID que viene en la petición
-        // Si no encuentra la venta, lanzará una excepción 404
-        $venta = Venta::findOrFail($ventas_id);
-
-        // Retorna la vista detalle_createVenta pasando la venta y los artículos
-        // como variables disponibles para la plantilla
-        return view('detalle_createVenta', ['venta' => $venta, 'articulos' => $articulos]);
-    }*/
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    /*public function storeVenta(Request $request)
-    {
-        //
-        $request->validate([
-            'cantidad' => 'required|numeric|min:1',
-            'articulos_id' => 'required|exists:articulos,id'
-        ]);
         try {
-            Detalle::create([
-                'cantidad' => $request->cantidad,         // Almacena la cantidad del detalle que viene del formulario
-                'articulos_id' => $request->articulos_id, // Almacena el ID del artículo seleccionado en el formulario
-                'ventas_id' => request()->ventas_id      // Almacena el ID de la venta que viene como parámetro en la URL
-            ]);
-            return redirect()->route('detalles.index')->with(['mensaje' => 'Detalle creado']);
+            // Busca la venta específica por ID o lanza una excepción si no existe
+            $venta = Venta::findOrFail($ventaId);
+            // Obtiene todos los artículos disponibles de la base de datos
+            $articulos = Articulo::all();
+            // Retorna la vista detalle_createVenta pasando la venta y artículos como datos
+            return view('detalle_createVenta', ['venta' => $venta, 'articulos' => $articulos]);
         } catch (\Exception $e) {
-            return redirect()->route('detalles.index')->with(['error' => 'Ocurrió un error al crear el detalle: '.$e->getMessage()]);
+            return redirect()->route('ventas.indexVenta', $ventaId)->with(['error' => 'Error al cargar el formulario: ' . $e->getMessage()]);
         }
-    }*/
-    /*public function createVentaDetalle($ventas_id)
-    {
-        try {
+        /*try {
             // Obtener todos los artículos disponibles
             $articulos = Articulo::all();
 
             // Buscar la venta específica
-            $venta = Venta::findOrFail($ventas_id);
+            $venta = Venta::findOrFail($ventaId);
 
             // Retornar vista con los datos
             return view('detalle_create', [
                 'articulos' => $articulos,
                 'venta' => $venta,
-                'ventas_id' => $ventas_id
+                'ventas_id' => $ventaId
             ]);
 
         } catch (\Exception $e) {
             return redirect()->route('detalles.index')
                 ->with(['error' => 'Error al cargar el formulario: ' . $e->getMessage()]);
-        }
-    }*/
+        }*/
+    }
 
-    public function storeVentaDetalle(Request $request, $ventas_id)
+    public function storeVentaDetalle(Request $request, string $ventasid)
     {
         $request->validate([
             'cantidad' => 'required|numeric|min:1',
@@ -219,15 +194,26 @@ class DetalleController extends Controller
             Detalle::create([
                 'cantidad' => $request->cantidad,
                 'articulos_id' => $request->articulos_id,
-                'ventas_id' => $ventas_id
+                'ventas_id' => $ventasid
             ]);
 
-            return redirect()->route('detalles.index')
+            return redirect()->route('detalles.indexVenta', ['detalle' => $ventasid])
                 ->with(['mensaje' => 'Detalle creado exitosamente']);
 
         } catch (\Exception $e) {
-            return redirect()->route('detalles.index')
+            return redirect()->route('detalles.indexVenta', ['detalle' => $ventasid])
                 ->with(['error' => 'Error al crear el detalle: ' . $e->getMessage()]);
+        }
+    }
+
+    public function createVenta($ventaId)
+    {
+        try {
+            $venta = Venta::findOrFail($ventaId);
+            $articulos = Articulo::all();
+            return view('detalle_createVenta', ['articulos' => $articulos, 'venta' => $venta]);
+        } catch (\Exception $e) {
+            return redirect()->route('ventas.index')->with(['error' => 'Error al cargar el formulario: ' . $e->getMessage()]);
         }
     }
 }

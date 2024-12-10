@@ -25,7 +25,6 @@
                             <th>Total</th>
                             <th>
                                 <a href="{{route("detalles.create")}}" class="btn btn-primary">Nuevo</a>
-                                <a href="{{route("detalles.createVenta", $venta->id)}}" class="btn btn-primary">Nuevo Articulo</a>
                             </th>
                         </tr>
                         </thead>

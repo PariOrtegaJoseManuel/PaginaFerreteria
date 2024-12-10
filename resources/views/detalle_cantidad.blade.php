@@ -27,7 +27,7 @@
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Guardar</button>
-                        <a href="{{ route('detalles.index') }}" class="btn btn-danger">Cancelar</a>
+                        <a href="{{ route('detalles.indexVenta', $ventaId) }}" class="btn btn-danger">Cancelar</a>
                     </div>
                 </form>
             </div>

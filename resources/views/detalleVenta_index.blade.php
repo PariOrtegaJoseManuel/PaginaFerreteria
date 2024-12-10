@@ -28,8 +28,7 @@
                             <th>Precio</th>
                             <th>Total</th>
                             <th>
-                                <a href="{{route("detalles.createVenta", $ventaId = $venta->id)}}" class="btn btn-primary">Nuevo Articulo</a>
-                                <a href="{{route("detalles.create")}}" class="btn btn-primary">Añadir Articulo</a>
+                                <a href="{{route("detalles.createVenta", $ventaId = $venta->id)}}" class="btn btn-primary">Añadir Articulo</a>
                             </th>
                         </tr>
                         </thead>

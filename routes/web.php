@@ -14,8 +14,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("detalles/{detalle}/venta", "App\Http\Controllers\DetalleController@indexVenta")->name("detalles.indexVenta");
     Route::get("detalles/{detalle}/{venta}/cantidad", "App\Http\Controllers\DetalleController@editVenta")->name("detalles.editVenta");
     Route::put("detalles/{detalle}/{venta}/cantidad", "App\Http\Controllers\DetalleController@updateVenta")->name("detalles.updateVenta");
-    //Route::get("detalles/createVenta", "App\Http\Controllers\DetalleController@createVenta")->name("detalles.createVenta");
-    //Route::post("detalles/createVenta", "App\Http\Controllers\DetalleController@storeVenta")->name("detalles.storeVenta");
+    Route::get("detalles/{venta}/notaVenta", "App\Http\Controllers\DetalleController@notaVenta")->name("detalles.notaVenta");
     Route::get("detalles/createVenta/{ventas_id}", "App\Http\Controllers\DetalleController@createVenta")->name("detalles.createVenta");
     Route::post("detalles/createVenta/{ventas_id}", "App\Http\Controllers\DetalleController@storeVentaDetalle")->name("detalles.storeVenta");
     Route::get("users/{user}/password", "App\Http\Controllers\UserController@editpassword")->name("users.editpassword");

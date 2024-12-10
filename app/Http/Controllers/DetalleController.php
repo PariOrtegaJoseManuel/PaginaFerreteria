@@ -6,6 +6,7 @@ use App\Models\Articulo;
 use App\Models\Detalle;
 use App\Models\Venta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class DetalleController extends Controller
 {
@@ -163,24 +164,6 @@ class DetalleController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('ventas.indexVenta', $ventaId)->with(['error' => 'Error al cargar el formulario: ' . $e->getMessage()]);
         }
-        /*try {
-            // Obtener todos los artículos disponibles
-            $articulos = Articulo::all();
-
-            // Buscar la venta específica
-            $venta = Venta::findOrFail($ventaId);
-
-            // Retornar vista con los datos
-            return view('detalle_create', [
-                'articulos' => $articulos,
-                'venta' => $venta,
-                'ventas_id' => $ventaId
-            ]);
-
-        } catch (\Exception $e) {
-            return redirect()->route('detalles.index')
-                ->with(['error' => 'Error al cargar el formulario: ' . $e->getMessage()]);
-        }*/
     }
 
     public function storeVentaDetalle(Request $request, string $ventasid)
@@ -215,5 +198,35 @@ class DetalleController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('ventas.index')->with(['error' => 'Error al cargar el formulario: ' . $e->getMessage()]);
         }
+    }
+    public function notaVenta(string $id)
+    {
+        // Recibe el ID de la venta como parámetro
+        $ventaId = $id;
+
+        // Busca la venta en la base de datos o lanza excepción si no existe
+        $venta = Venta::findOrFail($ventaId);
+
+        // Obtiene los detalles relacionados a la venta
+        $detalles = $venta->relDetalle;
+
+        // Obtiene todos los artículos
+        $articulos = Articulo::all();
+
+        // Crea una instancia del generador de PDF
+        $pdf = App::make("dompdf.wrapper");
+
+        // Carga la vista detalle_notaVenta con los datos
+        $pdf->loadView("detalle_notaVenta", [
+            "detalles" => $detalles,
+            "venta" => $venta,
+            "articulos" => $articulos
+        ]);
+
+        // Configura el PDF en tamaño carta y orientación vertical
+        $pdf->setPaper("letter", "portrait")->setWarnings(false);
+
+        // Retorna el PDF para visualización en el navegador
+        return $pdf->stream();
     }
 }

@@ -5,42 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporte de Ventas Diario</title>
     <style>
+        @page {
+            margin: 1cm;
+            font-family: 'Arial', sans-serif;
+            font-size: 10px;
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+
+        header, footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-weight: bold;
+            font-size: 30px;
+            border-radius: 10px;
         }
+
+        main {
+            margin: 20px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin-top: 20px;
+            font-size: 15px;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
+
         th {
+            background-color: #003366;
+            color: white;
+            border: 1px solid #ffffff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
             background-color: #f5f5f5;
         }
+
+        tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
         tfoot {
+            background-color: #e6e6e6;
             font-weight: bold;
-            background-color: #f9f9f9;
+        }
+
+        .footer-text {
+            font-size: 15px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>Reporte de Ventas del Día: {{ $fecha }}</h1>
-        </div>
+        Reporte de Ventas del Día: {{ $fecha }}
     </header>
 
-    <main class="container">
+    <main>
         <table>
             <thead>
                 <tr>
@@ -64,15 +99,16 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="3"><strong>Total de Ventas</strong></td>
-                    <td><strong>${{ number_format($totalVentas, 2) }}</strong></td>
+                    <td colspan="3">Total de Ventas</td>
+                    <td>${{ number_format($totalVentas, 2) }}</td>
                 </tr>
             </tfoot>
         </table>
     </main>
 
-    <footer class="container">
-        <p>&copy; {{ date('Y') }} Sistema de Ventas. Todos los derechos reservados.</p>
+    <footer>
+        <p class="footer-text">&copy; {{ date('Y') }} Sistema de Ventas. Todos los derechos reservados.</p>
     </footer>
 </body>
 </html>
+

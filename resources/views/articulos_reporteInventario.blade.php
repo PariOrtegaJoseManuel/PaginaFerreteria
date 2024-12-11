@@ -23,6 +23,7 @@
             line-height: 1.5cm;
             font-weight: bold;
             font-size: 25px;
+            border-radius: 10px;
         }
 
         header {

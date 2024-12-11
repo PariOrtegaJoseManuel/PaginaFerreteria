@@ -54,10 +54,10 @@ class DatabaseSeeder extends Seeder
         Permission::create(["name" => "unidades.edit"]);
         Permission::create(["name" => "unidades.destroy"]);
 
-        /*Permission::create(["name" => "roles.index"]);
+        Permission::create(["name" => "roles.index"]);
         Permission::create(["name" => "roles.create"]);
         Permission::create(["name" => "roles.edit"]);
-        Permission::create(["name" => "roles.destroy"]);*/
+        Permission::create(["name" => "roles.destroy"]);
 
         $admin->syncRoles($rolAdmin);
         $vendedor->syncRoles($rolVendedor);
@@ -69,6 +69,7 @@ class DatabaseSeeder extends Seeder
             "ventas.index","ventas.create","ventas.edit","ventas.destroy",
             "users.index","users.create","users.edit","users.destroy",
             "unidades.index","unidades.create","unidades.edit","unidades.destroy",
+            "roles.index","roles.create","roles.edit","roles.destroy",
         ]);
 
         $rolVendedor->syncPermissions([

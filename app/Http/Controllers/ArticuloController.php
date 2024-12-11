@@ -136,7 +136,7 @@ class ArticuloController extends Controller
             return redirect()->route('articulos.index')->with(['error' => 'Ocurrió un error al eliminar el articulo: '.$e->getMessage()]);
         }
     }
-    public function reporte()
+    public function reporteInventario()
     {
         $articulos = Articulo::all();
         $pdf = App::make("dompdf.wrapper");

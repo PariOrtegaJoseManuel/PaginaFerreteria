@@ -75,7 +75,7 @@ class UserController extends Controller
         try {
             $user = User::find($id);
             $roles = Role::all();
-            return view("users_edit", ["user" => $user, "roles" => $roles]);
+            return view("user_edit", ["user" => $user, "roles" => $roles]);
         } catch (\Exception $e) {
             return redirect()->route('users.index')->with(['error' => 'Ocurrió un error al mostrar el usuario: ' . $e->getMessage()]);
         }

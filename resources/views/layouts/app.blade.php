@@ -48,6 +48,9 @@
                         <li class="nav-item">
                             <a href="{{route("detalles.index")}}" class="nav-link">Detalles</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{route("roles.index")}}" class="nav-link">Roles</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

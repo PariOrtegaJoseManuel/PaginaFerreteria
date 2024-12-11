@@ -20,7 +20,42 @@
                                 <th>Id</th>
                                 <th>Descripcion</th>
                                 <th>
-                                    <a href="{{ route('unidades.create') }}" class="btn btn-primary">Nuevo</a>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCrear">
+                                        Nuevo
+                                    </button>
+
+                                    <div class="modal fade" id="modalCrear" tabindex="-1" aria-labelledby="modalCrearLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalCrearLabel">Nueva Unidad</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    @if($errors->any())
+                                                        <div class="alert alert-danger">
+                                                            <ul>
+                                                                @foreach($errors->all() as $error)
+                                                                    <li>{{$error}}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    @endif
+                                                    <form action="{{route("unidades.store")}}" method="POST">
+                                                        @csrf
+                                                        <div class="mb-3">
+                                                            <label for="descripcion" class="form-label">Descripcion</label>
+                                                            <input type="text" name="descripcion" id="descripcion" value="{{old("descripcion")}}" class="form-control">
+                                                        </div>
+                                                        <div class="text-center">
+                                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </th>
                             </tr>
                         </thead>
@@ -30,9 +65,43 @@
                                     <td class="text-end">{{ $unidad->id }}</td>
                                     <td class="text-start">{{ $unidad->descripcion }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('unidades.edit', $unidad) }}" class="btn btn-primary">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal{{$unidad->id}}">
                                             Editar
-                                        </a>
+                                        </button>
+                                        <div class="modal fade" id="editModal{{$unidad->id}}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="editModalLabel">Editar Unidad</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        @if($errors->any())
+                                                            <div class="alert alert-danger">
+                                                                <ul>
+                                                                    @foreach($errors->all() as $error)
+                                                                        <li>{{$error}}</li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            </div>
+                                                        @endif
+                                                        <form action="{{route('unidades.update', $unidad)}}" method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <div class="mb-3">
+                                                                <label for="descripcion" class="form-label">Descripcion</label>
+                                                                <input type="text" name="descripcion" id="descripcion" value="{{old('descripcion',$unidad->descripcion)}}" class="form-control">
+                                                            </div>
+                                                            <div class="text-center">
+                                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal{{ $unidad->id }}">
                                             Eliminar

@@ -37,9 +37,6 @@
                                 <td class="text-end">{{$detalle->relArticulo->precio_unitario}}</td>
                                 <td class="text-end">{{$detalle->cantidad * $detalle->relArticulo->precio_unitario}}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('detalles.editVenta', $detalle) }}" class="btn btn-primary">
-                                        Cantidad
-                                    </a>
                                     <a href="{{ route('detalles.edit', $detalle) }}" class="btn btn-primary">
                                         Editar
                                     </a>

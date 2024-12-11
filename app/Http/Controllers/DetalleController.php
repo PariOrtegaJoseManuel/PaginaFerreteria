@@ -30,7 +30,6 @@ class DetalleController extends Controller
      */
     public function index()
     {
-
         $detalles = Detalle::all();
         $articulos = Articulo::all();
         $ventas = Venta::all();

@@ -25,6 +25,7 @@
                             <th>Precio Unitario</th>
                             <th>Foto</th>
                             <th>Unidad</th>
+                            <th>Categoria</th>
                             <th>
                                 <a href="{{route("articulos.create")}}" class="btn btn-primary">Nuevo</a>
                             </th>
@@ -37,7 +38,7 @@
                                 <td class="text-start">{{$articulo->descripcion}}</td>
                                 <td class="text-center">{{$articulo->cantidad}}</td>
                                 <td class="text-end">{{$articulo->precio_unitario}}</td>
-                                <td class="text-start"><img src="{{url("img/$articulo->foto")}}" alt={{$articulo->descripcion}} height="100" width="100"></td>
+                                <td class="text-center"><img src="{{url("img/$articulo->foto")}}" alt={{$articulo->descripcion}} height="100" width="100"></td>
                                 <td class="text-start">{{$articulo->relUnidad->descripcion}}</td>
                                 <td class="text-center">{{$articulo->relCategoria->nombre}}</td>
                                 <td class="text-center">

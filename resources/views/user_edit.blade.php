@@ -44,7 +44,7 @@
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Guardar</button>
-                    <a href="{{route("users.index")}}" class="btn btn-secondary">Cancelar</a>
+                    <a href="{{route("users.index")}}" class="btn btn-danger">Cancelar</a>
                 </div>
             </form>
         </div>

@@ -102,6 +102,21 @@
                         @endforeach
                         </tbody>
                     </table>
+                    <div class="container">
+                        <div class="row">
+                            <form action="{{ route('ventas.reporteDiario') }}" method="GET" class="row">
+                                <div class="col-6">
+                                    <label for="fecha_reporte" class="form-label">Fecha para reporte:</label>
+                                </div>
+                                <div class="col-4">
+                                    <input type="date" id="fecha_reporte" name="fecha" class="form-control" required>
+                                </div>
+                                <div class="col-2">
+                                    <button type="submit" class="btn btn-warning">Reporte Diario</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

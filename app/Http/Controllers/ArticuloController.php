@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Articulo;
 use App\Models\Unidad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class ArticuloController extends Controller
 {
@@ -135,4 +136,13 @@ class ArticuloController extends Controller
             return redirect()->route('articulos.index')->with(['error' => 'Ocurrió un error al eliminar el articulo: '.$e->getMessage()]);
         }
     }
+    public function reporte()
+    {
+        $articulos = Articulo::all();
+        $pdf = App::make("dompdf.wrapper");
+        $pdf->loadView("articulos_reporteInventario", ["articulos" => $articulos]);
+        $pdf->setPaper("letter", "portrait")->setWarnings(false);
+        return $pdf->stream();
+    }
 }
+

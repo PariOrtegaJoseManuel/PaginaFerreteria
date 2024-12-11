@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 
 class VentaController extends Controller
 {
@@ -146,4 +147,34 @@ class VentaController extends Controller
             return redirect()->route('ventas.index')->with(['error' => 'Ocurrió un error al eliminar la venta: ' . $e->getMessage()]);
         }
     }
+
+    public function reporteDiario(Request $request)
+    {
+        // Obtener la fecha actual
+        //$fecha= now()->format('Y-m-d');
+
+        $fecha = $request->fecha;   
+        // Obtener las ventas del día
+        $ventas = Venta::whereDate('fecha', $fecha)->get();
+
+        // Calcular el total de las ventas
+        $totalVentas = $ventas->sum(function ($venta) {
+            return $venta->relDetalle->sum(function ($detalle) {
+                return $detalle->cantidad * $detalle->relArticulo->precio_unitario;
+            });
+        });
+
+        // Crea una instancia del generador de PDF
+        $pdf = App::make('dompdf.wrapper');
+
+        // Carga la vista ventas_reporteDiario con los datos
+        $pdf->loadView('ventas_reporteDiario', compact('ventas', 'totalVentas', 'fecha'));
+
+        // Configura el PDF en tamaño carta y orientación vertical
+        $pdf->setPaper('letter', 'portrait')->setWarnings(false);
+
+        // Retorna el PDF para visualización en el navegador
+        return $pdf->stream('reporte_diario.pdf');
+    }
 }
+

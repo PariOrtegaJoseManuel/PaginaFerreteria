@@ -28,10 +28,9 @@ class DetalleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        //
-        session()->flashInput($request->input());
+
         $detalles = Detalle::all();
         $articulos = Articulo::all();
         $ventas = Venta::all();

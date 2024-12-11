@@ -15,6 +15,7 @@
                     <div class="alert alert-danger" role="alert">{{session("error")}}</div>
                 @endif
                 <div class="table-responsive">
+                    <a href="{{route("articulos.reporteInventario")}}" class="btn btn-warning">Reporte Inventario</a>
                     <table class="table table-hover table-striped-columns table table-bordered border-light">
                         <thead class="text-center table-light">
                         <tr class="align-middle">

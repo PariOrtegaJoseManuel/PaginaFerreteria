@@ -31,6 +31,12 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
+                            <a href="{{route("categorias.index")}}" class="nav-link">Categorias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route("unidades.index")}}" class="nav-link">Unidades</a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{route("articulos.index")}}" class="nav-link">Articulos</a>
                         </li>
                         <li class="nav-item">
@@ -40,9 +46,6 @@
                             <a href="{{route("clientes.index")}}" class="nav-link">Clientes</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route("unidades.index")}}" class="nav-link">Unidades</a>
-                        </li>
-                        <li class="nav-item">
                             <a href="{{route("users.index")}}" class="nav-link">Usuarios</a>
                         </li>
                         <li class="nav-item">
@@ -50,6 +53,12 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{route("roles.index")}}" class="nav-link">Roles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route("pagos.index")}}" class="nav-link">Pagos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route("encargos.index")}}" class="nav-link">Encargos</a>
                         </li>
                     </ul>
 

@@ -20,5 +20,10 @@ class Venta extends Model
     public function relUser(){
         return $this->belongsTo(User::class,'users_id','id');
     }
-    
+    public function relEncargo(){
+        return $this->belongsTo(Encargo::class,'encargos_id','id');
+    }
+    public function relPago(){
+        return $this->hasMany(Pago::class,'ventas_id','id');
+    }
 }

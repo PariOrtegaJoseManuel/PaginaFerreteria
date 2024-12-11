@@ -38,6 +38,14 @@
                                 </option>
                             @endforeach
                         </select>
+                        <label for="categorias_id" class="form-label">Categoria</label>
+                        <select name="categorias_id" id="categorias_id" class="form-select">
+                            @foreach($categorias as $categoria)
+                                <option value="{{$categoria->id}}" {{$categoria->id==old("categoria_id",$articulo->categoria_id)?"selected":""}}>
+                                    {{$categoria->nombre}}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Guardar</button>

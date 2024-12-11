@@ -27,6 +27,18 @@
                         <label for="nit" class="form-label">Nit</label>
                         <input type="text" name="nit" id="nit" value="{{old("nit")}}" class="form-control">
                     </div>
+                    <div class="mb-3">
+                        <label for="direccion" class="form-label">Direccion</label>
+                        <input type="text" name="direccion" id="direccion" value="{{old("direccion")}}" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Telefono</label>
+                        <input type="text" name="telefono" id="telefono" value="{{old("telefono")}}" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" name="email" id="email" value="{{old("email")}}" class="form-control">
+                    </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Guardar</button>
                         <a href="{{route("clientes.index")}}" class="btn btn-danger">Cancelar</a>

@@ -20,6 +20,9 @@
                                 <th>Id</th>
                                 <th>Razon</th>
                                 <th>Nit</th>
+                                <th>Direccion</th>
+                                <th>Telefono</th>
+                                <th>Correo</th>
                                 <th>
                                     <a href="{{ route('clientes.create') }}" class="btn btn-primary">Nuevo</a>
                                 </th>
@@ -31,6 +34,9 @@
                                     <td class="text-end">{{ $cliente->id }}</td>
                                     <td class="text-start">{{ $cliente->razon }}</td>
                                     <td class="text-center">{{ $cliente->nit }}</td>
+                                    <td class="text-center">{{ $cliente->direccion }}</td>
+                                    <td class="text-center">{{ $cliente->telefono }}</td>
+                                    <td class="text-center">{{ $cliente->email }}</td>
                                     <td class="text-center">
                                         <a href="{{ route('clientes.edit', $cliente) }}" class="btn btn-primary">
                                             Editar

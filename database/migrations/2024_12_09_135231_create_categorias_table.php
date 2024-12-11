@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ventas', function (Blueprint $table) {
+        Schema::create('categorias', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha');
-            $table->foreignId('clientes_id')->references('id')->on('clientes');
-            $table->foreignId('users_id')->references('id')->on('users');
-            $table->foreignId('encargos_id')->nullable()->references('id')->on('encargos');
+            $table->string('nombre',100);
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ventas');
+        Schema::dropIfExists('categorias');
     }
 };

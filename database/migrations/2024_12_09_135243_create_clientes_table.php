@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('razon',200);
             $table->bigInteger('nit');
+            $table->string('direccion',200);
+            $table->string('telefono',100);
+            $table->string('email',100);
             $table->timestamps();
         });
     }

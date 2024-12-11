@@ -16,4 +16,7 @@ class Articulo extends Model
     public function relUnidad(){
         return $this->belongsTo(Unidad::class,'unidades_id','id');
     }
+    public function relCategoria(){
+        return $this->belongsTo(Categoria::class,'categorias_id','id');
+    }
 }

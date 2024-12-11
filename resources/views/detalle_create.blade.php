@@ -17,17 +17,19 @@
                 </div>
             @endif
             <div class="card-body">
-                <form action="{{route("detalles.store")}}" method="POST">
+                <form action="{{ route('detalles.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label for="fecha" class="form-label">Cantidad</label>
-                        <input type="number" name="cantidad" id="cantidad" value="{{old("cantidad")}}" class="form-control">
+                        <input type="number" name="cantidad" id="cantidad" value="{{ old('cantidad') }}"
+                            class="form-control">
                     </div>
                     <div class="mb-3">
                         <label for="ventas_id" class="form-label">Venta</label>
                         <select name="ventas_id" id="ventas_id" class="form-select">
                             @foreach($ventas as $venta)
-                                <option value="{{$venta->id}}" {{$venta->id==old("ventas_id")?"selected":""}}>
+                                <option value="{{$venta->id}}"
+                                    {{ $venta->id == old('ventas_id') ? 'selected' : '' }}>
                                     {{$venta->fecha}}
                                 </option>
                             @endforeach

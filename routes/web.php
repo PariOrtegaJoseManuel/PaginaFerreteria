@@ -20,7 +20,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("users/{user}/password", "App\Http\Controllers\UserController@editpassword")->name("users.editpassword");
     Route::post("users/{user}/password", "App\Http\Controllers\UserController@updatepassword")->name("users.updatepassword");
     Route::get('ventas/reporteDiario', 'App\Http\Controllers\VentaController@reporteDiario')->name('ventas.reporteDiario');
-    Route::get('articulos/reporteInventario', 'App\Http\Controllers\ArticuloController@reporte')->name('articulos.reporteInventario');
+    Route::get('articulos/reporteInventario', 'App\Http\Controllers\ArticuloController@reporteInventario')->name('articulos.reporteInventario');
     Route::resource('clientes', 'App\Http\Controllers\ClienteController');
     Route::resource('articulos', 'App\Http\Controllers\ArticuloController');
     Route::resource('detalles', 'App\Http\Controllers\DetalleController');

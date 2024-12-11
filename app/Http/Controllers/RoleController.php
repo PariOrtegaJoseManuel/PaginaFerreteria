@@ -13,10 +13,10 @@ class RoleController extends Controller
      * Solo se pueden acceder a las funciones que tengan permisos de role.create, role.index, role.update y role.delete
     */
     public function __construct(){
-        $this->middleware('can:role.create')->only(['create', 'store']);
-        $this->middleware('can:role.index')->only(['index']);
-        $this->middleware('can:role.update')->only(['edit', 'update']);
-        $this->middleware('can:role.delete')->only(['destroy']);
+        $this->middleware('can:roles.create')->only(['create', 'store']);
+        $this->middleware('can:roles.index')->only(['index']);
+        $this->middleware('can:roles.edit')->only(['edit', 'update']);
+        $this->middleware('can:roles.destroy')->only(['destroy']);
     }
 
     /** Validar el formulario de creación de un rol */

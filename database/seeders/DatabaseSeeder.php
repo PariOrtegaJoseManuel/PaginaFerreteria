@@ -59,6 +59,21 @@ class DatabaseSeeder extends Seeder
         Permission::create(["name" => "roles.edit"]);
         Permission::create(["name" => "roles.destroy"]);
 
+        Permission::create(["name" => "categorias.index"]);
+        Permission::create(["name" => "categorias.create"]);
+        Permission::create(["name" => "categorias.edit"]);
+        Permission::create(["name" => "categorias.destroy"]);
+
+        Permission::create(["name" => "encargos.index"]);
+        Permission::create(["name" => "encargos.create"]);
+        Permission::create(["name" => "encargos.edit"]);
+        Permission::create(["name" => "encargos.destroy"]);
+
+        Permission::create(["name" => "pagos.index"]);
+        Permission::create(["name" => "pagos.create"]);
+        Permission::create(["name" => "pagos.edit"]);
+        Permission::create(["name" => "pagos.destroy"]);
+
         $admin->syncRoles($rolAdmin);
         $vendedor->syncRoles($rolVendedor);
 
@@ -70,6 +85,9 @@ class DatabaseSeeder extends Seeder
             "users.index","users.create","users.edit","users.destroy",
             "unidades.index","unidades.create","unidades.edit","unidades.destroy",
             "roles.index","roles.create","roles.edit","roles.destroy",
+            "categorias.index","categorias.create","categorias.edit","categorias.destroy",
+            "encargos.index","encargos.create","encargos.edit","encargos.destroy",
+            "pagos.index","pagos.create","pagos.edit","pagos.destroy",
         ]);
 
         $rolVendedor->syncPermissions([

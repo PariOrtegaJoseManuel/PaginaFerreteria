@@ -108,9 +108,9 @@ class RoleController extends Controller
     {
         try {
             $role = Role::findOrFail($id);
-            // Verificar si tiene relaciones que impidan la eliminación
-            // if ($role->someRelation()->count() > 0) // Descomentar y ajustar según sea necesario
-            //     return redirect()->route('roles.index')->with(['error' => 'No se puede eliminar el rol con relaciones existentes']);
+            if ($role->users()->count() > 0) {
+                return redirect()->route('roles.index')->with(['error' => 'No se puede eliminar un rol que tiene usuarios asignados']);
+            }
 
             $role->delete();
             return redirect()->route('roles.index')->with(['mensaje' => 'Rol eliminado']);

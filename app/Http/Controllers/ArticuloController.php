@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Articulo;
+use App\Models\Categoria;
 use App\Models\Unidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -35,7 +36,8 @@ class ArticuloController extends Controller
         session()->flashInput($request->input());
         $articulos = Articulo::all();
         $unidades = Unidad::all();
-        return view('articulo_index', ['articulos' => $articulos, 'unidades' => $unidades]);
+        $categorias = Categoria::all();
+        return view('articulo_index', ['articulos' => $articulos, 'unidades' => $unidades, 'categorias' => $categorias]);
     }
 
     /**
@@ -45,7 +47,8 @@ class ArticuloController extends Controller
     {
         //
         $unidades = Unidad::all();
-        return view('articulo_create', ['unidades' => $unidades]);
+        $categorias = Categoria::all();
+        return view('articulo_create', ['unidades' => $unidades, 'categorias' => $categorias]);
     }
 
     /**
@@ -87,9 +90,10 @@ class ArticuloController extends Controller
     {
         //
         $unidades = Unidad::all();
+        $categorias = Categoria::all();
         try {
         $articulo = Articulo::findOrFail($id);
-        return view('articulo_edit', ['unidades' => $unidades, 'articulo' => $articulo]);
+        return view('articulo_edit', ['unidades' => $unidades, 'articulo' => $articulo, 'categorias' => $categorias]);
         } catch (\Exception $e) {
             return redirect()->route('articulos.index')->with(['error' => 'Ocurrió un error al mostrar el articulo: '.$e->getMessage()]);
         }
@@ -127,6 +131,13 @@ class ArticuloController extends Controller
         //
         try {
         $articulo = Articulo::findOrFail($id);
+        // Verificar si tiene actividades relacionadas
+        if ($articulo->RelVenta()->count() > 0){
+            return redirect()->route('articulos.index')->with(['error' => 'No se puede eliminar un articulo con ventas relacionadas']);
+        }
+        /*if ($articulo->RelEncargo()->count() > 0){
+            return redirect()->route('articulos.index')->with(['error' => 'No se puede eliminar un articulo con encargos relacionados']);
+        }*/
         $archivoAEliminar = "img/$articulo->foto";
         if (file_exists($archivoAEliminar))
             unlink($archivoAEliminar);

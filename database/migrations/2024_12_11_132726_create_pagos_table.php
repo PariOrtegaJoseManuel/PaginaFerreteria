@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ventas', function (Blueprint $table) {
+        Schema::create('pagos', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha');
-            $table->foreignId('clientes_id')->references('id')->on('clientes');
-            $table->foreignId('users_id')->references('id')->on('users');
-            $table->foreignId('encargos_id')->nullable()->references('id')->on('encargos');
+            $table->foreignId('encargos_id')->references('id')->on('encargos');
+            $table->foreignId('ventas_id')->references('id')->on('ventas');
+            $table->decimal('monto',10,2);
+            $table->date('fecha_pago');
+            $table->string('metodo_pago',100);
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ventas');
+        Schema::dropIfExists('pagos');
     }
 };

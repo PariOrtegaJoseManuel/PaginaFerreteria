@@ -13,4 +13,7 @@ class Cliente extends Model
     public function relVenta(){
         return $this->hasMany(Venta::class,'clientes_id','id');
     }
+    public function relEncargo(){
+        return $this->hasMany(Encargo::class,'clientes_id','id');
+    }
 }

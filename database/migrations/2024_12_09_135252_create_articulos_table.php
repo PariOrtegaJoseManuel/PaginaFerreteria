@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('precio_unitario',10,2);
             $table->string('foto',30);
             $table->foreignId('unidades_id')->references('id')->on('unidades');
+            $table->foreignId('categorias_id')->references('id')->on('categorias');
             $table->timestamps();
         });
     }

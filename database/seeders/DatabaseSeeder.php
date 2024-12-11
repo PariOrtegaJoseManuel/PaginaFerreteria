@@ -81,6 +81,7 @@ class DatabaseSeeder extends Seeder
         Unidad::create(['descripcion' => 'Kilogramo']);
         Unidad::create(['descripcion' => 'Litro']);
         Unidad::create(['descripcion' => 'Otro']);
+        Unidad::create(['descripcion' => 'Unidad']);
 
 
     }

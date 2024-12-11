@@ -18,7 +18,10 @@ class ClienteController extends Controller
     {
         $request->validate([
             'razon' => 'required|string|min:4|max:100',
-            'nit' => 'required|numeric|min:0'
+            'nit' => 'required|numeric|min:0',
+            'telefono' => 'required|numeric|min:0',
+            'direccion' => 'required|string|min:4|max:100',
+            'email' => 'required|email|unique'
         ]);
     }
     /**
@@ -103,7 +106,8 @@ class ClienteController extends Controller
          // Verificar si tiene actividades relacionadas
         if ($cliente->RelVenta()->count() > 0)
             return redirect()->route('clientes.index')->with(['error' => 'No se puede eliminar un cliente con ventas relacionadas']);
-
+        if ($cliente->RelEncargo()->count() > 0)
+            return redirect()->route('clientes.index')->with(['error' => 'No se puede eliminar un cliente con encargos relacionados']);
         $cliente->delete();
             return redirect()->route('clientes.index')->with(['mensaje' => 'Cliente eliminado']);
         } catch (\Exception $e) {

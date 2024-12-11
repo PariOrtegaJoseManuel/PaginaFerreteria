@@ -20,13 +20,13 @@ class EncargoController extends Controller
         $request->validate([
             'clientes_id' => 'required|numeric|min:1',
             'descripcion_articulo' => 'required|string|max:255',
-            'cantidad' => 'required|numeric|min:0',
+            'cantidad' => 'required|numeric|min:1',
             'estado' => 'required|string|max:255',
             'observaciones' => 'required|string|max:255',
-            // La fecha de entrega debe ser hoy o posterior
-            'fecha_entrega' => 'required|date|after_or_equal:today',
-            // La fecha del encargo debe ser anterior o igual a la fecha de entrega
+            // La fecha del encargo debe ser igual o anterior a la fecha de entrega
             'fecha_encargo' => 'required|date|before_or_equal:fecha_entrega',
+            // La fecha de entrega debe ser igual o posterior a la fecha del encargo
+            'fecha_entrega' => 'required|date|after_or_equal:fecha_encargo',
         ]);
     }
     /**

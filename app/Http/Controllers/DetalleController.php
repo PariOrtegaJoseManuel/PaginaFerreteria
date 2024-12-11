@@ -20,7 +20,7 @@ class DetalleController extends Controller
     public function validarForm(Request $request)
     {
         $request->validate([
-            'cantidad' => 'required|numeric|min:0',
+            'cantidad' => 'required|numeric|min:1',
             'ventas_id' => 'required|numeric|min:1',
             'articulos_id' => 'required|numeric|min:1'
         ]);

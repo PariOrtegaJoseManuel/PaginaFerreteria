@@ -21,10 +21,11 @@ class ArticuloController extends Controller
     {
         $request->validate([
             'descripcion' => 'required|string|min:4|max:100',
-            'cantidad' => 'required|numeric|min:0',
-            'precio_unitario' => 'required|numeric|min:0',
+            'cantidad' => 'required|numeric|min:1',
+            'precio_unitario' => 'required|numeric|min:1',
             "foto" => $isUpdate ? "image|mimes:jpg,jpeg,png,gif|max:2048" : "required|mimes:jpg,jpeg,png,gif|max:2048",
-            'unidades_id' => 'required|numeric|min:1'
+            'unidades_id' => 'required|numeric|min:1',
+            'categorias_id' => 'required|numeric|min:1'
         ]);
     }
     /**

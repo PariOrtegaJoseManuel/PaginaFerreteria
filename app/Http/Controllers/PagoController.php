@@ -20,7 +20,7 @@ class PagoController extends Controller
     {
         $request->validate([
             'monto' => 'required|numeric|min:0',
-            'fecha_pago' => 'required|date',
+            'fecha_pago' => 'required|date|before_or_equal:today',
             'metodo_pago' => 'required|string|max:100',
             'encargos_id' => 'required|numeric|min:1',
             'ventas_id' => 'required|numeric|min:1'

@@ -21,7 +21,8 @@ class VentaController extends Controller
     public function validarForm(Request $request, $isUpdate)
     {
         $request->validate([
-            'fecha' => 'required|date',
+            // La fecha es requerida, debe ser una fecha válida y debe ser igual o anterior a hoy
+            'fecha' => 'required|date|before_or_equal:today',
             'clientes_id' => 'required|numeric|min:1',
             'users_id' => $isUpdate ? 'nullable|numeric|min:1' : 'required|numeric|min:1',
         ]);
@@ -153,7 +154,7 @@ class VentaController extends Controller
         // Obtener la fecha actual
         //$fecha= now()->format('Y-m-d');
 
-        $fecha = $request->fecha;   
+        $fecha = $request->fecha;
         // Obtener las ventas del día
         $ventas = Venta::whereDate('fecha', $fecha)->get();
 

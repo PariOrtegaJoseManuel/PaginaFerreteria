@@ -22,9 +22,10 @@
                             <th>Cliente</th>
                             <th>Descripcion</th>
                             <th>Cantidad</th>
-                            <th>Fecha</th>
+                            <th>Fecha Encargo</th>
                             <th>Estado</th>
                             <th>Observaciones</th>
+                            <th>Fecha Entrega</th>
                             <th>
                                 <a href="{{route("encargos.create")}}" class="btn btn-primary">Nuevo</a>
                             </th>
@@ -40,6 +41,7 @@
                                 <td class="text-end">{{$encargo->fecha_encargo}}</td>
                                 <td class="text-end">{{$encargo->estado}}</td>
                                 <td class="text-end">{{$encargo->observaciones}}</td>
+                                <td class="text-end">{{$encargo->fecha_entrega}}</td>
                                 <td class="text-center">
                                     <a href="{{ route('encargos.edit', $encargo) }}" class="btn btn-primary">
                                         Editar

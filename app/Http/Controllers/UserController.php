@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         $request->validate([
             "name" => "required|string|min:4|max:100",
-            "email" => "required|email",
+            "email" => $isCreate ? "required|email|unique" : "required|email",
             "password" => $isCreate ? "required|string|min:6|max:100" : ""
         ]);
     }

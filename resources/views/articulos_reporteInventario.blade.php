@@ -81,13 +81,6 @@
             padding: 2px;
             background-color: #f9f9f9;
         }
-
-        .total {
-            text-align: right;
-            font-size: 12px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
@@ -121,12 +114,7 @@
                     @endif
                 </td>
             </tr>
-            @php $total += $articulo->precio_unitario * $articulo->cantidad; @endphp
         @endforeach
-        <tr class="total-row">
-            <td colspan="3">TOTAL</td>
-            <td colspan="3">{{ number_format($total, 2) }}</td>
-        </tr>
         </tbody>
     </table>
 </main>

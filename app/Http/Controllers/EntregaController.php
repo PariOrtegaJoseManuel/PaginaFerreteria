@@ -21,6 +21,7 @@ class EntregaController extends Controller
     {
         $request->validate([
             'monto' => 'required|numeric|min:0',
+            'precio' => 'required|numeric|min:0',
             'fecha_pago' => 'required|date|before_or_equal:today',
             'metodo_pagos_id' => 'required|numeric|min:1',
             'encargos_id' => 'nullable|numeric|min:1',

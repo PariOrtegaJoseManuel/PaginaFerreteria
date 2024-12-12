@@ -17,48 +17,47 @@
                 </div>
             @endif
             <div class="card-body">
-                <form action="{{ route('pagos.update', [$pago]) }}" method="POST">
+                <form action="{{ route('entregas.update', [$entrega]) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
                         <label for="encargos_id" class="form-label">Encargo</label>
                         <select name="encargos_id" id="encargos_id" class="form-select">
-                            <option value="">No es encargo</option>
                             @foreach ($encargos as $encargo)
                                 <option value="{{ $encargo->id }}"
-                                    {{ $encargo->id == old('encargos_id', $pago->encargo_id) ? 'selected' : '' }}>
+                                    {{ $encargo->id == old('encargos_id', $entrega->encargos_id) ? 'selected' : '' }}>
                                     {{ $encargo->descripcion_articulo }}
                                 </option>
                             @endforeach
                         </select>
                         <label for="ventas_id" class="form-label">Venta</label>
                         <select name="ventas_id" id="ventas_id" class="form-select">
-                        @foreach ($ventas as $venta)
-                            <option value="{{ $venta->id }}"
-                                {{ $venta->id == old('ventas_id', $pago->venta_id) ? 'selected' : '' }}>
-                                {{ $venta->fecha }}
-                            </option>
+                            @foreach ($ventas as $venta)
+                                <option value="{{ $venta->id }}"
+                                    {{ $venta->id == old('ventas_id', $entrega->venta_id) ? 'selected' : '' }}>
+                                    {{ $venta->fecha }}
+                                </option>
                             @endforeach
                         </select>
                         <label for="monto" class="form-label">Monto</label>
-                        <input type="text" name="monto" id="monto" value="{{ old('monto', $pago->monto) }}"
+                        <input type="text" name="monto" id="monto" value="{{ old('monto', $entrega->monto) }}"
                             class="form-control">
-                        <label for="fecha_pago" class="form-label">Fecha</label>
+                        <label for="fecha_pago" class="form-label">Fecha de Pago</label>
                         <input type="date" name="fecha_pago" id="fecha_pago"
-                            value="{{ old('fecha_pago', $pago->fecha_pago) }}" class="form-control">
+                            value="{{ old('fecha_pago', $entrega->fecha_pago) }}" class="form-control">
                         <label for="metodo_pagos_id" class="form-label">Metodo</label>
                         <select name="metodo_pagos_id" id="metodo_pagos_id" class="form-select">
                             @foreach ($metodo_pagos as $metodo_pago)
                                 <option value="{{ $metodo_pago->id }}"
-                                    {{ $metodo_pago->id == old('metodo_pagos_id', $pago->metodo_pagos_id) ? 'selected' : '' }}>
+                                    {{ $metodo_pago->id == old('metodo_pagos_id', $entrega->metodo_pagos_id) ? 'selected' : '' }}>
                                     {{ $metodo_pago->metodo }}
                                 </option>
-                                @endforeach
-                            </select>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Guardar</button>
-                        <a href="{{ route('pagos.index') }}" class="btn btn-danger">Cancelar</a>
+                        <a href="{{ route('entregas.index') }}" class="btn btn-danger">Cancelar</a>
                     </div>
                 </form>
             </div>

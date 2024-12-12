@@ -31,6 +31,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource("roles", "App\Http\Controllers\RoleController");
     Route::resource("categorias", "App\Http\Controllers\CategoriaController");
     Route::resource("encargos", "App\Http\Controllers\EncargoController");
-    Route::resource("pagos", "App\Http\Controllers\PagoController");
+    Route::resource("entregas", "App\Http\Controllers\EntregaController");
     Route::resource("metodo_pagos", "App\Http\Controllers\MetodoPagoController");
 });

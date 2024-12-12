@@ -33,7 +33,7 @@
                         </thead>
                         <tbody class="table-group-divider">
                         @foreach($articulos as $articulo)
-                            <tr class="align-middle">
+                            <tr class="align-middle {{ $articulo->cantidad == 0 ? 'table-danger' : ($articulo->cantidad <= 5 ? 'table-warning' : '') }}">
                                 <td class="text-end">{{$articulo->id}}</td>
                                 <td class="text-start">{{$articulo->descripcion}}</td>
                                 <td class="text-center">{{$articulo->cantidad}}</td>

@@ -16,6 +16,11 @@
                     </ul>
                 </div>
             @endif
+            <div class="card-body"
+                @if (session('error'))
+                    <div class="alert alert-danger" role="alert">{{ session('error') }}</div>
+                @endif
+            </div>
             <div class="card-body">
                 <form action="{{ route('detalles.updateVenta', [$detalle, $ventaId]) }}" method="POST">
                     @csrf
@@ -33,8 +38,8 @@
                                     {{ $metodo_pago->id == old('metodo_pagos_id', $detalle->metodo_pagos_id) ? 'selected' : '' }}>
                                     {{ $metodo_pago->metodo }}
                                 </option>
-                                @endforeach
-                            </select>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Guardar</button>

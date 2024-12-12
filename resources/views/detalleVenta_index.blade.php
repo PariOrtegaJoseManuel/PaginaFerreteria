@@ -47,12 +47,12 @@
                                         Editar
                                     </a>
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal{{ $detalle->id}}">
+                                        data-bs-target="#exampleModal{{ $detalle->id, $venta->id}}">
                                         Eliminar
                                     </button>
                                 </td>
                             </tr>
-                            <div class="modal fade" id="exampleModal{{ $detalle->id }}" tabindex="-1"
+                            <div class="modal fade" id="exampleModal{{ $detalle->id, $venta->id }}" tabindex="-1"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -67,7 +67,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary"
                                                 data-bs-dismiss="modal">Cerrar</button>
-                                            <form action="{{ route('detalles.destroy', $detalle) }}" method="post">
+                                            <form action="{{ route('detalles.destroyVenta', [$detalle, $venta->id]) }}" method="post">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger">Eliminar</button>

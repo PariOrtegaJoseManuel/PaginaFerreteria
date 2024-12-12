@@ -18,8 +18,8 @@ class ClienteController extends Controller
     {
         $request->validate([
             'razon' => 'required|string|min:4|max:100',
-            'nit' => 'required|numeric|min:8',
-            'telefono' => 'nullable|numeric|min:7|max:8',
+            'nit' => 'required|string|min:8|max:14',
+            'telefono' => 'nullable|string|min:7|max:8',
             'direccion' => 'nullable|string|min:4|max:100',
             'email' => 'nullable|email'
         ]);

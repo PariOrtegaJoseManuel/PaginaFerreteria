@@ -16,7 +16,6 @@ return new class extends Migration
             $table->date('fecha');
             $table->foreignId('clientes_id')->references('id')->on('clientes');
             $table->foreignId('users_id')->references('id')->on('users');
-            $table->foreignId('encargos_id')->nullable()->references('id')->on('encargos');
             $table->timestamps();
         });
     }

@@ -142,18 +142,36 @@ class DetalleController extends Controller
     {
         $direccion = $ventaId;
         $request->validate([
-            "cantidad"=>"required|numeric|min:1",
-            "metodo_pagos_id"=>"required|numeric|min:1"
+            "cantidad" => "required|numeric|min:1",
+            "metodo_pagos_id" => "required|numeric|min:1"
         ]);
+
         try {
             $detalle = Detalle::find($id);
+            $articulo = Articulo::find($detalle->articulos_id);
+
+            // Calcular la diferencia de cantidad
+            $diferencia = $request->cantidad - $detalle->cantidad;
+
+            // Verificar si hay suficiente stock para el incremento
+            if ($diferencia > 0 && $articulo->cantidad < $diferencia) {
+                return back()->with('error', 'No hay suficiente stock. Stock disponible: ' . $articulo->cantidad);
+            }
+
+            // Actualizar el stock del artículo
+            $articulo->cantidad -= $diferencia;
+            $articulo->save();
+
+            // Actualizar el detalle
             $detalle->cantidad = $request->cantidad;
             $detalle->metodo_pagos_id = $request->metodo_pagos_id;
             $detalle->save();
+
             return redirect()->route("detalles.indexVenta", $direccion)
-            ->with(["mensaje"=>"Cantidad modificada"]);
+                ->with(["mensaje" => "Cantidad modificada"]);
         } catch (\Exception $e) {
-            return redirect()->route('detalles.indexVenta', $direccion)->with(['error' => 'Ocurrió un error al modificar la cantidad: ' . $e->getMessage()]);
+            return redirect()->route('detalles.indexVenta', $direccion)
+                ->with(['error' => 'Ocurrió un error al modificar la cantidad: ' . $e->getMessage()]);
         }
     }
 
@@ -181,12 +199,27 @@ class DetalleController extends Controller
         ]);
 
         try {
+            // Obtener el artículo
+            $articulo = Articulo::findOrFail($request->articulos_id);
+
+            // Verificar si hay suficiente stock
+            if ($articulo->cantidad < $request->cantidad) {
+                return redirect()->back()->with([
+                    'error' => 'No hay suficiente stock. Stock disponible: ' . $articulo->cantidad
+                ]);
+            }
+
+            // Crear el detalle
             Detalle::create([
                 'cantidad' => $request->cantidad,
                 'articulos_id' => $request->articulos_id,
                 'ventas_id' => $ventasid,
                 'metodo_pagos_id' => $request->metodo_pagos_id
             ]);
+
+            // Actualizar el stock del artículo
+            $articulo->cantidad -= $request->cantidad;
+            $articulo->save();
 
             return redirect()->route('detalles.indexVenta', ['detalle' => $ventasid])
                 ->with(['mensaje' => 'Detalle creado exitosamente']);

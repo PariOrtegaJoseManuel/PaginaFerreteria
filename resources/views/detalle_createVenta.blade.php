@@ -17,6 +17,11 @@
                 </div>
             @endif
             <div class="card-body">
+                @if (session('error'))
+                    <div class="alert alert-danger" role="alert">{{ session('error') }}</div>
+                @endif
+            </div>
+            <div class="card-body">
                 <form action="{{ route('detalles.storeVenta', ['ventas_id' => $venta->id]) }}" method="POST">
                     @csrf
 

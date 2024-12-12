@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Articulo;
 use App\Models\Categoria;
+use App\Models\Cliente;
 use App\Models\MetodoPago;
 use App\Models\Unidad;
 use App\Models\User;
@@ -118,5 +120,57 @@ class DatabaseSeeder extends Seeder
         Categoria::create(['nombre' => 'Maquinaria']);
         Categoria::create(['nombre' => 'Materiales']);
         Categoria::create(['nombre' => 'Otros']);
+
+        Cliente::create(["razon" => "Empresa A","nit" => 123456789, "telefono" => "123456789",
+        "email" => "empresaA@example.com", "direccion" => "direccion 1"]);
+        Cliente::create(["razon" => "Empresa B","nit" => 123456789, "telefono" => "123456789",
+        "email" => "empresaB@example.com", "direccion" => "direccion 2"]);
+        Cliente::create(["razon" => "Empresa C","nit" => 123456789, "telefono" => "123456789",
+        "email" => "empresaC@example.com", "direccion" => "direccion 3"]);
+        Cliente::create(["razon" => "Empresa D","nit" => 123456789, "telefono" => "123456789",
+        "email" => "empresaD@example.com", "direccion" => "direccion 4"]);
+        Cliente::create(["razon" => "Empresa E","nit" => 123456789, "telefono" => "123456789",
+        "email" => "empresaE@example.com", "direccion" => "direccion 5"]);
+
+        Articulo::create([
+            "descripcion" => "Martillo",
+            "cantidad" => 25,
+            "precio_unitario" => 10,
+            "foto" => "martillo.png",
+            "unidades_id" => 1,
+            "categorias_id" => 1,
+        ]);
+        Articulo::create([
+            "descripcion" => "Clavos (caja)",
+            "cantidad" => 100,
+            "precio_unitario" => 3,
+            "foto" => "clavos.png",
+            "unidades_id" => 1,
+            "categorias_id" => 2,
+        ]);
+        Articulo::create([
+            "descripcion" => "Pintura Blanca (galón)",
+            "cantidad" => 15,
+            "precio_unitario" => 50,
+            "foto" => "pintura_blanca.png",
+            "unidades_id" => 2,
+            "categorias_id" => 3,
+        ]);
+        Articulo::create([
+            "descripcion" => "Taladro Eléctrico",
+            "cantidad" => 8,
+            "precio_unitario" => 75,
+            "foto" => "taladro.png",
+            "unidades_id" => 1,
+            "categorias_id" => 1,
+        ]);
+        Articulo::create([
+            "descripcion" => "Cemento (bolsa 50kg)",
+            "cantidad" => 50,
+            "precio_unitario" => 120,
+            "foto" => "cemento.png",
+            "unidades_id" => 3,
+            "categorias_id" => 2,
+        ]);
     }
 }

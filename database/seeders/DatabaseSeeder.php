@@ -111,10 +111,10 @@ class DatabaseSeeder extends Seeder
         Unidad::create(['descripcion' => 'Litro']);
         Unidad::create(['descripcion' => 'Otro']);
 
-        MetodoPago::create(['metodo' => 'Efectivo']);
-        MetodoPago::create(['metodo' => 'Tarjeta']);
-        MetodoPago::create(['metodo' => 'Transferencia']);
-        MetodoPago::create(['metodo' => 'Cheque']);
+        MetodoPago::create(['metodo' => 'Efectivo', 'foto' => 'efectivo.png']);
+        MetodoPago::create(['metodo' => 'Tarjeta', 'foto' => 'tarjeta.jpg']);
+        MetodoPago::create(['metodo' => 'Transferencia', 'foto' => 'transferencia.jpg']);
+        MetodoPago::create(['metodo' => 'Cheque', 'foto' => 'cheque.jpg']);
 
         Categoria::create(['nombre' => 'Herramientas']);
         Categoria::create(['nombre' => 'Maquinaria']);

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('metodo_pagos', function (Blueprint $table) {
             $table->id();
             $table->string('metodo',100);
+            $table->string('foto',255)->nullable();
             $table->timestamps();
         });
     }

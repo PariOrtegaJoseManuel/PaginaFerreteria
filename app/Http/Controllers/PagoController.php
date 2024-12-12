@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Encargo;
+use App\Models\MetodoPago;
 use App\Models\Pago;
 use App\Models\Venta;
 use Illuminate\Http\Request;
@@ -21,8 +22,8 @@ class PagoController extends Controller
         $request->validate([
             'monto' => 'required|numeric|min:0',
             'fecha_pago' => 'required|date|before_or_equal:today',
-            'metodo_pago' => 'required|string|max:100',
-            'encargos_id' => 'required|numeric|min:1',
+            'metodo_pagos_id' => 'required|numeric|min:1',
+            'encargos_id' => 'nullable|numeric|min:1',
             'ventas_id' => 'required|numeric|min:1'
         ]);
     }
@@ -35,7 +36,8 @@ class PagoController extends Controller
         $pagos = Pago::all();
         $ventas = Venta::all();
         $encargos = Encargo::all();
-        return view('pago_index', ['pagos' => $pagos, 'ventas' => $ventas, 'encargos' => $encargos]);
+        $metodo_pagos = MetodoPago::all();
+        return view('pago_index', ['pagos' => $pagos, 'ventas' => $ventas, 'encargos' => $encargos, 'metodo_pagos' => $metodo_pagos]);
     }
 
     /**
@@ -46,7 +48,8 @@ class PagoController extends Controller
         //
         $ventas = Venta::all();
         $encargos = Encargo::all();
-        return view('pago_create', ['ventas' => $ventas, 'encargos' => $encargos]);
+        $metodo_pagos = MetodoPago::all();
+        return view('pago_create', ['ventas' => $ventas, 'encargos' => $encargos, 'metodo_pagos' => $metodo_pagos]);
     }
 
     /**
@@ -78,9 +81,10 @@ class PagoController extends Controller
         //
         $encargos = Encargo::all();
         $ventas = Venta::all();
+        $metodo_pagos = MetodoPago::all();
         try {
         $pago = Pago::findOrFail($id);
-        return view('pago_edit', ['encargos' => $encargos, 'ventas' => $ventas, 'pago' => $pago]);
+        return view('pago_edit', ['encargos' => $encargos, 'ventas' => $ventas, 'metodo_pagos' => $metodo_pagos , 'pago' => $pago]);
         } catch (\Exception $e) {
             return redirect()->route('pagos.index')->with(['error' => 'Ocurrió un error al mostrar el pago: '.$e->getMessage()]);
         }

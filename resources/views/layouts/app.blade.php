@@ -60,6 +60,9 @@
                         <li class="nav-item">
                             <a href="{{route("encargos.index")}}" class="nav-link">Encargos</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{route("metodo_pagos.index")}}" class="nav-link">Metodo de Pagos</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

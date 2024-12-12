@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('pagos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('encargos_id')->references('id')->on('encargos');
+            $table->foreignId('encargos_id')->nullable()->references('id')->on('encargos');
             $table->foreignId('ventas_id')->references('id')->on('ventas');
             $table->decimal('monto',10,2);
             $table->date('fecha_pago');
-            $table->string('metodo_pago',100);
+            $table->foreignId('metodo_pagos_id')->references('id')->on('metodo_pagos');
             $table->timestamps();
         });
     }

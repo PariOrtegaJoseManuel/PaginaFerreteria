@@ -16,4 +16,7 @@ class Detalle extends Model
     public function relArticulo(){
         return $this->belongsTo(Articulo::class,'articulos_id','id');
     }
+    public function relMetodoPago(){
+        return $this->belongsTo(MetodoPago::class,'metodo_pagos_id','id');
+    }
 }

@@ -27,6 +27,7 @@
                             <th>Cantidad</th>
                             <th>Precio</th>
                             <th>Total</th>
+                            <th>Metodo de Pago</th>
                             <th>
                                 <a href="{{route("detalles.createVenta", $ventaId = $venta->id)}}" class="btn btn-primary">Añadir Articulo</a>
                             </th>
@@ -40,12 +41,13 @@
                                 <td class="text-end">{{$detalle->cantidad}}</td>
                                 <td class="text-end">{{$detalle->relArticulo->precio_unitario}}</td>
                                 <td class="text-end">{{$detalle->cantidad * $detalle->relArticulo->precio_unitario}}</td>
+                                <td class="text-end">{{$detalle->relMetodoPago->metodo}}</td>
                                 <td class="text-center">
                                     <a href="{{ route('detalles.editVenta', [$detalle, $ventaId => $venta->id]) }}" class="btn btn-primary">
                                         Editar
                                     </a>
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal{{ $detalle->id }}">
+                                        data-bs-target="#exampleModal{{ $detalle->id}}">
                                         Eliminar
                                     </button>
                                 </td>

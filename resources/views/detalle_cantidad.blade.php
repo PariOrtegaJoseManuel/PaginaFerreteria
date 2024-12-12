@@ -25,6 +25,17 @@
                         <input type="number" name="cantidad" id="cantidad"
                             value="{{ old('cantidad', $detalle->cantidad) }}" class="form-control">
                     </div>
+                    <div class="mb-3">
+                        <label for="metodo_pagos_id" class="form-label">Metodo</label>
+                        <select name="metodo_pagos_id" id="metodo_pagos_id" class="form-select">
+                            @foreach ($metodo_pagos as $metodo_pago)
+                                <option value="{{ $metodo_pago->id }}"
+                                    {{ $metodo_pago->id == old('metodo_pagos_id', $detalle->metodo_pagos_id) ? 'selected' : '' }}>
+                                    {{ $metodo_pago->metodo }}
+                                </option>
+                                @endforeach
+                            </select>
+                    </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Guardar</button>
                         <a href="{{ route('detalles.indexVenta', $ventaId) }}" class="btn btn-danger">Cancelar</a>

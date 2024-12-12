@@ -10,18 +10,18 @@ class ClienteController extends Controller
     public function __construct()
     {
         $this->middleware('can:clientes.index')->only('index');
-        $this->middleware('can:clientes.create')->only('create','store');
-        $this->middleware('can:clientes.edit')->only('edit','update');
+        $this->middleware('can:clientes.create')->only('create', 'store');
+        $this->middleware('can:clientes.edit')->only('edit', 'update');
         $this->middleware('can:clientes.destroy')->only('destroy');
     }
     public function validarForm(Request $request)
     {
         $request->validate([
             'razon' => 'required|string|min:4|max:100',
-            'nit' => 'required|numeric|min:0',
-            'telefono' => 'required|numeric|min:0',
-            'direccion' => 'required|string|min:4|max:100',
-            'email' => 'required|email|unique'
+            'nit' => 'required|numeric|min:8',
+            'telefono' => 'nullable|numeric|min:7|max:8',
+            'direccion' => 'nullable|string|min:4|max:100',
+            'email' => 'nullable|email'
         ]);
     }
     /**
@@ -51,10 +51,19 @@ class ClienteController extends Controller
         //
         $this->validarForm($request);
         try {
-        Cliente::create($request->all());
-        return redirect()->route('clientes.index')->with(['mensaje' => 'Cliente creado']);
+            if (empty($request->telefono)) {
+                $request->merge(['telefono' => 00000000]);
+            }
+            if (is_null($request->direccion)) {
+                $request->merge(['direccion' => 'Sin dirección registrada']);
+            }
+            if (is_null($request->email)) {
+                $request->merge(['email' => 'Sin email registrado']);
+            }
+            Cliente::create($request->all());
+            return redirect()->route('clientes.index')->with(['mensaje' => 'Cliente creado']);
         } catch (\Exception $e) {
-            return redirect()->route('clientes.index')->with(['error' => 'Ocurrió un error al crear el cliente: '.$e->getMessage()]);
+            return redirect()->route('clientes.index')->with(['error' => 'Ocurrió un error al crear el cliente: ' . $e->getMessage()]);
         }
     }
 
@@ -73,10 +82,10 @@ class ClienteController extends Controller
     {
         //
         try {
-        $cliente = Cliente::findOrFail($id);
-        return view('cliente_edit', ['cliente' => $cliente]);
+            $cliente = Cliente::findOrFail($id);
+            return view('cliente_edit', ['cliente' => $cliente]);
         } catch (\Exception $e) {
-            return redirect()->route('clientes.index')->with(['error' => 'Ocurrió un error al mostrar el cliente: '.$e->getMessage()]);
+            return redirect()->route('clientes.index')->with(['error' => 'Ocurrió un error al mostrar el cliente: ' . $e->getMessage()]);
         }
     }
 
@@ -88,11 +97,11 @@ class ClienteController extends Controller
         //
         $this->validarForm($request);
         try {
-        $cliente = Cliente::findOrFail($id);
-        $cliente->update($request->all());
-        return redirect()->route('clientes.index')->with(['mensaje' => 'Cliente editado']);
+            $cliente = Cliente::findOrFail($id);
+            $cliente->update($request->all());
+            return redirect()->route('clientes.index')->with(['mensaje' => 'Cliente editado']);
         } catch (\Exception $e) {
-            return redirect()->route('clientes.index')->with(['error' => 'Ocurrió un error al editar el cliente: '.$e->getMessage()]);
+            return redirect()->route('clientes.index')->with(['error' => 'Ocurrió un error al editar el cliente: ' . $e->getMessage()]);
         }
     }
 
@@ -102,16 +111,16 @@ class ClienteController extends Controller
     public function destroy(string $id)
     {
         try {
-        $cliente = Cliente::findOrFail($id);
-         // Verificar si tiene actividades relacionadas
-        if ($cliente->RelVenta()->count() > 0)
-            return redirect()->route('clientes.index')->with(['error' => 'No se puede eliminar un cliente con ventas relacionadas']);
-        if ($cliente->RelEncargo()->count() > 0)
-            return redirect()->route('clientes.index')->with(['error' => 'No se puede eliminar un cliente con encargos relacionados']);
-        $cliente->delete();
+            $cliente = Cliente::findOrFail($id);
+            // Verificar si tiene actividades relacionadas
+            if ($cliente->RelVenta()->count() > 0)
+                return redirect()->route('clientes.index')->with(['error' => 'No se puede eliminar un cliente con ventas relacionadas']);
+            if ($cliente->RelEncargo()->count() > 0)
+                return redirect()->route('clientes.index')->with(['error' => 'No se puede eliminar un cliente con encargos relacionados']);
+            $cliente->delete();
             return redirect()->route('clientes.index')->with(['mensaje' => 'Cliente eliminado']);
         } catch (\Exception $e) {
-            return redirect()->route('clientes.index')->with(['error' => 'Ocurrió un error al eliminar el cliente: '.$e->getMessage()]);
+            return redirect()->route('clientes.index')->with(['error' => 'Ocurrió un error al eliminar el cliente: ' . $e->getMessage()]);
         }
     }
 }

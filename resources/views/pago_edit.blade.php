@@ -23,6 +23,7 @@
                     <div class="mb-3">
                         <label for="encargos_id" class="form-label">Encargo</label>
                         <select name="encargos_id" id="encargos_id" class="form-select">
+                            <option value="">No es encargo</option>
                             @foreach ($encargos as $encargo)
                                 <option value="{{ $encargo->id }}"
                                     {{ $encargo->id == old('encargos_id', $pago->encargo_id) ? 'selected' : '' }}>
@@ -45,9 +46,15 @@
                         <label for="fecha_pago" class="form-label">Fecha</label>
                         <input type="date" name="fecha_pago" id="fecha_pago"
                             value="{{ old('fecha_pago', $pago->fecha_pago) }}" class="form-control">
-                        <label for="metodo_pago" class="form-label">Metodo</label>
-                        <input type="text" name="metodo_pago" id="metodo_pago"
-                            value="{{ old('metodo_pago', $pago->metodo_pago) }}" class="form-control">
+                        <label for="metodo_pagos_id" class="form-label">Metodo</label>
+                        <select name="metodo_pagos_id" id="metodo_pagos_id" class="form-select">
+                            @foreach ($metodo_pagos as $metodo_pago)
+                                <option value="{{ $metodo_pago->id }}"
+                                    {{ $metodo_pago->id == old('metodo_pagos_id', $pago->metodo_pagos_id) ? 'selected' : '' }}>
+                                    {{ $metodo_pago->metodo }}
+                                </option>
+                                @endforeach
+                            </select>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Guardar</button>

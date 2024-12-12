@@ -16,4 +16,7 @@ class Pago extends Model
     public function relVenta(){
         return $this->belongsTo(Venta::class,'ventas_id','id');
     }
+    public function relMetodoPago(){
+        return $this->belongsTo(MetodoPago::class,'metodo_pagos_id','id');
+    }
 }

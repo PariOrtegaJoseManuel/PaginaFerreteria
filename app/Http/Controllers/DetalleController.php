@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Articulo;
 use App\Models\Detalle;
+use App\Models\MetodoPago;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -33,7 +34,8 @@ class DetalleController extends Controller
         $detalles = Detalle::all();
         $articulos = Articulo::all();
         $ventas = Venta::all();
-        return view('detalle_index', ['detalles' => $detalles, 'articulos' => $articulos, 'ventas' => $ventas]);
+        $metodo_pagos = MetodoPago::all();
+        return view('detalle_index', ['detalles' => $detalles, 'articulos' => $articulos, 'metodo_pagos' => $metodo_pagos ,'ventas' => $ventas]);
     }
 
     /**
@@ -44,7 +46,8 @@ class DetalleController extends Controller
         //
         $ventas = Venta::all();
         $articulos = Articulo::all();
-        return view('detalle_create', ['ventas' => $ventas, 'articulos' => $articulos]);
+        $metodo_pagos = MetodoPago::all();
+        return view('detalle_create', ['ventas' => $ventas, 'articulos' => $articulos,'metodo_pagos' => $metodo_pagos]);
     }
 
     /**
@@ -76,9 +79,10 @@ class DetalleController extends Controller
         //
         $articulos = Articulo::all();
         $ventas = Venta::all();
+        $metodo_pagos = MetodoPago::all();
         try {
         $detalle = Detalle::findOrFail($id);
-        return view('detalle_edit', ['articulos' => $articulos, 'detalle' => $detalle, 'ventas' => $ventas]);
+        return view('detalle_edit', ['articulos' => $articulos, 'detalle' => $detalle, 'metodo_pagos' => $metodo_pagos ,'ventas' => $ventas]);
         } catch (\Exception $e) {
             return redirect()->route('detalles.index')->with(['error' => 'Ocurrió un error al mostrar el detalle: '.$e->getMessage()]);
         }
@@ -127,7 +131,8 @@ class DetalleController extends Controller
         $direccion = $ventaId;
         try {
             $detalle = Detalle::find($id);
-            return view("detalle_cantidad", ["detalle" => $detalle, "ventaId" => $ventaId]);
+            $metodo_pagos = MetodoPago::all();
+            return view("detalle_cantidad", ["detalle" => $detalle, "ventaId" => $ventaId, "metodo_pagos" => $metodo_pagos]);
         } catch (\Exception $e) {
             $detalle = Detalle::find($id);
             return redirect()->route('detalles.indexVenta', $direccion)->with(['error' => 'Ocurrió un error al mostrar la cantidad: ' . $e->getMessage()]);
@@ -137,11 +142,13 @@ class DetalleController extends Controller
     {
         $direccion = $ventaId;
         $request->validate([
-            "cantidad"=>"required|numeric|min:1"
+            "cantidad"=>"required|numeric|min:1",
+            "metodo_pagos_id"=>"required|numeric|min:1"
         ]);
         try {
             $detalle = Detalle::find($id);
             $detalle->cantidad = $request->cantidad;
+            $detalle->metodo_pagos_id = $request->metodo_pagos_id;
             $detalle->save();
             return redirect()->route("detalles.indexVenta", $direccion)
             ->with(["mensaje"=>"Cantidad modificada"]);
@@ -157,8 +164,9 @@ class DetalleController extends Controller
             $venta = Venta::findOrFail($ventaId);
             // Obtiene todos los artículos disponibles de la base de datos
             $articulos = Articulo::all();
+            $metodo_pagos = MetodoPago::all();
             // Retorna la vista detalle_createVenta pasando la venta y artículos como datos
-            return view('detalle_createVenta', ['venta' => $venta, 'articulos' => $articulos]);
+            return view('detalle_createVenta', ['venta' => $venta, 'articulos' => $articulos, 'metodo_pagos' => $metodo_pagos]);
         } catch (\Exception $e) {
             return redirect()->route('ventas.indexVenta', $ventaId)->with(['error' => 'Error al cargar el formulario: ' . $e->getMessage()]);
         }
@@ -168,14 +176,16 @@ class DetalleController extends Controller
     {
         $request->validate([
             'cantidad' => 'required|numeric|min:1',
-            'articulos_id' => 'required|exists:articulos,id'
+            'articulos_id' => 'required|exists:articulos,id',
+            'metodo_pagos_id' => 'required|exists:metodo_pagos,id'
         ]);
 
         try {
             Detalle::create([
                 'cantidad' => $request->cantidad,
                 'articulos_id' => $request->articulos_id,
-                'ventas_id' => $ventasid
+                'ventas_id' => $ventasid,
+                'metodo_pagos_id' => $request->metodo_pagos_id
             ]);
 
             return redirect()->route('detalles.indexVenta', ['detalle' => $ventasid])
@@ -192,9 +202,22 @@ class DetalleController extends Controller
         try {
             $venta = Venta::findOrFail($ventaId);
             $articulos = Articulo::all();
-            return view('detalle_createVenta', ['articulos' => $articulos, 'venta' => $venta]);
+            $metodo_pagos = MetodoPago::all();
+            return view('detalle_createVenta', ['articulos' => $articulos, 'venta' => $venta, 'metodo_pagos' => $metodo_pagos]);
         } catch (\Exception $e) {
             return redirect()->route('ventas.index')->with(['error' => 'Error al cargar el formulario: ' . $e->getMessage()]);
+        }
+    }
+
+    public function destroyVenta(string $id, string $ventaId)
+    {
+        //
+        try {
+        $detalle = Detalle::findOrFail($id);
+        $detalle->delete();
+        return redirect()->route('detalles.indexVenta', $ventaId)->with(['mensaje' => 'Detalle eliminado']);
+        } catch (\Exception $e) {
+            return redirect()->route('detalles.indexVenta', $ventaId)->with(['error' => 'Ocurrió un error al eliminar el detalle: '.$e->getMessage()]);
         }
     }
     public function notaVenta(string $id)

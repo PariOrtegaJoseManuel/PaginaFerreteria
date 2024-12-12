@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Categoria;
+use App\Models\MetodoPago;
 use App\Models\Unidad;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -74,6 +76,11 @@ class DatabaseSeeder extends Seeder
         Permission::create(["name" => "pagos.edit"]);
         Permission::create(["name" => "pagos.destroy"]);
 
+        Permission::create(["name" => "metodo_pagos.index"]);
+        Permission::create(["name" => "metodo_pagos.create"]);
+        Permission::create(["name" => "metodo_pagos.edit"]);
+        Permission::create(["name" => "metodo_pagos.destroy"]);
+
         $admin->syncRoles($rolAdmin);
         $vendedor->syncRoles($rolVendedor);
 
@@ -88,6 +95,7 @@ class DatabaseSeeder extends Seeder
             "categorias.index","categorias.create","categorias.edit","categorias.destroy",
             "encargos.index","encargos.create","encargos.edit","encargos.destroy",
             "pagos.index","pagos.create","pagos.edit","pagos.destroy",
+            "metodo_pagos.index","metodo_pagos.create","metodo_pagos.edit","metodo_pagos.destroy",
         ]);
 
         $rolVendedor->syncPermissions([
@@ -100,5 +108,15 @@ class DatabaseSeeder extends Seeder
         Unidad::create(['descripcion' => 'Kilogramo']);
         Unidad::create(['descripcion' => 'Litro']);
         Unidad::create(['descripcion' => 'Otro']);
+
+        MetodoPago::create(['metodo' => 'Efectivo']);
+        MetodoPago::create(['metodo' => 'Tarjeta']);
+        MetodoPago::create(['metodo' => 'Transferencia']);
+        MetodoPago::create(['metodo' => 'Cheque']);
+
+        Categoria::create(['nombre' => 'Herramientas']);
+        Categoria::create(['nombre' => 'Maquinaria']);
+        Categoria::create(['nombre' => 'Materiales']);
+        Categoria::create(['nombre' => 'Otros']);
     }
 }

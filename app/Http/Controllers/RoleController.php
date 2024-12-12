@@ -24,6 +24,7 @@ class RoleController extends Controller
     {
         $request->validate([
             'nombre' => 'required|string|min:4|max:100',
+            
             // Agrega otras validaciones según sea necesario
         ]);
     }

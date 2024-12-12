@@ -33,11 +33,11 @@
                         @foreach($pagos as $pago)
                             <tr class="align-middle">
                                 <td class="text-end">{{$pago->id}}</td>
-                                <td class="text-start">{{$pago->relEncargo->descripcion_articulo}}</td>
+                                <td class="text-start">{{$pago->relEncargo ? $pago->relEncargo->descripcion_articulo : 'no es encargo'}}</td>
                                 <td class="text-end">{{$pago->relVenta->fecha}}</td>
                                 <td class="text-end">{{$pago->monto}}</td>
                                 <td class="text-end">{{$pago->fecha_pago}}</td>
-                                <td class="text-end">{{$pago->metodo_pago}}</td>
+                                <td class="text-end">{{$pago->relMetodoPago->metodo}}</td>
                                 <td class="text-center">
                                     <a href="{{ route('pagos.edit', $pago) }}" class="btn btn-primary">
                                         Editar

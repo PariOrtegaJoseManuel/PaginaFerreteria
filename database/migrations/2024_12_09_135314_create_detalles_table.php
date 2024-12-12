@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('cantidad');
             $table->foreignId('ventas_id')->references('id')->on('ventas');
+            $table->foreignId('metodo_pagos_id')->references('id')->on('metodo_pagos');
             $table->foreignId('articulos_id')->references('id')->on('articulos');
             $table->timestamps();
         });

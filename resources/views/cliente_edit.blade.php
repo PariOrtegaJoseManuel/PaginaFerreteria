@@ -25,7 +25,7 @@
                         <input type="text" name="razon" id="razon" value="{{old("razon",$cliente->razon)}}" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label for="nit" class="form-label">Nit</label>
+                        <label for="nit" class="form-label">Nit/CI</label>
                         <input type="text" name="nit" id="nit" value="{{old("nit",$cliente->nit)}}" class="form-control">
                     </div>
                     <div class="mb-3">
@@ -34,7 +34,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="telefono" class="form-label">Telefono</label>
-                        <input type="text" name="telefono" id="telefono" value="{{old("telefono",$cliente->telefono)}}" class="form-control">
+                        <input type="number" name="telefono" id="telefono" value="{{old("telefono",$cliente->telefono)}}" class="form-control">
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>

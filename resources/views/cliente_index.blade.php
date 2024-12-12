@@ -19,7 +19,7 @@
                             <tr class="align-middle">
                                 <th>Id</th>
                                 <th>Razon</th>
-                                <th>Nit</th>
+                                <th>Nit/CI</th>
                                 <th>Direccion</th>
                                 <th>Telefono</th>
                                 <th>Correo</th>

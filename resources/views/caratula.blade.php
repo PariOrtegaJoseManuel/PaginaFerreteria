@@ -62,8 +62,7 @@
     <div class="services-section py-5 bg-light">
         <div class="container">
             <h2 class="text-center mb-5 position-relative">
-                <span class="badge bg-primary position-absolute start-50 translate-middle-x" style="top: -15px;">Servicios</span>
-                Nuestros Servicios Premium
+                Nuestros Servicios
             </h2>
             <div class="row g-4">
                 <div class="col-md-4">
@@ -76,13 +75,37 @@
                         <a href="#" class="btn btn-outline-primary mt-3">Ver más</a>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="feature-card h-100">
+                        <div class="icon-wrapper mb-4">
+                            <i class="fas fa-hard-hat fa-3x text-primary"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Materiales de Construcción</h3>
+                        <p class="text-muted">Los mejores materiales para construcción y remodelación de calidad garantizada</p>
+                        <a href="#" class="btn btn-outline-primary mt-3">Ver más</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card h-100">
+                        <div class="icon-wrapper mb-4">
+                            <i class="fas fa-cogs fa-3x text-primary"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Maquinaria Especializada</h3>
+                        <p class="text-muted">Equipos y maquinaria de última generación para trabajos profesionales</p>
+                        <a href="#" class="btn btn-outline-primary mt-3">Ver más</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
+    <div class="container">
+        <h2 class="text-center mb-5 position-relative">
+            Novedades
+        </h2>
+    </div>
     <div class="carousel-section">
         <div class="container">
-            <div id="mainCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div id="mainCarousel" class="carousel slide carousel-fade col-md-6 mx-auto" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"></button>
                     <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"></button>
@@ -90,21 +113,27 @@
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="{{ asset('img/herramientas.jpg') }}" class="d-block w-100" alt="Herramientas">
+                        <div class="square-img-container">
+                            <img src="{{ asset('img/herramientas.jpg') }}" class="d-block w-100" alt="Herramientas">
+                        </div>
                         <div class="carousel-caption">
                             <h2>Herramientas Profesionales</h2>
                             <p>Calidad y durabilidad garantizada</p>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ asset('img/materiales.jpg') }}" class="d-block w-100" alt="Materiales">
+                        <div class="square-img-container">
+                            <img src="{{ asset('img/materiales.jpg') }}" class="d-block w-100" alt="Materiales">
+                        </div>
                         <div class="carousel-caption">
                             <h2>Materiales de Construcción</h2>
                             <p>Todo para tu proyecto constructivo</p>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ asset('img/electricidad.jpg') }}" class="d-block w-100" alt="Electricidad">
+                        <div class="square-img-container">
+                            <img src="{{ asset('img/electricidad.jpg') }}" class="d-block w-100" alt="Electricidad">
+                        </div>
                         <div class="carousel-caption">
                             <h2>Material Eléctrico</h2>
                             <p>Soluciones eléctricas completas</p>
@@ -120,6 +149,24 @@
             </div>
         </div>
     </div>
+
+    <style>
+        .square-img-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* Esto hace que el contenedor sea cuadrado */
+            overflow: hidden;
+        }
+
+        .square-img-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Esto asegura que la imagen cubra todo el espacio sin deformarse */
+        }
+    </style>
 
     <footer class="footer-section" id="contacto">
         <div class="container">

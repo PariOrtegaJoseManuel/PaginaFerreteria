@@ -15,6 +15,10 @@
                     <div class="alert alert-danger" role="alert">{{session("error")}}</div>
                 @endif
                 <div class="table-responsive">
+                    <h3>Cliente: {{$venta->relCliente->razon}}</h3>
+                    <h3>Fecha: {{$venta->fecha}}</h3>
+                    <h3>Usuario: {{$venta->relUser->name}}</h3>
+                    <h3>Id Venta: {{$venta->id}}</h3>
                     <table class="table table-hover table-striped-columns table table-bordered border-light">
                         <thead class="text-center table-light">
                         <tr class="align-middle">
@@ -26,7 +30,7 @@
                             <th>Fecha de Pago</th>
                             <th>Metodo</th>
                             <th>
-                                <a href="{{route("entregas.create")}}" class="btn btn-primary">Nuevo</a>
+                                <a href="{{route("entregas.createEntrega", $venta->id)}}" class="btn btn-primary">Nuevo</a>
                             </th>
                         </tr>
                         </thead>
@@ -41,22 +45,22 @@
                                 <td class="text-end">{{$entrega->fecha_pago}}</td>
                                 <td class="text-end">{{$entrega->relMetodoPago->metodo}}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('entregas.edit', $entrega) }}" class="btn btn-primary">
+                                    <a href="{{ route('entregas.editEntrega', ['entrega' => $entrega, 'ventaId' => $venta->id]) }}" class="btn btn-primary">
                                         Editar
                                     </a>
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal{{ $entrega->id }}">
+                                        data-bs-target="#exampleModal{{ $entrega->id , $venta->id }}">
                                         Eliminar
                                     </button>
 
                                 </td>
                             </tr>
-                            <div class="modal fade" id="exampleModal{{ $entrega->id }}" tabindex="-1"
+                            <div class="modal fade" id="exampleModal{{ $entrega->id , $venta->id }}" tabindex="-1"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header bg-danger">
-                                            <h5 class="modal-title" id="exampleModalLabel">Eliminar Articulo</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Eliminar Entrega</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
@@ -66,7 +70,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary"
                                                 data-bs-dismiss="modal">Cerrar</button>
-                                            <form action="{{ route('entregas.destroy', $entrega) }}" method="post">
+                                            <form action="{{ route('entregas.destroyEntrega', [$entrega->id, $venta->id]) }}" method="post">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger">Eliminar</button>

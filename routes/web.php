@@ -18,6 +18,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("detalles/createVenta/{ventas_id}", "App\Http\Controllers\DetalleController@createVenta")->name("detalles.createVenta");
     Route::post("detalles/createVenta/{ventas_id}", "App\Http\Controllers\DetalleController@storeVentaDetalle")->name("detalles.storeVenta");
     Route::delete("detalles/{detalle}/{venta}/cantidad", "App\Http\Controllers\DetalleController@destroyVenta")->name("detalles.destroyVenta");
+
+    Route::get("entregas/{entrega}/venta", "App\Http\Controllers\EntregaController@indexVenta")->name("entregas.indexVenta");
+    Route::get("entregas/createEntrega/{ventas_id}", "App\Http\Controllers\EntregaController@createEntrega")->name("entregas.createEntrega");
+    Route::post("entregas/createEntrega/{ventas_id}", "App\Http\Controllers\EntregaController@storeEntrega")->name("entregas.storeEntrega");
+    Route::delete("entregas/{entrega}/{ventaId}", "App\Http\Controllers\EntregaController@destroyEntrega")->name("entregas.destroyEntrega");
+    Route::get("entregas/{entrega}/{ventaId}/edit", "App\Http\Controllers\EntregaController@editEntrega")->name("entregas.editEntrega");
+    Route::put("entregas/{entrega}/{ventaId}/update", "App\Http\Controllers\EntregaController@updateEntrega")->name("entregas.updateEntrega");
+
     Route::get("users/{user}/password", "App\Http\Controllers\UserController@editpassword")->name("users.editpassword");
     Route::post("users/{user}/password", "App\Http\Controllers\UserController@updatepassword")->name("users.updatepassword");
     Route::get('ventas/reporteDiario', 'App\Http\Controllers\VentaController@reporteDiario')->name('ventas.reporteDiario');

@@ -1,3 +1,7 @@
+@extends("layouts.app")
+
+@section("content")
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -123,13 +127,8 @@
     <!-- Footer -->
     <footer>
         <p>&copy; {{ date('Y') }} Ferretería "El Esmeril". Todos los derechos reservados.</p>
-        <p>
-            <a href="#">Términos y condiciones</a> | <a href="#">Política de privacidad</a>
-        </p>
     </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 
-
+@endsection

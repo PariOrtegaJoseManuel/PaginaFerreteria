@@ -1,46 +1,56 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                Nuevo Rol
+    <div class="container py-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white py-3">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-plus-circle me-2"></i>
+                    <h1 class="h3 mb-0">Nuevo Rol</h1>
+                </div>
             </div>
             @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <ul class="mb-0">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-            <div class="card-body">
+            <div class="card-body p-4">
                 <form action="{{ route('roles.store') }}" method="POST">
                     @csrf
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nombre</label>
+                    <div class="mb-4">
+                        <label for="name" class="form-label fw-bold">Nombre</label>
                         <input type="text" name="name" id="name" value="{{ old('name') }}"
-                            class="form-control">
+                            class="form-control form-control-lg shadow-sm" placeholder="Ingrese el nombre del rol">
                     </div>
-                    <div class="mb-3">
-                        <div class="row">
+                    <div class="mb-4">
+                        <label class="form-label fw-bold mb-3">Permisos</label>
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
                             @foreach ($permissions as $permission)
-                                <div class="col-md-3">
-                                    <div class="form-check">
-                                        <label for="{{ $permission->id }} " class="form-check-label">{{ $permission->name }}</label>
-                                        <input type="checkbox" class="form-check-input" name="permissions[]" value="{{$permission->name}}"></input>
+                                <div class="col">
+                                    <div class="form-check custom-checkbox">
+                                        <input type="checkbox" class="form-check-input shadow-sm" id="permission_{{ $permission->id }}"
+                                            name="permissions[]" value="{{$permission->name}}">
+                                        <label class="form-check-label" for="permission_{{ $permission->id }}">
+                                            {{ $permission->name }}
+                                        </label>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
                     </div>
-                    <div class="text-center">
-
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                        <a href="{{ route('roles.index') }}" class="btn btn-danger">Cancelar</a>
-
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="submit" class="btn btn-primary btn-lg px-4 shadow-sm">
+                            <i class="fas fa-save me-2"></i>Guardar
+                        </button>
+                        <a href="{{ route('roles.index') }}" class="btn btn-danger btn-lg px-4 shadow-sm">
+                            <i class="fas fa-times me-2"></i>Cancelar
+                        </a>
                     </div>
                 </form>
             </div>

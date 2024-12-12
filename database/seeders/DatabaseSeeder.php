@@ -144,7 +144,7 @@ class DatabaseSeeder extends Seeder
             "descripcion" => "Clavos (caja)",
             "cantidad" => 100,
             "precio_unitario" => 3,
-            "foto" => "clavos.png",
+            "foto" => "clavos.jpeg",
             "unidades_id" => 1,
             "categorias_id" => 2,
         ]);
@@ -160,7 +160,7 @@ class DatabaseSeeder extends Seeder
             "descripcion" => "Taladro Eléctrico",
             "cantidad" => 8,
             "precio_unitario" => 75,
-            "foto" => "taladro.png",
+            "foto" => "taladro.jpeg",
             "unidades_id" => 1,
             "categorias_id" => 1,
         ]);

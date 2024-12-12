@@ -11,8 +11,8 @@ class EncargoController extends Controller
     public function __construct()
     {
         $this->middleware('can:encargos.index')->only('index');
-        $this->middleware('can:encargos.create')->only('create','store');
-        $this->middleware('can:encargos.edit')->only('edit','update');
+        $this->middleware('can:encargos.create')->only('create', 'store');
+        $this->middleware('can:encargos.edit')->only('edit', 'update');
         $this->middleware('can:encargos.destroy')->only('destroy');
     }
     public function validarForm(Request $request)
@@ -27,6 +27,7 @@ class EncargoController extends Controller
             'fecha_encargo' => 'required|date|before_or_equal:fecha_entrega',
             // La fecha de entrega debe ser igual o posterior a la fecha del encargo
             'fecha_entrega' => 'required|date|after_or_equal:fecha_encargo',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
     }
     /**
@@ -61,10 +62,18 @@ class EncargoController extends Controller
             if (is_null($request->observaciones)) {
                 $request->merge(['observaciones' => 'Sin observaciones']);
             }
-        Encargo::create($request->all());
-        return redirect()->route('encargos.index')->with(['mensaje' => 'Encargo creado']);
+            if ($foto = $request->file("foto")) {
+                $input = $request->all();
+                $fotoNombre = $request->descripcion_articulo . "." . $foto->getClientOriginalExtension();
+                $fotoRuta = "img";
+                $foto->move($fotoRuta, $fotoNombre);
+                $input["foto"] = $fotoNombre;
+                Encargo::create($input);
+            } else
+                Encargo::create($request->all());
+            return redirect()->route('encargos.index')->with(['mensaje' => 'Encargo creado']);
         } catch (\Exception $e) {
-            return redirect()->route('encargos.index')->with(['error' => 'Ocurrió un error al crear el encargo: '.$e->getMessage()]);
+            return redirect()->route('encargos.index')->with(['error' => 'Ocurrió un error al crear el encargo: ' . $e->getMessage()]);
         }
     }
 
@@ -82,10 +91,10 @@ class EncargoController extends Controller
         //
         $clientes = Cliente::all();
         try {
-        $encargo = Encargo::findOrFail($id);
-        return view('encargo_edit', ['clientes' => $clientes, 'encargo' => $encargo]);
+            $encargo = Encargo::findOrFail($id);
+            return view('encargo_edit', ['clientes' => $clientes, 'encargo' => $encargo]);
         } catch (\Exception $e) {
-            return redirect()->route('encargos.index')->with(['error' => 'Ocurrió un error al mostrar el encargo: '.$e->getMessage()]);
+            return redirect()->route('encargos.index')->with(['error' => 'Ocurrió un error al mostrar el encargo: ' . $e->getMessage()]);
         }
     }
 
@@ -98,11 +107,22 @@ class EncargoController extends Controller
         //
         $this->validarForm($request);
         try {
-        $encargo = Encargo::findOrFail($id);
-        $encargo->update($request->all());
-        return redirect()->route('encargos.index')->with(['mensaje' => 'Encargo editado']);
+            $encargo = Encargo::findOrFail($id);
+            if ($foto = $request->file("foto")) {
+                $archivoAEliminar = "img/$encargo->foto";
+                if (file_exists($archivoAEliminar))
+                    unlink($archivoAEliminar);
+                $input = $request->all();
+                $fotoNombre = $request->descripcion_articulo . "." . $foto->getClientOriginalExtension();
+                $fotoRuta = "img";
+                $foto->move($fotoRuta, $fotoNombre);
+                $input["foto"] = $fotoNombre;
+                $encargo->update($input);
+            } else
+                $encargo->update($request->all());
+            return redirect()->route('encargos.index')->with(['mensaje' => 'Encargo editado']);
         } catch (\Exception $e) {
-            return redirect()->route('encargos.index')->with(['error' => 'Ocurrió un error al editar el encargo: '.$e->getMessage()]);
+            return redirect()->route('encargos.index')->with(['error' => 'Ocurrió un error al editar el encargo: ' . $e->getMessage()]);
         }
     }
 
@@ -113,15 +133,18 @@ class EncargoController extends Controller
     {
         //
         try {
-        $encargo = Encargo::findOrFail($id);
-        // Verificar si tiene actividades relacionadas
-        if ($encargo->relPago()->count() > 0)
-            return redirect()->route('encargos.index')->with(['error' => 'No se puede eliminar un encargo con pagos relacionados']);
+            $encargo = Encargo::findOrFail($id);
+            // Verificar si tiene actividades relacionadas
+            if ($encargo->relPago()->count() > 0)
+                return redirect()->route('encargos.index')->with(['error' => 'No se puede eliminar un encargo con pagos relacionados']);
+            $archivoAEliminar = "img/$encargo->foto";
+            if (file_exists($archivoAEliminar))
+                unlink($archivoAEliminar);
 
-        $encargo->delete();
-        return redirect()->route('encargos.index')->with(['mensaje' => 'Encargo eliminado']);
+            $encargo->delete();
+            return redirect()->route('encargos.index')->with(['mensaje' => 'Encargo eliminado']);
         } catch (\Exception $e) {
-            return redirect()->route('encargos.index')->with(['error' => 'Ocurrió un error al eliminar el encargo: '.$e->getMessage()]);
+            return redirect()->route('encargos.index')->with(['error' => 'Ocurrió un error al eliminar el encargo: ' . $e->getMessage()]);
         }
     }
 }

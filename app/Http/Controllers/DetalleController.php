@@ -123,8 +123,10 @@ class DetalleController extends Controller
     {
         $ventaId = $ventaId;
         $venta = Venta::findOrFail($ventaId);
+        $metodo_pagos = MetodoPago::all();
+        $articulos = Articulo::all();
         $detalles = $venta->relDetalle; // Asumiendo que tienes una relación definida
-        return view('detalleVenta_index', compact('venta', 'detalles'));
+        return view('detalleVenta_index', compact('venta', 'detalles', 'metodo_pagos', 'articulos'));
     }
     public function editVenta(string $id, string $ventaId)
     {

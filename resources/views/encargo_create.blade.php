@@ -17,7 +17,7 @@
                 </div>
             @endif
             <div class="card-body">
-                <form action="{{ route('encargos.store') }}" method="POST">
+                <form action="{{ route('encargos.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="clientes_id" class="form-label">Cliente</label>
@@ -64,6 +64,10 @@
                         <label for="fecha_entrega" class="form-label">Fecha de Entrega</label>
                         <input type="date" name="fecha_entrega" id="fecha_entrega" value="{{ old('fecha_entrega') }}"
                             class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="foto" class="form-label">Foto</label>
+                        <input type="file" id="foto" name="foto" class="form-control">
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Guardar</button>

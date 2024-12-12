@@ -1,123 +1,156 @@
 @extends("layouts.app")
 
 @section("content")
-
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h1>Ventas</h1>
+    <div class="container py-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1 class="h3 mb-0">
+                        <i class="fas fa-file-invoice-dollar me-2"></i>Ventas
+                    </h1>
+                </div>
             </div>
             <div class="card-body">
-                <div class="container-fluid">
+                <div class="container-fluid mb-4">
                     <form action="{{ route('ventas.index') }}" method="GET">
-                        <div class="row">
-                            <div class="container col-4">
-                                <label for="razon" class="form-label">Razon Social:</label>
-                                <input type="text" list="razon" class="form-control" placeholder="Ingrese la razon social" name="razon" value="{{ old('razon') }}">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label for="razon" class="form-label fw-bold">
+                                    <i class="fas fa-building me-1"></i>Razón Social:
+                                </label>
+                                <input type="text" list="razon" class="form-control shadow-sm" placeholder="Ingrese la razón social" name="razon" value="{{ old('razon') }}">
                                 <datalist id="razon">
                                     @foreach ($clientes as $cliente)
                                     <option value="{{ $cliente->razon }}"></option>
                                     @endforeach
-                                  </datalist>
-                                </div>
-                            <div class="container col-3">
-                                <label for="fecha" class="form-label">Fecha:</label>
-                                <input type="date" class="form-control" name="fecha" value="{{ old('fecha') }}">
+                                </datalist>
                             </div>
-                            <div class="container col-1 align-self-end">
-                                <button type="submit" class="btn btn-primary">Buscar</button>
+                            <div class="col-md-3">
+                                <label for="fecha" class="form-label fw-bold">
+                                    <i class="fas fa-calendar-alt me-1"></i>Fecha:
+                                </label>
+                                <input type="date" class="form-control shadow-sm" name="fecha" value="{{ old('fecha') }}">
+                            </div>
+                            <div class="col-md-2 align-self-end">
+                                <button type="submit" class="btn btn-primary w-100 shadow-sm">
+                                    <i class="fas fa-search me-1"></i>Buscar
+                                </button>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="container">
+
+                <div class="container mb-4">
                     @if(session("mensaje"))
-                        <div class="alert alert-success" role="alert">{{session("mensaje")}}</div>
+                        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>{{session("mensaje")}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     @endif
                     @if(session("error"))
-                        <div class="alert alert-danger" role="alert">{{session("error")}}</div>
+                        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+                            <i class="fas fa-exclamation-circle me-2"></i>{{session("error")}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     @endif
                 </div>
+
                 <div class="table-responsive">
-                    <table class="table table-hover table-striped-columns table table-bordered border-light">
-                        <thead class="text-center table-light">
-                            <tr class="align-middle">
-                                <th>Id</th>
+                    <table class="table table-hover align-middle shadow-sm">
+                        <thead class="bg-light text-center">
+                            <tr>
+                                <th>ID</th>
                                 <th>Fecha</th>
                                 <th>Cliente</th>
                                 <th>Vendedor</th>
                                 <th>
-                                    <a href="{{route("ventas.create")}}" class="btn btn-primary">Nuevo</a>
+                                    <a href="{{route("ventas.create")}}" class="btn btn-primary shadow-sm">
+                                        <i class="fas fa-plus me-1"></i>Nueva Venta
+                                    </a>
                                 </th>
-                        </tr>
+                            </tr>
                         </thead>
                         <tbody class="table-group-divider">
-                        @foreach($ventas as $venta)
-                            <tr class="align-middle">
-                                <td class="text-end">{{$venta->id}}</td>
-                                <td class="text-start">{{$venta->fecha}}</td>
-                                <td class="text-start">{{$venta->razon}}</td>
-                                <td class="text-start">{{$venta->relUser->name}}</td>
-                                <td class="text-center">
-                                    <a href="{{ route('detalles.indexVenta', ['detalle' => $venta->id]) }}" class="btn btn-success">
-                                        Detalles
-                                    </a>
-                                    <a href="{{ route('entregas.indexVenta', ['entrega' => $venta->id]) }}" class="btn btn-success">
-                                        Entregas
-                                    </a>
-                                    <a href="{{ route('detalles.notaVenta', $venta) }}" class="btn btn-warning">
-                                        Nota de Venta
-                                    </a>
-                                    <a href="{{ route('ventas.edit', $venta) }}" class="btn btn-primary">
-                                        Editar
-                                    </a>
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal{{ $venta->id }}">
-                                        Eliminar
-                                    </button>
+                            @foreach($ventas as $venta)
+                                <tr>
+                                    <td class="text-center fw-bold">{{$venta->id}}</td>
+                                    <td>{{$venta->fecha}}</td>
+                                    <td>{{$venta->razon}}</td>
+                                    <td>{{$venta->relUser->name}}</td>
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group">
+                                            <a href="{{ route('detalles.indexVenta', ['detalle' => $venta->id]) }}" class="btn btn-outline-success shadow-sm">
+                                                <i class="fas fa-list me-1"></i>Detalles
+                                            </a>
+                                            <a href="{{ route('entregas.indexVenta', ['entrega' => $venta->id]) }}" class="btn btn-outline-secondary shadow-sm">
+                                                <i class="fas fa-truck me-1"></i>Entregas
+                                            </a>
+                                            <a href="{{ route('detalles.notaVenta', $venta) }}" class="btn btn-outline-warning shadow-sm">
+                                                <i class="fas fa-file-alt me-1"></i>Nota
+                                            </a>
+                                            <a href="{{ route('ventas.edit', $venta) }}" class="btn btn-outline-primary shadow-sm">
+                                                <i class="fas fa-edit me-1"></i>Editar
+                                            </a>
+                                            <button type="button" class="btn btn-outline-danger shadow-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $venta->id }}">
+                                                <i class="fas fa-trash-alt me-1"></i>Eliminar
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
 
-                                </td>
-                            </tr>
-                            <div class="modal fade" id="exampleModal{{ $venta->id }}" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header bg-danger">
-                                            <h5 class="modal-title" id="exampleModalLabel">Eliminar Articulo</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Desea eliminar la venta {{ $venta->descripcion }}?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary"
-                                                data-bs-dismiss="modal">Cerrar</button>
-                                            <form action="{{ route('ventas.destroy', $venta) }}" method="post">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                                            </form>
+                                <!-- Modal Eliminar -->
+                                <div class="modal fade" id="exampleModal{{ $venta->id }}" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-danger text-white">
+                                                <h5 class="modal-title">
+                                                    <i class="fas fa-trash-alt me-2"></i>Eliminar Venta
+                                                </h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body text-center p-4">
+                                                <i class="fas fa-exclamation-triangle text-warning fa-3x mb-3"></i>
+                                                <h5 class="mb-3">¿Está seguro que desea eliminar esta venta?</h5>
+                                                <p class="text-muted">Esta acción no se puede deshacer</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    <i class="fas fa-times me-1"></i>Cancelar
+                                                </button>
+                                                <form action="{{ route('ventas.destroy', $venta) }}" method="post">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger">
+                                                        <i class="fas fa-trash-alt me-1"></i>Eliminar
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
                         </tbody>
                     </table>
-                    <div class="container">
-                        <div class="row">
-                            <form action="{{ route('ventas.reporteDiario') }}" method="GET" class="row">
-                                <div class="col-6">
-                                    <label for="fecha_reporte" class="form-label">Fecha para reporte:</label>
-                                </div>
-                                <div class="col-4">
-                                    <input type="date" id="fecha_reporte" name="fecha" class="form-control" required>
-                                </div>
-                                <div class="col-2">
-                                    <button type="submit" class="btn btn-warning">Reporte Diario</button>
-                                </div>
-                            </form>
+
+                    <div class="container mt-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <form action="{{ route('ventas.reporteDiario') }}" method="GET" class="row g-3 align-items-end">
+                                    <div class="col-md-6">
+                                        <label for="fecha_reporte" class="form-label fw-bold">
+                                            <i class="fas fa-calendar-day me-1"></i>Fecha para reporte:
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="date" id="fecha_reporte" name="fecha" class="form-control shadow-sm" required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-warning w-100 shadow-sm">
+                                            <i class="fas fa-file-download me-1"></i>Reporte
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

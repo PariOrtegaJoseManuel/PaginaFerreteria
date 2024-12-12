@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('estado',['pendiente','en_proceso','completado','cancelado']);
             $table->string('observaciones',200);
             $table->date('fecha_entrega');
+            $table->string('foto',200);
             $table->timestamps();
         });
     }

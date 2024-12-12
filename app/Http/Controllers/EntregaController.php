@@ -146,13 +146,14 @@ class EntregaController extends Controller
 
             // Obtener las entregas relacionadas con esta venta
             $entregas = Entrega::where('ventas_id', $ventaId)->get();
-
+            $metodo_pagos = MetodoPago::all();
+            $encargos = Encargo::all();
             // Si no hay entregas, inicializar como array vacío para evitar el error
             if ($entregas->isEmpty()) {
                 $entregas = collect([]);
             }
 
-            return view('entregaVenta_index', ['venta' => $venta, 'entregas' => $entregas]);
+            return view('entregaVenta_index', ['venta' => $venta, 'entregas' => $entregas, 'metodo_pagos' => $metodo_pagos, 'encargos' => $encargos]);
         } catch (\Exception $e) {
             return redirect()->route('ventas.index')
                 ->with(['error' => 'Error al cargar las entregas: ' . $e->getMessage()]);

@@ -1,134 +1,237 @@
 @extends("layouts.app")
 
 @section("content")
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ferretería El Esmeril</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .header-title {
-            background-color: #003366;
-            color: white;
-            padding: 40px 20px;
-            margin-bottom: 10px; /* Espaciado reducido para dar más margen al logo */
-            text-align: center;
-            border-bottom: 5px solid #f8c471;
-        }
-
-        .header-title h1 {
-            font-size: 3rem;
-            font-weight: bold;
-        }
-
-        .logo-container {
-            text-align: center;
-            margin: -20px 0 10px 0; /* Elevamos la posición del logo */
-        }
-
-        .logo-container img {
-            width: 200px; /* Tamaño del logo aumentado */
-            height: auto;
-            object-fit: contain;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .carousel-item img {
-            height: 450px; /* Altura ajustada para más espacio */
-            object-fit: cover;
-            border-radius: 10px;
-        }
-
-        .carousel-caption {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            font-size: 1rem;
-        }
-
-        footer {
-            background-color: #003366;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        footer a {
-            color: #f8c471;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <!-- Encabezado -->
-    <div class="header-title">
-        <h1>Ferretería "El Esmeril"</h1>
-        <p>Tu mejor opción en herramientas y materiales de construcción</p>
-    </div>
-
-    <!-- Logo -->
-    <div class="logo-container">
-        <img src="{{ asset('img/logo.png') }}" alt="Logo Ferretería El Esmeril">
-    </div>
-
-    <!-- Carrusel -->
-    <div class="container">
-        <div id="carouselArticulos" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselArticulos" data-bs-slide-to="0" class="active"></button>
-                <button type="button" data-bs-target="#carouselArticulos" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#carouselArticulos" data-bs-slide-to="2"></button>
-            </div>
-
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="{{ asset('img/herramientas.jpg') }}" class="d-block w-100" alt="Herramientas">
-                    <div class="carousel-caption">
-                        <h5>Herramientas de Calidad</h5>
-                        <p>Encuentra las mejores marcas en herramientas para tus proyectos</p>
-                    </div>
+    <div class="hero-section" style="background-color: blue;">
+        <div class="overlay"></div>
+        <div class="hero-content container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-center text-lg-start">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo Ferretería El Esmeril" class="main-logo animate__animated animate__fadeInLeft">
                 </div>
-                <div class="carousel-item">
-                    <img src="{{ asset('img/materiales.jpg') }}" class="d-block w-100" alt="Materiales">
-                    <div class="carousel-caption">
-                        <h5>Materiales de Construcción</h5>
-                        <p>Todo lo que necesitas para tu obra</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ asset('img/electricidad.jpg') }}" class="d-block w-100" alt="Electricidad">
-                    <div class="carousel-caption">
-                        <h5>Material Eléctrico</h5>
-                        <p>Amplio surtido en material eléctrico y de iluminación</p>
+                <div class="col-lg-6 text-center text-lg-start">
+                    <h1 class="display-3 fw-bold text-white animate__animated animate__fadeInRight">Ferretería "El Esmeril"</h1>
+                    <p class="lead text-white mb-4 animate__animated animate__fadeInRight animate__delay-1s">Tu socio confiable en herramientas y materiales de construcción</p>
+                    <div class="animate__animated animate__fadeInUp animate__delay-2s">
+                        <a href="{{ route('articulos.index') }}" class="btn btn-primary btn-lg me-3">
+                            <i class="fas fa-shopping-cart me-2"></i>Ver Productos
+                        </a>
+                        <a href="#contacto" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-phone me-2"></i>Contáctanos
+                        </a>
                     </div>
                 </div>
             </div>
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselArticulos" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-                <span class="visually-hidden">Anterior</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselArticulos" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-                <span class="visually-hidden">Siguiente</span>
-            </button>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; {{ date('Y') }} Ferretería "El Esmeril". Todos los derechos reservados.</p>
-    </footer>
-</body>
-</html>
+    <div class="stats-section py-5">
+        <div class="container">
+            <div class="row g-4 text-center">
+                <div class="col-md-3">
+                    <div class="stats-card animate__animated animate__fadeIn">
+                        <i class="fas fa-tools fa-3x mb-3 text-primary"></i>
+                        <h2 class="counter">1500+</h2>
+                        <p class="text-muted">Productos</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card animate__animated animate__fadeIn animate__delay-1s">
+                        <i class="fas fa-users fa-3x mb-3 text-primary"></i>
+                        <h2 class="counter">1000+</h2>
+                        <p class="text-muted">Clientes Satisfechos</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card animate__animated animate__fadeIn animate__delay-2s">
+                        <i class="fas fa-truck fa-3x mb-3 text-primary"></i>
+                        <h2 class="counter">500+</h2>
+                        <p class="text-muted">Entregas Mensuales</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card animate__animated animate__fadeIn animate__delay-3s">
+                        <i class="fas fa-star fa-3x mb-3 text-primary"></i>
+                        <h2 class="counter">10+</h2>
+                        <p class="text-muted">Años de Experiencia</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="services-section py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5 position-relative">
+                <span class="badge bg-primary position-absolute start-50 translate-middle-x" style="top: -15px;">Servicios</span>
+                Nuestros Servicios Premium
+            </h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card h-100">
+                        <div class="icon-wrapper mb-4">
+                            <i class="fas fa-tools fa-3x text-primary"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Herramientas Profesionales</h3>
+                        <p class="text-muted">Amplia gama de herramientas de las mejores marcas para todo tipo de proyectos</p>
+                        <a href="#" class="btn btn-outline-primary mt-3">Ver más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="carousel-section">
+        <div class="container">
+            <div id="mainCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{{ asset('img/herramientas.jpg') }}" class="d-block w-100" alt="Herramientas">
+                        <div class="carousel-caption">
+                            <h2>Herramientas Profesionales</h2>
+                            <p>Calidad y durabilidad garantizada</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ asset('img/materiales.jpg') }}" class="d-block w-100" alt="Materiales">
+                        <div class="carousel-caption">
+                            <h2>Materiales de Construcción</h2>
+                            <p>Todo para tu proyecto constructivo</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ asset('img/electricidad.jpg') }}" class="d-block w-100" alt="Electricidad">
+                        <div class="carousel-caption">
+                            <h2>Material Eléctrico</h2>
+                            <p>Soluciones eléctricas completas</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-section" id="contacto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Contacto</h4>
+                    <p><i class="fas fa-phone me-2"></i> +591 12345678</p>
+                    <p><i class="fas fa-envelope me-2"></i> info@elesmeril.com</p>
+                </div>
+                <div class="col-md-4">
+                    <h4>Ubicación</h4>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Av. Principal #123, Santa Cruz</p>
+                </div>
+                <div class="col-md-4">
+                    <h4>Horario</h4>
+                    <p><i class="fas fa-clock me-2"></i> Lunes a Sábado: 8:00 - 18:00</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; {{ date('Y') }} Ferretería "El Esmeril". Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+
+        .hero-section {
+            height: 100vh;
+            background: url('{{ asset('img/hero-bg.jpg') }}') center/cover no-repeat fixed;
+        }
+
+        .overlay {
+            background: linear-gradient(45deg, rgba(0, 51, 102, 0.9), rgba(0, 51, 102, 0.7));
+        }
+
+        .stats-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 123, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .carousel-item img {
+            height: 600px;
+            filter: brightness(0.8);
+        }
+
+        .carousel-caption {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                height: auto;
+                padding: 6rem 0;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.innerText);
+                let count = 0;
+                const speed = 2000 / target;
+
+                const updateCount = () => {
+                    if(count < target) {
+                        count++;
+                        counter.innerText = count + '+';
+                        setTimeout(updateCount, speed);
+                    }
+                };
+
+                updateCount();
+            });
+        });
+    </script>
 @endsection

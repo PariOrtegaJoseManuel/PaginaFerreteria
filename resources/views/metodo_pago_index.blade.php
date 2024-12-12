@@ -15,20 +15,20 @@
                 @endif
                 <div class="text-center">
                     <div class="card text-center">
-                        <div class="row row-cols-4 row-cols-md-4 g-4">
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
                             @foreach ($metodo_pagos as $metodo_pago)
                                 <div class="col">
-                                    <div class="card" style="width: 18rem;">
+                                    <div class="card h-100">
                                         <img class="card-img-top" src="..." alt="Card image cap">
                                         <div class="card-body">
                                             <h5 class="card-title text-center">{{ $metodo_pago->metodo }}</h5>
                                         </div>
                                         <div class="card-body text-center">
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal"
                                                 data-bs-target="#editModal{{ $metodo_pago->id }}">
                                                 Editar
                                             </button>
-                                            <button type="button" class="btn btn-danger " data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal{{ $metodo_pago->id }}">
                                                 Eliminar
                                             </button>

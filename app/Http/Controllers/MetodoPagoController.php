@@ -10,14 +10,15 @@ class MetodoPagoController extends Controller
     public function __construct()
     {
         $this->middleware('can:metodo_pagos.index')->only('index');
-        $this->middleware('can:metodo_pagos.create')->only('create','store');
-        $this->middleware('can:metodo_pagos.edit')->only('edit','update');
+        $this->middleware('can:metodo_pagos.create')->only('create', 'store');
+        $this->middleware('can:metodo_pagos.edit')->only('edit', 'update');
         $this->middleware('can:metodo_pagos.destroy')->only('destroy');
     }
     public function validarForm(Request $request)
     {
         $request->validate([
-            'metodo' => 'required|string|min:2|max:100'
+            'metodo' => 'required|string|min:2|max:100|unique:metodo_pagos,metodo',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
     }
     /**
@@ -47,10 +48,18 @@ class MetodoPagoController extends Controller
         //
         $this->validarForm($request);
         try {
-        MetodoPago::create($request->all());
-        return redirect()->route('metodo_pagos.index')->with(['mensaje' => 'Metodo de pago creado']);
+            if ($foto = $request->file("foto")) {
+                $input = $request->all();
+                $fotoNombre = $request->metodo . "." . $foto->getClientOriginalExtension();
+                $fotoRuta = "img";
+                $foto->move($fotoRuta, $fotoNombre);
+                $input["foto"] = $fotoNombre;
+                MetodoPago::create($input);
+            } else
+                MetodoPago::create($request->all());
+            return redirect()->route('metodo_pagos.index')->with(['mensaje' => 'Metodo de pago creado']);
         } catch (\Exception $e) {
-            return redirect()->route('metodo_pagos.index')->with(['error' => 'Ocurrió un error al crear el metodo de pago: '.$e->getMessage()]);
+            return redirect()->route('metodo_pagos.index')->with(['error' => 'Ocurrió un error al crear el metodo de pago: ' . $e->getMessage()]);
         }
     }
 
@@ -69,10 +78,10 @@ class MetodoPagoController extends Controller
     {
         //
         try {
-        $metodo_pago = MetodoPago::findOrFail($id);
-        return view('metodo_pago_edit', ['metodo_pago' => $metodo_pago]);
+            $metodo_pago = MetodoPago::findOrFail($id);
+            return view('metodo_pago_edit', ['metodo_pago' => $metodo_pago]);
         } catch (\Exception $e) {
-            return redirect()->route('metodo_pagos.index')->with(['error' => 'Ocurrió un error al mostrar el metodo de pago: '.$e->getMessage()]);
+            return redirect()->route('metodo_pagos.index')->with(['error' => 'Ocurrió un error al mostrar el metodo de pago: ' . $e->getMessage()]);
         }
     }
 
@@ -84,11 +93,22 @@ class MetodoPagoController extends Controller
         //
         $this->validarForm($request);
         try {
-        $metodo_pago = MetodoPago::findOrFail($id);
-        $metodo_pago->update($request->all());
-        return redirect()->route('metodo_pagos.index')->with(['mensaje' => 'Metodo de pago editado']);
+            $metodo_pago = MetodoPago::find($id);
+            if ($foto = $request->file("foto")) {
+                $archivoAEliminar = "img/$metodo_pago->foto";
+                if (file_exists($archivoAEliminar))
+                    unlink($archivoAEliminar);
+                $input = $request->all();
+                $fotoNombre = $request->metodo . "." . $foto->getClientOriginalExtension();
+                $fotoRuta = "img";
+                $foto->move($fotoRuta, $fotoNombre);
+                $input["foto"] = $fotoNombre;
+                $metodo_pago->update($input);
+            } else
+                $metodo_pago->update($request->all());
+            return redirect()->route('metodo_pagos.index')->with(['mensaje' => 'Metodo de pago editado']);
         } catch (\Exception $e) {
-            return redirect()->route('metodo_pagos.index')->with(['error' => 'Ocurrió un error al editar el metodo de pago: '.$e->getMessage()]);
+            return redirect()->route('metodo_pagos.index')->with(['error' => 'Ocurrió un error al editar el metodo de pago: ' . $e->getMessage()]);
         }
     }
 
@@ -98,16 +118,19 @@ class MetodoPagoController extends Controller
     public function destroy(string $id)
     {
         try {
-        $metodo_pago = MetodoPago::findOrFail($id);
-         // Verificar si tiene actividades relacionadas
-        if ($metodo_pago->RelPagos()->count() > 0)
-            return redirect()->route('metodo_pagos.index')->with(['error' => 'No se puede eliminar un metodo de pago con pagos relacionados']);
-        if ($metodo_pago->RelDetalle()->count() > 0)
-            return redirect()->route('metodo_pagos.index')->with(['error' => 'No se puede eliminar un metodo de pago con detalles relacionados']);
-        $metodo_pago->delete();
-        return redirect()->route('metodo_pagos.index')->with(['mensaje' => 'Metodo de pago eliminado']);
+            $metodo_pago = MetodoPago::findOrFail($id);
+            // Verificar si tiene actividades relacionadas
+            if ($metodo_pago->relEntregas()->count() > 0)
+                return redirect()->route('metodo_pagos.index')->with(['error' => 'No se puede eliminar un metodo de pago con entregas relacionadas']);
+            if ($metodo_pago->relDetalle()->count() > 0)
+                return redirect()->route('metodo_pagos.index')->with(['error' => 'No se puede eliminar un metodo de pago con detalles relacionados']);
+            $archivoAEliminar = "img/$metodo_pago->foto";
+            if (file_exists($archivoAEliminar))
+                unlink($archivoAEliminar);
+            $metodo_pago->delete();
+            return redirect()->route('metodo_pagos.index')->with(['mensaje' => 'Metodo de pago eliminado']);
         } catch (\Exception $e) {
-            return redirect()->route('metodo_pagos.index')->with(['error' => 'Ocurrió un error al eliminar el metodo de pago: '.$e->getMessage()]);
+            return redirect()->route('metodo_pagos.index')->with(['error' => 'Ocurrió un error al eliminar el metodo de pago: ' . $e->getMessage()]);
         }
     }
 }

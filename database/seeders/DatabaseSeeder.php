@@ -105,21 +105,21 @@ class DatabaseSeeder extends Seeder
             "ventas.index","ventas.create","ventas.edit","ventas.destroy",
         ]);
 
-        Unidad::create(['descripcion' => 'Pieza']);
-        Unidad::create(['descripcion' => 'Bidon']);
-        Unidad::create(['descripcion' => 'Kilogramo']);
-        Unidad::create(['descripcion' => 'Litro']);
-        Unidad::create(['descripcion' => 'Otro']);
+        Unidad::create(['descripcion' => 'Pieza', 'foto' => 'pieza.png']);
+        Unidad::create(['descripcion' => 'Bidon', 'foto' => 'bidon.png']);
+        Unidad::create(['descripcion' => 'Kilogramo', 'foto' => 'kilogramo.png']);
+        Unidad::create(['descripcion' => 'Litro', 'foto' => 'litro.png']);
+        Unidad::create(['descripcion' => 'Otro', 'foto' => 'otro.png']);
 
         MetodoPago::create(['metodo' => 'Efectivo', 'foto' => 'efectivo.png']);
         MetodoPago::create(['metodo' => 'Tarjeta', 'foto' => 'tarjeta.jpg']);
         MetodoPago::create(['metodo' => 'Transferencia', 'foto' => 'transferencia.jpg']);
         MetodoPago::create(['metodo' => 'Cheque', 'foto' => 'cheque.jpg']);
 
-        Categoria::create(['nombre' => 'Herramientas']);
-        Categoria::create(['nombre' => 'Maquinaria']);
-        Categoria::create(['nombre' => 'Materiales']);
-        Categoria::create(['nombre' => 'Otros']);
+        Categoria::create(['nombre' => 'Herramientas', 'foto' => 'herramientas.jpg']);
+        Categoria::create(['nombre' => 'Maquinaria', 'foto' => 'maquinaria.jpg']);
+        Categoria::create(['nombre' => 'Materiales', 'foto' => 'materiales.jpg']);
+        Categoria::create(['nombre' => 'Otros', 'foto' => 'otros.jpg']);
 
         Cliente::create(["razon" => "Empresa A","nit" => 123456789, "telefono" => "123456789",
         "email" => "empresaA@example.com", "direccion" => "direccion 1"]);

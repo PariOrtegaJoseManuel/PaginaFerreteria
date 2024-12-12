@@ -10,14 +10,15 @@ class UnidadController extends Controller
     public function __construct()
     {
         $this->middleware('can:unidades.index')->only('index');
-        $this->middleware('can:unidades.create')->only('create','store');
-        $this->middleware('can:unidades.edit')->only('edit','update');
+        $this->middleware('can:unidades.create')->only('create', 'store');
+        $this->middleware('can:unidades.edit')->only('edit', 'update');
         $this->middleware('can:unidades.destroy')->only('destroy');
     }
     public function validarForm(Request $request)
     {
         $request->validate([
-            'descripcion' => 'required|string|min:4|max:100'
+            'descripcion' => 'required|string|min:4|max:100',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
     }
     /**
@@ -47,10 +48,18 @@ class UnidadController extends Controller
         //
         $this->validarForm($request);
         try {
-        Unidad::create($request->all());
-        return redirect()->route('unidades.index')->with(['mensaje' => 'Unidad creada']);
+            if ($foto = $request->file("foto")) {
+                $input = $request->all();
+                $fotoNombre = $request->descripcion . "." . $foto->getClientOriginalExtension();
+                $fotoRuta = "img";
+                $foto->move($fotoRuta, $fotoNombre);
+                $input["foto"] = $fotoNombre;
+                Unidad::create($input);
+            } else
+                Unidad::create($request->all());
+            return redirect()->route('unidades.index')->with(['mensaje' => 'Unidad creada']);
         } catch (\Exception $e) {
-            return redirect()->route('unidades.index')->with(['error' => 'Ocurrió un error al crear la unidad: '.$e->getMessage()]);
+            return redirect()->route('unidades.index')->with(['error' => 'Ocurrió un error al crear la unidad: ' . $e->getMessage()]);
         }
     }
 
@@ -69,10 +78,10 @@ class UnidadController extends Controller
     {
         //
         try {
-        $unidad = Unidad::findOrFail($id);
-        return view('unidad_edit', ['unidad' => $unidad]);
+            $unidad = Unidad::findOrFail($id);
+            return view('unidad_edit', ['unidad' => $unidad]);
         } catch (\Exception $e) {
-            return redirect()->route('unidades.index')->with(['error' => 'Ocurrió un error al mostrar la unidad: '.$e->getMessage()]);
+            return redirect()->route('unidades.index')->with(['error' => 'Ocurrió un error al mostrar la unidad: ' . $e->getMessage()]);
         }
     }
 
@@ -84,11 +93,22 @@ class UnidadController extends Controller
         //
         $this->validarForm($request);
         try {
-        $unidad = Unidad::findOrFail($id);
-        $unidad->update($request->all());
-        return redirect()->route('unidades.index')->with(['mensaje' => 'Unidad editada']);
+            $unidad = Unidad::findOrFail($id);
+            if ($foto = $request->file("foto")) {
+                $archivoAEliminar = "img/$unidad->foto";
+                if (file_exists($archivoAEliminar))
+                    unlink($archivoAEliminar);
+                $input = $request->all();
+                $fotoNombre = $request->descripcion . "." . $foto->getClientOriginalExtension();
+                $fotoRuta = "img";
+                $foto->move($fotoRuta, $fotoNombre);
+                $input["foto"] = $fotoNombre;
+                $unidad->update($input);
+            } else
+                $unidad->update($request->all());
+            return redirect()->route('unidades.index')->with(['mensaje' => 'Unidad editada']);
         } catch (\Exception $e) {
-            return redirect()->route('unidades.index')->with(['error' => 'Ocurrió un error al editar la Unidad: '.$e->getMessage()]);
+            return redirect()->route('unidades.index')->with(['error' => 'Ocurrió un error al editar la Unidad: ' . $e->getMessage()]);
         }
     }
 
@@ -98,15 +118,17 @@ class UnidadController extends Controller
     public function destroy(string $id)
     {
         try {
-        $unidad = Unidad::findOrFail($id);
-         // Verificar si tiene actividades relacionadas
-        if ($unidad->RelArticulo()->count() > 0)
-            return redirect()->route('unidades.index')->with(['error' => 'No se puede eliminar una unidad con articulos relacionados']);
-
-        $unidad->delete();
-        return redirect()->route('unidades.index')->with(['mensaje' => 'Unidad eliminada']);
+            $unidad = Unidad::findOrFail($id);
+            // Verificar si tiene actividades relacionadas
+            if ($unidad->RelArticulo()->count() > 0)
+                return redirect()->route('unidades.index')->with(['error' => 'No se puede eliminar una unidad con articulos relacionados']);
+            $archivoAEliminar = "img/$unidad->foto";
+            if (file_exists($archivoAEliminar))
+                unlink($archivoAEliminar);
+            $unidad->delete();
+            return redirect()->route('unidades.index')->with(['mensaje' => 'Unidad eliminada']);
         } catch (\Exception $e) {
-            return redirect()->route('unidades.index')->with(['error' => 'Ocurrió un error al eliminar la unidad: '.$e->getMessage()]);
+            return redirect()->route('unidades.index')->with(['error' => 'Ocurrió un error al eliminar la unidad: ' . $e->getMessage()]);
         }
     }
 }

@@ -10,14 +10,15 @@ class CategoriaController extends Controller
     public function __construct()
     {
         $this->middleware('can:categorias.index')->only('index');
-        $this->middleware('can:categorias.create')->only('create','store');
-        $this->middleware('can:categorias.edit')->only('edit','update');
+        $this->middleware('can:categorias.create')->only('create', 'store');
+        $this->middleware('can:categorias.edit')->only('edit', 'update');
         $this->middleware('can:categorias.destroy')->only('destroy');
     }
     public function validarForm(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string|min:4|max:100'
+            'nombre' => 'required|string|min:4|max:100',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
     }
     /**
@@ -47,10 +48,18 @@ class CategoriaController extends Controller
         //
         $this->validarForm($request);
         try {
-        Categoria::create($request->all());
-        return redirect()->route('categorias.index')->with(['mensaje' => 'Categoria creada']);
+            if ($foto = $request->file("foto")) {
+                $input = $request->all();
+                $fotoNombre = $request->nombre . "." . $foto->getClientOriginalExtension();
+                $fotoRuta = "img";
+                $foto->move($fotoRuta, $fotoNombre);
+                $input["foto"] = $fotoNombre;
+                Categoria::create($input);
+            } else
+                Categoria::create($request->all());
+            return redirect()->route('categorias.index')->with(['mensaje' => 'Categoria creada']);
         } catch (\Exception $e) {
-            return redirect()->route('categorias.index')->with(['error' => 'Ocurrió un error al crear la categoria: '.$e->getMessage()]);
+            return redirect()->route('categorias.index')->with(['error' => 'Ocurrió un error al crear la categoria: ' . $e->getMessage()]);
         }
     }
 
@@ -69,10 +78,10 @@ class CategoriaController extends Controller
     {
         //
         try {
-        $categoria = Categoria::findOrFail($id);
-        return view('categoria_edit', ['categoria' => $categoria]);
+            $categoria = Categoria::findOrFail($id);
+            return view('categoria_edit', ['categoria' => $categoria]);
         } catch (\Exception $e) {
-            return redirect()->route('categorias.index')->with(['error' => 'Ocurrió un error al mostrar la categoria: '.$e->getMessage()]);
+            return redirect()->route('categorias.index')->with(['error' => 'Ocurrió un error al mostrar la categoria: ' . $e->getMessage()]);
         }
     }
 
@@ -84,11 +93,22 @@ class CategoriaController extends Controller
         //
         $this->validarForm($request);
         try {
-        $categoria = Categoria::findOrFail($id);
-        $categoria->update($request->all());
-        return redirect()->route('categorias.index')->with(['mensaje' => 'Categoria editada']);
+            $categoria = Categoria::findOrFail($id);
+            if ($foto = $request->file("foto")) {
+                $archivoAEliminar = "img/$categoria->foto";
+                if (file_exists($archivoAEliminar))
+                    unlink($archivoAEliminar);
+                $input = $request->all();
+                $fotoNombre = $request->nombre . "." . $foto->getClientOriginalExtension();
+                $fotoRuta = "img";
+                $foto->move($fotoRuta, $fotoNombre);
+                $input["foto"] = $fotoNombre;
+                $categoria->update($input);
+            } else
+                $categoria->update($request->all());
+            return redirect()->route('categorias.index')->with(['mensaje' => 'Categoria editada']);
         } catch (\Exception $e) {
-            return redirect()->route('categorias.index')->with(['error' => 'Ocurrió un error al editar la Categoria: '.$e->getMessage()]);
+            return redirect()->route('categorias.index')->with(['error' => 'Ocurrió un error al editar la Categoria: ' . $e->getMessage()]);
         }
     }
 
@@ -98,15 +118,18 @@ class CategoriaController extends Controller
     public function destroy(string $id)
     {
         try {
-        $categoria = Categoria::findOrFail($id);
-         // Verificar si tiene actividades relacionadas
-        if ($categoria->RelArticulo()->count() > 0)
-            return redirect()->route('categorias.index')->with(['error' => 'No se puede eliminar una categoria con articulos relacionados']);
+            $categoria = Categoria::findOrFail($id);
+            // Verificar si tiene actividades relacionadas
+            if ($categoria->RelArticulo()->count() > 0)
+                return redirect()->route('categorias.index')->with(['error' => 'No se puede eliminar una categoria con articulos relacionados']);
+            $archivoAEliminar = "img/$categoria->foto";
+            if (file_exists($archivoAEliminar))
+                unlink($archivoAEliminar);
 
-        $categoria->delete();
-        return redirect()->route('categorias.index')->with(['mensaje' => 'Categoria eliminada']);
+            $categoria->delete();
+            return redirect()->route('categorias.index')->with(['mensaje' => 'Categoria eliminada']);
         } catch (\Exception $e) {
-            return redirect()->route('categorias.index')->with(['error' => 'Ocurrió un error al eliminar la categoria: '.$e->getMessage()]);
+            return redirect()->route('categorias.index')->with(['error' => 'Ocurrió un error al eliminar la categoria: ' . $e->getMessage()]);
         }
     }
 }

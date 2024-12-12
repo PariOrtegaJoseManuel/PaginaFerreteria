@@ -22,7 +22,7 @@ class EncargoController extends Controller
             'descripcion_articulo' => 'required|string|max:255',
             'cantidad' => 'required|numeric|min:1',
             'estado' => 'required|string|max:255',
-            'observaciones' => 'required|string|max:255',
+            'observaciones' => 'nullable|string|max:255',
             // La fecha del encargo debe ser igual o anterior a la fecha de entrega
             'fecha_encargo' => 'required|date|before_or_equal:fecha_entrega',
             // La fecha de entrega debe ser igual o posterior a la fecha del encargo
@@ -58,6 +58,9 @@ class EncargoController extends Controller
         //
         $this->validarForm($request);
         try {
+            if (is_null($request->observaciones)) {
+                $request->merge(['observaciones' => 'Sin observaciones']);
+            }
         Encargo::create($request->all());
         return redirect()->route('encargos.index')->with(['mensaje' => 'Encargo creado']);
         } catch (\Exception $e) {

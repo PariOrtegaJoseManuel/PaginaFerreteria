@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Encargo;
+use App\Models\Entrega;
 use App\Models\MetodoPago;
-use App\Models\Pago;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 
-class PagoController extends Controller
+class EntregaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:pagos.index')->only('index');
-        $this->middleware('can:pagos.create')->only('create','store');
-        $this->middleware('can:pagos.edit')->only('edit','update');
-        $this->middleware('can:pagos.destroy')->only('destroy');
+        $this->middleware('can:entregas.index')->only('index');
+        $this->middleware('can:entregas.create')->only('create','store');
+        $this->middleware('can:entregas.edit')->only('edit','update');
+        $this->middleware('can:entregas.destroy')->only('destroy');
     }
     public function validarForm(Request $request)
     {
@@ -33,11 +33,11 @@ class PagoController extends Controller
     public function index()
     {
 
-        $pagos = Pago::all();
+        $entregas = Entrega::all();
         $ventas = Venta::all();
         $encargos = Encargo::all();
         $metodo_pagos = MetodoPago::all();
-        return view('pago_index', ['pagos' => $pagos, 'ventas' => $ventas, 'encargos' => $encargos, 'metodo_pagos' => $metodo_pagos]);
+        return view('entrega_index', ['entregas' => $entregas, 'ventas' => $ventas, 'encargos' => $encargos, 'metodo_pagos' => $metodo_pagos]);
     }
 
     /**
@@ -49,7 +49,7 @@ class PagoController extends Controller
         $ventas = Venta::all();
         $encargos = Encargo::all();
         $metodo_pagos = MetodoPago::all();
-        return view('pago_create', ['ventas' => $ventas, 'encargos' => $encargos, 'metodo_pagos' => $metodo_pagos]);
+        return view('entrega_create', ['ventas' => $ventas, 'encargos' => $encargos, 'metodo_pagos' => $metodo_pagos]);
     }
 
     /**
@@ -60,10 +60,10 @@ class PagoController extends Controller
         //
         $this->validarForm($request);
         try {
-        Pago::create($request->all());
-        return redirect()->route('pagos.index')->with(['mensaje' => 'Pago creado']);
+        Entrega::create($request->all());
+        return redirect()->route('entregas.index')->with(['mensaje' => 'Entrega creada']);
         } catch (\Exception $e) {
-            return redirect()->route('pagos.index')->with(['error' => 'Ocurrió un error al crear el pago: '.$e->getMessage()]);
+            return redirect()->route('entregas.index')->with(['error' => 'Ocurrió un error al crear la entrega: '.$e->getMessage()]);
         }
     }
 
@@ -83,10 +83,10 @@ class PagoController extends Controller
         $ventas = Venta::all();
         $metodo_pagos = MetodoPago::all();
         try {
-        $pago = Pago::findOrFail($id);
-        return view('pago_edit', ['encargos' => $encargos, 'ventas' => $ventas, 'metodo_pagos' => $metodo_pagos , 'pago' => $pago]);
+        $entrega = Entrega::findOrFail($id);
+        return view('entrega_edit', ['encargos' => $encargos, 'ventas' => $ventas, 'metodo_pagos' => $metodo_pagos , 'entrega' => $entrega]);
         } catch (\Exception $e) {
-            return redirect()->route('pagos.index')->with(['error' => 'Ocurrió un error al mostrar el pago: '.$e->getMessage()]);
+            return redirect()->route('entregas.index')->with(['error' => 'Ocurrió un error al mostrar la entrega: '.$e->getMessage()]);
         }
     }
 
@@ -99,11 +99,11 @@ class PagoController extends Controller
         //
         $this->validarForm($request);
         try {
-        $pago = Pago::findOrFail($id);
-        $pago->update($request->all());
-        return redirect()->route('pagos.index')->with(['mensaje' => 'Pago editado']);
+        $entrega = Entrega::findOrFail($id);
+        $entrega->update($request->all());
+        return redirect()->route('entregas.index')->with(['mensaje' => 'Entrega editada']);
         } catch (\Exception $e) {
-            return redirect()->route('pagos.index')->with(['error' => 'Ocurrió un error al editar el pago: '.$e->getMessage()]);
+            return redirect()->route('entregas.index')->with(['error' => 'Ocurrió un error al editar la entrega: '.$e->getMessage()]);
         }
     }
 
@@ -114,7 +114,7 @@ class PagoController extends Controller
     {
         //
         try {
-        $pago = Pago::findOrFail($id);
+        $entrega = Entrega::findOrFail($id);
         // Verificar si tiene actividades relacionadas
         /*if ($pago->RelEncargo()->count() > 0){
             return redirect()->route('pagos.index')->with(['error' => 'No se puede eliminar un pago con encargos relacionados']);
@@ -122,10 +122,10 @@ class PagoController extends Controller
         if ($pago->RelVenta()->count() > 0){
             return redirect()->route('pagos.index')->with(['error' => 'No se puede eliminar un pago con ventas relacionadas']);
         }*/
-        $pago->delete();
-        return redirect()->route('pagos.index')->with(['mensaje' => 'Pago eliminado']);
+        $entrega->delete();
+        return redirect()->route('entregas.index')->with(['mensaje' => 'Entrega eliminada']);
         } catch (\Exception $e) {
-            return redirect()->route('pagos.index')->with(['error' => 'Ocurrió un error al eliminar el pago: '.$e->getMessage()]);
+        return redirect()->route('entregas.index')->with(['error' => 'Ocurrió un error al eliminar la entrega: '.$e->getMessage()]);
         }
     }
 }

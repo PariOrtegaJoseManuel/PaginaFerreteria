@@ -55,7 +55,7 @@
                             <a href="{{route("roles.index")}}" class="nav-link">Roles</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route("pagos.index")}}" class="nav-link">Pagos</a>
+                            <a href="{{route("entregas.index")}}" class="nav-link">Entregas</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route("encargos.index")}}" class="nav-link">Encargos</a>

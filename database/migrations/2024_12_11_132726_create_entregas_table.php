@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pagos', function (Blueprint $table) {
+        Schema::create('entregas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('encargos_id')->nullable()->references('id')->on('encargos');
+            $table->foreignId('encargos_id')->references('id')->on('encargos');
             $table->foreignId('ventas_id')->references('id')->on('ventas');
             $table->decimal('monto',10,2);
             $table->date('fecha_pago');

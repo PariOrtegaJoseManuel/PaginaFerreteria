@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pago extends Model
+class Entrega extends Model
 {
     use HasFactory;
-    protected $table = 'pagos';
+    protected $table = 'entregas';
     protected $guarded = ['id'];
     public function relEncargo(){
         return $this->belongsTo(Encargo::class,'encargos_id','id');

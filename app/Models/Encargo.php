@@ -13,8 +13,8 @@ class Encargo extends Model
     public function relCliente(){
         return $this->belongsTo(Cliente::class,'clientes_id','id');
     }
-    
-    public function relPago(){
-        return $this->hasMany(Pago::class,'encargos_id','id');
+
+    public function relEntregas(){
+        return $this->hasMany(Entrega::class,'encargos_id','id');
     }
 }

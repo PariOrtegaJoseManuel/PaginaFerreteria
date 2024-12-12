@@ -5,7 +5,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                Nuevo Pago
+                Nueva Entrega
             </div>
             @if($errors->any())
                 <div class="alert alert-danger">
@@ -17,7 +17,7 @@
                 </div>
             @endif
             <div class="card-body">
-                <form action="{{ route('pagos.store') }}" method="POST">
+                <form action="{{ route('entregas.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label for="encargos_id" class="form-label">Encargo</label>
@@ -58,13 +58,13 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="fecha_pago" class="form-label">Fecha</label>
+                        <label for="fecha_pago" class="form-label">Fecha de Pago</label>
                         <input type="date" name="fecha_pago" id="fecha_pago" value="{{ old('fecha_pago') }}"
                             class="form-control">
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Guardar</button>
-                        <a href="{{ route('pagos.index') }}" class="btn btn-danger">Cancelar</a>
+                        <a href="{{ route('entregas.index') }}" class="btn btn-danger">Cancelar</a>
                     </div>
                 </form>
             </div>

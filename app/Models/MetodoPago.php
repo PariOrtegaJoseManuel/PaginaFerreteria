@@ -10,8 +10,8 @@ class MetodoPago extends Model
     use HasFactory;
     protected $table = 'metodo_pagos';
     protected $guarded = ['id'];
-    public function relPagos(){
-        return $this->hasMany(Pago::class,'metodo_pagos_id','id');
+    public function relEntregas(){
+        return $this->hasMany(Entrega::class,'metodo_pagos_id','id');
     }
     public function relDetalle(){
         return $this->hasMany(Detalle::class,'metodo_pagos_id','id');

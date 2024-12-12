@@ -73,10 +73,10 @@ class DatabaseSeeder extends Seeder
         Permission::create(["name" => "encargos.edit"]);
         Permission::create(["name" => "encargos.destroy"]);
 
-        Permission::create(["name" => "pagos.index"]);
-        Permission::create(["name" => "pagos.create"]);
-        Permission::create(["name" => "pagos.edit"]);
-        Permission::create(["name" => "pagos.destroy"]);
+        Permission::create(["name" => "entregas.index"]);
+        Permission::create(["name" => "entregas.create"]);
+        Permission::create(["name" => "entregas.edit"]);
+        Permission::create(["name" => "entregas.destroy"]);
 
         Permission::create(["name" => "metodo_pagos.index"]);
         Permission::create(["name" => "metodo_pagos.create"]);
@@ -96,7 +96,7 @@ class DatabaseSeeder extends Seeder
             "roles.index","roles.create","roles.edit","roles.destroy",
             "categorias.index","categorias.create","categorias.edit","categorias.destroy",
             "encargos.index","encargos.create","encargos.edit","encargos.destroy",
-            "pagos.index","pagos.create","pagos.edit","pagos.destroy",
+            "entregas.index","entregas.create","entregas.edit","entregas.destroy",
             "metodo_pagos.index","metodo_pagos.create","metodo_pagos.edit","metodo_pagos.destroy",
         ]);
 

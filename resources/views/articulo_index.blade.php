@@ -34,7 +34,7 @@
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
                     @foreach($articulos as $articulo)
                         <div class="col">
-                            <div class="card h-100 shadow-sm hover-shadow transition {{ $articulo->cantidad == 0 ? 'border-danger' : ($articulo->cantidad <= 5 ? 'border-warning' : '') }}">
+                            <div class="card h-100 shadow-sm hover-shadow transition {{ $articulo->cantidad == 0 ? 'bg-danger' : ($articulo->cantidad <= 5 ? 'bg-warning' : '') }}">
                                 <div class="position-relative">
                                     <img class="card-img-top" src="{{url("img/$articulo->foto")}}"
                                          alt="{{$articulo->descripcion}}" style="height: 200px; object-fit: cover;">

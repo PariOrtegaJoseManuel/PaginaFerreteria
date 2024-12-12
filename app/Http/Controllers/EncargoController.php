@@ -135,8 +135,8 @@ class EncargoController extends Controller
         try {
             $encargo = Encargo::findOrFail($id);
             // Verificar si tiene actividades relacionadas
-            if ($encargo->relPago()->count() > 0)
-                return redirect()->route('encargos.index')->with(['error' => 'No se puede eliminar un encargo con pagos relacionados']);
+            if ($encargo->relEntregas()->count() > 0)
+                return redirect()->route('encargos.index')->with(['error' => 'No se puede eliminar un encargo con entregas relacionadas']);
             $archivoAEliminar = "img/$encargo->foto";
             if (file_exists($archivoAEliminar))
                 unlink($archivoAEliminar);

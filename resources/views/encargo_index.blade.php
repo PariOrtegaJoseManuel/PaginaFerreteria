@@ -43,7 +43,7 @@
                                         <p class="mb-1"><strong>Cantidad:</strong> <span class="badge bg-info">{{$encargo->cantidad}}</span></p>
                                         <p class="mb-1"><strong>Fecha Encargo:</strong> {{$encargo->fecha_encargo}}</p>
                                         <p class="mb-1"><strong>Estado:</strong>
-                                            <span class="badge {{ $encargo->estado == 'Pendiente' ? 'bg-warning' : 'bg-success' }}">
+                                            <span class="badge {{ $encargo->estado == 'Pendiente' ? 'bg-warning' : ($encargo->estado == 'En Proceso' ? 'bg-info' : ($encargo->estado == 'Completado' ? 'bg-success' : 'bg-danger')) }}">
                                                 {{$encargo->estado}}
                                             </span>
                                         </p>

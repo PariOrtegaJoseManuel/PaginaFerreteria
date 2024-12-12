@@ -110,7 +110,7 @@
                 <td>{{ $articulo->unidades_id }}</td>
                 <td>
                     @if($articulo->foto)
-                        <img src="{{ public_path('img/' . $articulo->foto) }}" style="max-width: 100px; height: auto;">
+                        {{ $articulo->foto }}
                     @endif
                 </td>
             </tr>

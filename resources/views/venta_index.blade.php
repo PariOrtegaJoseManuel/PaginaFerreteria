@@ -64,9 +64,65 @@
                                 <th>Cliente</th>
                                 <th>Vendedor</th>
                                 <th>
-                                    <a href="{{route("ventas.create")}}" class="btn btn-primary shadow-sm">
+                                    <button type="button" class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#createModal">
                                         <i class="fas fa-plus me-1"></i>Nueva Venta
-                                    </a>
+                                    </button>
+
+                                    <!-- Modal Crear -->
+                                    <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-primary text-white">
+                                                    <h5 class="modal-title">
+                                                        <i class="fas fa-plus me-2"></i>Nueva Venta
+                                                    </h5>
+                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body p-4">
+                                                    @if($errors->any())
+                                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                            <ul class="mb-0">
+                                                                @foreach($errors->all() as $error)
+                                                                    <li>{{$error}}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                        </div>
+                                                    @endif
+
+                                                    <form action="{{route('ventas.store')}}" method="POST">
+                                                        @csrf
+                                                        <div class="mb-3">
+                                                            <label for="fecha" class="form-label fw-bold">
+                                                                <i class="fas fa-calendar-alt me-1"></i>Fecha
+                                                            </label>
+                                                            <input type="date" name="fecha" id="fecha" value="{{ old('fecha', now()->format('Y-m-d')) }}" class="form-control shadow-sm">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="clientes_id" class="form-label fw-bold">
+                                                                <i class="fas fa-user me-1"></i>Cliente
+                                                            </label>
+                                                            <select name="clientes_id" id="clientes_id" class="form-select shadow-sm">
+                                                                @foreach($clientes as $cliente)
+                                                                    <option value="{{$cliente->id}}" {{$cliente->id==old("clientes_id")?"selected":""}}>
+                                                                        {{$cliente->razon}}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="d-flex justify-content-center gap-2">
+                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                                                <i class="fas fa-times me-1"></i>Cancelar
+                                                            </button>
+                                                            <button type="submit" class="btn btn-primary">
+                                                                <i class="fas fa-save me-1"></i>Guardar
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </th>
                             </tr>
                         </thead>
@@ -88,9 +144,62 @@
                                             <a href="{{ route('detalles.notaVenta', $venta) }}" class="btn btn-outline-warning shadow-sm">
                                                 <i class="fas fa-file-alt me-1"></i>Nota
                                             </a>
-                                            <a href="{{ route('ventas.edit', $venta) }}" class="btn btn-outline-primary shadow-sm">
+                                            <button type="button" class="btn btn-outline-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#editModal{{ $venta->id }}">
                                                 <i class="fas fa-edit me-1"></i>Editar
-                                            </a>
+                                            </button>
+
+                                            <!-- Modal Editar -->
+                                            <div class="modal fade" id="editModal{{ $venta->id }}" tabindex="-1" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header bg-primary text-white">
+                                                            <h5 class="modal-title">
+                                                                <i class="fas fa-edit me-2"></i>Editar Venta
+                                                            </h5>
+                                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body p-4">
+                                                            @if($errors->any())
+                                                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                                    <ul class="mb-0">
+                                                                        @foreach($errors->all() as $error)
+                                                                            <li>{{$error}}</li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                                </div>
+                                                            @endif
+
+                                                            <form action="{{route('ventas.update', $venta)}}" method="POST">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <div class="mb-3">
+                                                                    <label for="fecha" class="form-label fw-bold">Fecha</label>
+                                                                    <input type="date" name="fecha" id="fecha" value="{{old('fecha',$venta->fecha)}}" class="form-control">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="clientes_id" class="form-label fw-bold">Cliente</label>
+                                                                    <select name="clientes_id" id="clientes_id" class="form-select">
+                                                                        @foreach($clientes as $cliente)
+                                                                            <option value="{{$cliente->id}}" {{$cliente->id==old('clientes_id',$venta->clientes_id)?'selected':''}}>
+                                                                                {{$cliente->razon}}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="text-center">
+                                                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                                                        <i class="fas fa-times me-1"></i>Cancelar
+                                                                    </button>
+                                                                    <button type="submit" class="btn btn-primary">
+                                                                        <i class="fas fa-save me-1"></i>Guardar
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <button type="button" class="btn btn-outline-danger shadow-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $venta->id }}">
                                                 <i class="fas fa-trash-alt me-1"></i>Eliminar
                                             </button>

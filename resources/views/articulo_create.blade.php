@@ -1,62 +1,135 @@
 @extends("layouts.app")
 
 @section("content")
-
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                Nuevo Articulo
+    <div class="container py-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1 class="h3 mb-0">Nuevo Artículo</h1>
+                </div>
             </div>
+
             @if($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <ul class="mb-0">
                         @foreach($errors->all() as $error)
                             <li>{{$error}}</li>
                         @endforeach
                     </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-            <div class="card-body">
+
+            <div class="card-body p-4">
                 <form action="{{route("articulos.store")}}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="mb-3">
-                        <label for="descripcion" class="form-label">Descripcion</label>
-                        <input type="text" name="descripcion" id="descripcion" value="{{old("descripcion")}}" class="form-control">
-                        <label for="precio_unitario" class="form-label">Precio Unitario</label>
-                        <input type="text" name="precio_unitario" id="precio_unitario" value="{{old("precio_unitario")}}" class="form-control">
-                        <label for="cantidad" class="form-label">Cantidad</label>
-                        <input type="text" name="cantidad" id="cantidad" value="{{old("cantidad")}}" class="form-control">
-                        <label for="foto" class="form-label">Foto</label>
-                        <input type="file" id="foto" name="foto" class="form-control">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="descripcion" class="form-label fw-bold">Descripción</label>
+                                <input type="text" name="descripcion" id="descripcion" value="{{old("descripcion")}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="precio_unitario" class="form-label fw-bold">Precio Unitario</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="text" name="precio_unitario" id="precio_unitario" value="{{old("precio_unitario")}}" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cantidad" class="form-label fw-bold">Cantidad</label>
+                                <input type="number" name="cantidad" id="cantidad" value="{{old("cantidad")}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="foto" class="form-label fw-bold">Foto</label>
+                                <input type="file" id="foto" name="foto" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="unidades_id" class="form-label fw-bold">Unidad</label>
+                                        <select name="unidades_id" id="unidades_id" class="form-select" onchange="mostrarImagenUnidad(this)">
+                                            @foreach($unidades as $unidad)
+                                                <option value="{{$unidad->id}}" data-imagen="{{url('img/'.$unidad->foto)}}" {{$unidad->id==old("unidad_id")?"selected":""}}>
+                                                    {{$unidad->descripcion}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <img id="imagenUnidad" src="" alt="Imagen unidad" class="img-thumbnail mt-4" style="height: 50px; display: none;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="categorias_id" class="form-label fw-bold">Categoría</label>
+                                        <select name="categorias_id" id="categorias_id" class="form-select" onchange="mostrarImagenCategoria(this)">
+                                            @foreach($categorias as $categoria)
+                                                <option value="{{$categoria->id}}" data-imagen="{{url('img/'.$categoria->foto)}}" {{$categoria->id==old("categoria_id")?"selected":""}}>
+                                                    {{$categoria->nombre}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <img id="imagenCategoria" src="" alt="Imagen categoría" class="img-thumbnail mt-4" style="height: 50px; display: none;">
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="unidades_id" class="form-label">Unidad</label>
-                        <select name="unidades_id" id="unidades_id" class="form-select">
-                            @foreach($unidades as $unidad)
-                                <option value="{{$unidad->id}}" {{$unidad->id==old("unidad_id")?"selected":""}}>
-                                    {{$unidad->descripcion}}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="categorias_id" class="form-label">Categoria</label>
-                        <select name="categorias_id" id="categorias_id" class="form-select">
-                            @foreach($categorias as $categoria)
-                                <option value="{{$categoria->id}}" {{$categoria->id==old("categoria_id")?"selected":""}}>
-                                    {{$categoria->nombre}}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                        <a href="{{route("articulos.index")}}" class="btn btn-danger">Cancelar</a>
+
+                    <div class="d-flex justify-content-center gap-3 mt-4">
+                        <a href="{{route("articulos.index")}}" class="btn btn-lg btn-danger">
+                            <i class="fas fa-times me-2"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-lg btn-primary">
+                            <i class="fas fa-save me-2"></i>Guardar
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-@endsection
+    <script>
+        function mostrarImagenUnidad(select) {
+            const imagen = document.getElementById('imagenUnidad');
+            const selectedOption = select.options[select.selectedIndex];
+            const urlImagen = selectedOption.getAttribute('data-imagen');
 
+            imagen.src = urlImagen;
+            imagen.style.display = 'block';
+        }
+
+        function mostrarImagenCategoria(select) {
+            const imagen = document.getElementById('imagenCategoria');
+            const selectedOption = select.options[select.selectedIndex];
+            const urlImagen = selectedOption.getAttribute('data-imagen');
+
+            imagen.src = urlImagen;
+            imagen.style.display = 'block';
+        }
+
+        // Mostrar las imágenes al cargar la página
+        window.onload = function() {
+            const selectUnidad = document.getElementById('unidades_id');
+            const selectCategoria = document.getElementById('categorias_id');
+            mostrarImagenUnidad(selectUnidad);
+            mostrarImagenCategoria(selectCategoria);
+        }
+    </script>
+@endsection

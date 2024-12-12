@@ -13,9 +13,9 @@
                 @if (session('error'))
                     <div class="alert alert-danger" role="alert">{{ session('error') }}</div>
                 @endif
-                <div class="table-responsive">
+                <div class="text-center">
                     <div class="card text-center">
-                        <div class="row row-cols-3 row-cols-md-3 g-4">
+                        <div class="row row-cols-4 row-cols-md-4 g-4">
                             @foreach ($metodo_pagos as $metodo_pago)
                                 <div class="col">
                                     <div class="card" style="width: 18rem;">

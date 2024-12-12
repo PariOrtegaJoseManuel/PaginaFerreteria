@@ -132,7 +132,7 @@
                     </div>
                     <div class="carousel-item">
                         <div class="square-img-container">
-                            <img src="{{ asset('img/electricidad.jpg') }}" class="d-block w-100" alt="Electricidad">
+                            <img src="{{ asset('img/electricidad.png') }}" class="d-block w-100" alt="Electricidad">
                         </div>
                         <div class="carousel-caption">
                             <h2>Material Eléctrico</h2>

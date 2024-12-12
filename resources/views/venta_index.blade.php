@@ -62,6 +62,9 @@
                                     <a href="{{ route('detalles.indexVenta', ['detalle' => $venta->id]) }}" class="btn btn-success">
                                         Detalles
                                     </a>
+                                    <a href="{{ route('entregas.indexVenta', ['entrega' => $venta->id]) }}" class="btn btn-success">
+                                        Entregas
+                                    </a>
                                     <a href="{{ route('detalles.notaVenta', $venta) }}" class="btn btn-warning">
                                         Nota de Venta
                                     </a>

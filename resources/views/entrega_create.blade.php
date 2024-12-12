@@ -42,8 +42,13 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="monto" class="form-label">Monto</label>
-                        <input type="number" step="any" name="monto" id="monto" value="{{ old('monto') }}"
+                        <label for="precio" class="form-label">Precio</label>
+                        <input type="number" step="any" name="precio" id="precio" value="{{ old('precio') }}"
+                            class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="total" class="form-label">Total</label>
+                        <input type="number" step="any" name="total" id="total" value="{{ old('total') }}"
                             class="form-control">
                     </div>
                     <div class="mb-3">

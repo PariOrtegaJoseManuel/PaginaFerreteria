@@ -30,39 +30,61 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        @can('categorias.index')
                         <li class="nav-item">
                             <a href="{{route("categorias.index")}}" class="nav-link">Categorias</a>
                         </li>
+                        @endcan
+                        @can('unidades.index')
                         <li class="nav-item">
                             <a href="{{route("unidades.index")}}" class="nav-link">Unidades</a>
                         </li>
+                        @endcan
+                        @can('articulos.index')
                         <li class="nav-item">
                             <a href="{{route("articulos.index")}}" class="nav-link">Articulos</a>
                         </li>
+                        @endcan
+                        @can('ventas.index')
                         <li class="nav-item">
                             <a href="{{route("ventas.index")}}" class="nav-link">Ventas</a>
                         </li>
+                        @endcan
+                        @can('clientes.index')
                         <li class="nav-item">
                             <a href="{{route("clientes.index")}}" class="nav-link">Clientes</a>
                         </li>
+                        @endcan
+                        @can('users.index')
                         <li class="nav-item">
                             <a href="{{route("users.index")}}" class="nav-link">Usuarios</a>
                         </li>
+                        @endcan
+                        @can('users.index')
                         <li class="nav-item">
                             <a href="{{route("detalles.index")}}" class="nav-link">Detalles</a>
                         </li>
+                        @endcan
+                        @can('roles.index')
                         <li class="nav-item">
                             <a href="{{route("roles.index")}}" class="nav-link">Roles</a>
                         </li>
+                        @endcan
+                        @can('users.index')
                         <li class="nav-item">
                             <a href="{{route("entregas.index")}}" class="nav-link">Entregas</a>
                         </li>
+                        @endcan
+                        @can('encargos.index')
                         <li class="nav-item">
                             <a href="{{route("encargos.index")}}" class="nav-link">Encargos</a>
                         </li>
+                        @endcan
+                        @can('metodo_pagos.index')
                         <li class="nav-item">
                             <a href="{{route("metodo_pagos.index")}}" class="nav-link">Metodo de Pagos</a>
                         </li>
+                        @endcan
                     </ul>
 
                     <!-- Right Side Of Navbar -->

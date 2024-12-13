@@ -3,8 +3,11 @@
 @section("content")
     <div class="container py-4">
         <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white py-3">
+            <div class="card-header bg-primary text-white py-3 d-flex justify-content-between align-items-center">
                 <h1 class="h3 mb-0">Entregas</h1>
+                <a href="{{ route('ventas.index') }}" class="btn btn-light">
+                    <i class="fas fa-arrow-left me-2"></i>Volver
+                </a>
             </div>
             <div class="card-body">
                 @if(session("mensaje"))

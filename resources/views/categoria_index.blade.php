@@ -6,9 +6,11 @@
             <div class="card-header bg-primary text-white py-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <h1 class="h3 mb-0">Categorías</h1>
+                    @can('categorias.create')
                     <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modalCrear">
                         <i class="fas fa-plus me-2"></i>Nueva Categoría
                     </button>
+                    @endcan
                 </div>
             </div>
             <div class="card-body">
@@ -42,14 +44,18 @@
                                 <div class="card-body">
                                     <h5 class="card-title text-center mb-3">{{ $categoria->nombre }}</h5>
                                     <div class="d-flex justify-content-center gap-2">
+                                        @can('categorias.edit')
                                         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
                                             data-bs-target="#modalEditar{{ $categoria->id }}">
                                             <i class="fas fa-edit me-1"></i>Editar
                                         </button>
+                                        @endcan
+                                        @can('categorias.destroy')
                                         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal{{ $categoria->id }}">
                                             <i class="fas fa-trash-alt me-1"></i>Eliminar
                                         </button>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>

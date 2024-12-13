@@ -54,6 +54,7 @@
                                 <th>Precio</th>
                                 <th>Total</th>
                                 <th>Metodo de Pago</th>
+                                @can('detalles.create')
                                 <th>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
                                         <i class="fas fa-plus me-2"></i>Añadir Articulo
@@ -129,6 +130,7 @@
                                         </div>
                                     </div>
                                 </th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -140,14 +142,19 @@
                                     <td class="text-end">{{number_format($detalle->relArticulo->precio_unitario, 2)}} Bs</td>
                                     <td class="text-end">{{number_format($detalle->cantidad * $detalle->relArticulo->precio_unitario, 2)}} Bs</td>
                                     <td>{{$detalle->relMetodoPago->metodo}}</td>
+                                    @can('detalles.edit')
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
+                                            @can('detalles.edit')
                                             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $detalle->id }}">
                                                 <i class="fas fa-edit me-1"></i>Editar
                                             </button>
+                                            @endcan
+                                            @can('detalles.destroy')
                                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $detalle->id, $venta->id}}">
                                                 <i class="fas fa-trash-alt me-1"></i>Eliminar
                                             </button>
+                                            @endcan
 
                                         </div>
 
@@ -196,6 +203,7 @@
                                             </div>
                                         </div>
                                     </td>
+                                    @endcan
                                 </tr>
 
                                 <!-- Modal Eliminar -->

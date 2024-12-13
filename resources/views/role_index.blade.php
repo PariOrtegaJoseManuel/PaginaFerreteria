@@ -6,9 +6,11 @@
             <div class="card-header bg-primary text-white py-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <h1 class="h3 mb-0">Roles</h1>
-                    <a href="{{ route('roles.create') }}" class="btn btn-light">
-                        <i class="fas fa-plus me-2"></i>Nuevo Rol
-                    </a>
+                    @can('roles.create')
+                        <a href="{{ route('roles.create') }}" class="btn btn-light">
+                            <i class="fas fa-plus me-2"></i>Nuevo Rol
+                        </a>
+                    @endcan
                 </div>
             </div>
             <div class="card-body">
@@ -40,13 +42,18 @@
                                     <td>{{ $role->name }}</td>
                                     <td>
                                         <div class="d-flex justify-content-center gap-2">
-                                            <a href="{{ route('roles.edit', $role) }}" class="btn btn-outline-primary btn-sm">
+                                            @can('roles.edit')
+                                            <a href="{{ route('roles.edit', $role) }}"
+                                                class="btn btn-outline-primary btn-sm">
                                                 <i class="fas fa-edit me-1"></i>Editar
                                             </a>
-                                            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal{{ $role->id }}">
+                                            @endcan
+                                            @can('roles.destroy')
+                                            <button type="button" class="btn btn-outline-danger btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal{{ $role->id }}">
                                                 <i class="fas fa-trash-alt me-1"></i>Eliminar
                                             </button>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>
@@ -60,11 +67,13 @@
                                                 <h5 class="modal-title" id="exampleModalLabel">
                                                     <i class="fas fa-trash-alt me-2"></i>Eliminar Rol
                                                 </h5>
-                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
+                                                <button type="button" class="btn-close btn-close-white"
+                                                    data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p class="mb-0">¿Está seguro que desea eliminar el rol <strong>{{ $role->name }}</strong>?</p>
+                                                <p class="mb-0">¿Está seguro que desea eliminar el rol
+                                                    <strong>{{ $role->name }}</strong>?
+                                                </p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

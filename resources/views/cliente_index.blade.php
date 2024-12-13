@@ -8,9 +8,11 @@
                     <h1 class="h3 mb-0">
                         <i class="fas fa-users me-2"></i>Clientes
                     </h1>
-                    <a href="{{ route('clientes.create') }}" class="btn btn-light">
-                        <i class="fas fa-plus me-2"></i>Nuevo Cliente
-                    </a>
+                    @can('clientes.create')
+                        <a href="{{ route('clientes.create') }}" class="btn btn-light">
+                            <i class="fas fa-plus me-2"></i>Nuevo Cliente
+                        </a>
+                    @endcan
                 </div>
             </div>
             <div class="card-body">
@@ -36,7 +38,9 @@
                                 <th scope="col">Dirección</th>
                                 <th scope="col">Teléfono</th>
                                 <th scope="col">Correo</th>
-                                <th scope="col" class="text-center">Acciones</th>
+                                @can('clientes.edit')
+                                    <th scope="col" class="text-center">Acciones</th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -48,17 +52,24 @@
                                     <td>{{ $cliente->direccion }}</td>
                                     <td class="text-center">{{ $cliente->telefono }}</td>
                                     <td>{{ $cliente->email }}</td>
-                                    <td>
-                                        <div class="d-flex justify-content-center gap-2">
-                                            <a href="{{ route('clientes.edit', $cliente) }}" class="btn btn-outline-primary btn-sm">
-                                                <i class="fas fa-edit me-1"></i>Editar
-                                            </a>
-                                            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal{{ $cliente->id }}">
-                                                <i class="fas fa-trash-alt me-1"></i>Eliminar
-                                            </button>
-                                        </div>
-                                    </td>
+                                    @can('clientes.edit')
+                                        <td>
+                                            <div class="d-flex justify-content-center gap-2">
+                                                @can('clientes.edit')
+                                                    <a href="{{ route('clientes.edit', $cliente) }}"
+                                                        class="btn btn-outline-primary btn-sm">
+                                                        <i class="fas fa-edit me-1"></i>Editar
+                                                    </a>
+                                                @endcan
+                                                @can('clientes.destroy')
+                                                    <button type="button" class="btn btn-outline-danger btn-sm"
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModal{{ $cliente->id }}">
+                                                        <i class="fas fa-trash-alt me-1"></i>Eliminar
+                                                    </button>
+                                                @endcan
+                                            </div>
+                                        </td>
+                                    @endcan
                                 </tr>
 
                                 <!-- Modal Eliminar -->
@@ -70,11 +81,12 @@
                                                 <h5 class="modal-title" id="exampleModalLabel">
                                                     <i class="fas fa-trash-alt me-2"></i>Eliminar Cliente
                                                 </h5>
-                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
+                                                <button type="button" class="btn-close btn-close-white"
+                                                    data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p class="mb-0">¿Está seguro que desea eliminar al cliente <strong>{{ $cliente->razon }}</strong>?</p>
+                                                <p class="mb-0">¿Está seguro que desea eliminar al cliente
+                                                    <strong>{{ $cliente->razon }}</strong>?</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

@@ -55,6 +55,7 @@
                                 <th>Total</th>
                                 <th>Fecha de Pago</th>
                                 <th>Metodo</th>
+                                @can('entregas.create')
                                 <th>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
                                         <i class="fas fa-plus me-2"></i>Nueva Entrega
@@ -131,6 +132,7 @@
                                         </div>
                                     </div>
                                 </th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -143,14 +145,17 @@
                                     <td class="text-end">{{number_format($entrega->total, 2)}} Bs</td>
                                     <td class="text-end">{{$entrega->fecha_pago}}</td>
                                     <td>{{$entrega->relMetodoPago->metodo}}</td>
+                                    @can('entregas.edit')
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
                                             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $entrega->id }}">
                                                 <i class="fas fa-edit me-1"></i>Editar
                                             </button>
+                                            @can('entregas.destroy')
                                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $entrega->id , $venta->id }}">
                                                 <i class="fas fa-trash-alt me-1"></i>Eliminar
                                             </button>
+                                            @endcan
                                         </div>
 
                                         <!-- Modal de Edición -->
@@ -223,6 +228,7 @@
                                             </div>
                                         </div>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                         </tbody>

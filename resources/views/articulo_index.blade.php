@@ -7,9 +7,11 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <h1 class="h3 mb-0">Artículos</h1>
                     <div class="d-flex gap-2">
+                        @can('articulos.create')
                         <a href="{{ route('articulos.create') }}" class="btn btn-light">
                             <i class="fas fa-plus me-2"></i>Nuevo Artículo
                         </a>
+                        @endcan
                         <a href="{{ route('articulos.reporteInventario') }}" class="btn btn-warning">
                             <i class="fas fa-file-alt me-2"></i>Reporte Inventario
                         </a>
@@ -82,13 +84,17 @@
                                         </p>
                                     </div>
                                     <div class="d-flex justify-content-center gap-2">
-                                        <a href="{{ route('articulos.edit', $articulo) }}" class="btn btn-outline-primary">
-                                            <i class="fas fa-edit me-1"></i>Editar
-                                        </a>
+                                        @can('articulos.edit')
+                                            <a href="{{ route('articulos.edit', $articulo) }}" class="btn btn-outline-primary">
+                                                <i class="fas fa-edit me-1"></i>Editar
+                                            </a>
+                                        @endcan
+                                        @can('articulos.destroy')
                                         <button type="button" class="btn btn-outline-{{ $articulo->cantidad == 0 ? 'light' : 'danger' }}" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal{{ $articulo->id }}">
-                                            <i class="fas fa-trash-alt me-1"></i>Eliminar
-                                        </button>
+                                                <i class="fas fa-trash-alt me-1"></i>Eliminar
+                                            </button>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>

@@ -13,10 +13,11 @@ class DetalleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:detalles.index')->only('index','indexVenta','notaVenta');
-        $this->middleware('can:detalles.create')->only('create','store','createVentaDetalle','storeVentaDetalle');
-        $this->middleware('can:detalles.edit')->only('edit','update','editVenta','updateVenta');
-        $this->middleware('can:detalles.destroy')->only('destroy','destroyVenta');
+        $this->middleware('can:detalles.index')->only('indexVenta');
+        $this->middleware('can:detalles.create')->only('createVentaDetalle','storeVentaDetalle');
+        $this->middleware('can:detalles.edit')->only('editVenta','updateVenta');
+        $this->middleware('can:detalles.destroy')->only('destroyVenta');
+        $this->middleware('can:detalles.notaVenta')->only('notaVenta');
     }
     public function validarForm(Request $request)
     {

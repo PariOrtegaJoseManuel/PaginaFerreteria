@@ -12,10 +12,10 @@ class EntregaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:entregas.index')->only('index','indexVenta');
-        $this->middleware('can:entregas.create')->only('create','store','createEntrega','storeEntrega');
-        $this->middleware('can:entregas.edit')->only('edit','update','editEntrega','updateEntrega');
-        $this->middleware('can:entregas.destroy')->only('destroy','destroyEntrega');
+        $this->middleware('can:entregas.index')->only('indexVenta');
+        $this->middleware('can:entregas.create')->only('createEntrega','storeEntrega');
+        $this->middleware('can:entregas.edit')->only('editEntrega','updateEntrega');
+        $this->middleware('can:entregas.destroy')->only('destroyEntrega');
     }
     public function validarForm(Request $request)
     {

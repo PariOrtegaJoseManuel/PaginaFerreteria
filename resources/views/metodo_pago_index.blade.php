@@ -6,9 +6,11 @@
             <div class="card-header bg-primary text-white py-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <h1 class="h3 mb-0">Métodos de Pago</h1>
+                    @can('metodo_pagos.create')
                     <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modalCrear">
                         <i class="fas fa-plus me-2"></i>Nuevo Método
                     </button>
+                    @endcan
                 </div>
             </div>
             <div class="card-body">
@@ -40,14 +42,18 @@
                                 <div class="card-body">
                                     <h5 class="card-title text-center mb-3">{{ $metodo_pago->metodo }}</h5>
                                     <div class="d-flex justify-content-center gap-2">
+                                        @can('metodo_pagos.edit')
                                         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
                                             data-bs-target="#editModal{{ $metodo_pago->id }}">
                                             <i class="fas fa-edit me-1"></i>Editar
                                         </button>
+                                        @endcan
+                                        @can('metodo_pagos.destroy')
                                         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal{{ $metodo_pago->id }}">
                                             <i class="fas fa-trash-alt me-1"></i>Eliminar
                                         </button>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>

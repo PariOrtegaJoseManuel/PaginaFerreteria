@@ -23,9 +23,11 @@
                 @endif
 
                 <div class="text-end mb-3">
+                    @can('users.create')
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">
                         <i class="fas fa-plus-circle me-2"></i>Nuevo Usuario
                     </button>
+                    @endcan
 
                     <!-- Modal de creación -->
                     <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
@@ -118,12 +120,14 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
+                                            @can('users.edit')
                                             <a href="{{route("users.editpassword",$user)}}" class="btn btn-outline-warning">
                                                 <i class="fas fa-key me-1"></i>Password
                                             </a>
                                             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $user->id }}">
                                                 <i class="fas fa-edit me-1"></i>Editar
                                             </button>
+                                            @endcan
 
                                             <!-- Modal de edición -->
                                             <div class="modal fade" id="editModal{{ $user->id }}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -180,10 +184,12 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @can('users.destroy')
                                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal{{ $user->id }}">
                                                 <i class="fas fa-trash me-1"></i>Eliminar
                                             </button>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>

@@ -46,7 +46,7 @@
                                     <h5 class="card-title text-center mb-3">{{$articulo->descripcion}}</h5>
                                     <div class="mb-3">
                                         <p class="mb-1"><strong>Cantidad:</strong> {{$articulo->cantidad}}</p>
-                                        <p class="mb-1"><strong>Precio:</strong> ${{$articulo->precio_unitario}}</p>
+                                        <p class="mb-1"><strong>Precio:</strong> {{$articulo->precio_unitario}} Bs</p>
                                         <p class="mb-1"><strong>Unidad:</strong> {{$articulo->relUnidad->descripcion}}</p>
                                         <p class="mb-1"><strong>Categoría:</strong> {{$articulo->relCategoria->nombre}}</p>
                                     </div>

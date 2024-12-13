@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         $request->validate([
             "name" => "required|string|min:4|max:100",
-            "email" => $isCreate ? "required|email|unique" : "required|email",
+            "email" => $isCreate ? "required|email|unique:users,email" : "required|email",
             "password" => $isCreate ? "required|string|min:6|max:100" : ""
         ]);
     }
@@ -31,7 +31,8 @@ class UserController extends Controller
         //
         session()->flashInput($request->input());
         $users = User::all();
-        return view('user_index', ['users' => $users]);
+        $roles = Role::all();
+        return view('user_index', ['users' => $users, 'roles' => $roles]);
     }
     /**
      * Show the form for creating a new resource.
@@ -127,18 +128,17 @@ class UserController extends Controller
     public function updatepassword(Request $request, string $id)
     {
         $request->validate([
-            "password"=>"required|string|min:3|max:50",
-            "password_confirmation"=>"required|same:password"
+            "password" => "required|string|min:3|max:50",
+            "password_confirmation" => "required|same:password"
         ]);
         try {
             $user = User::find($id);
             $user->password = $request->password;
             $user->save();
             return redirect()->route("users.index")
-            ->with(["mensaje"=>"Contraseña modificada"]);
+                ->with(["mensaje" => "Contraseña modificada"]);
         } catch (\Exception $e) {
             return redirect()->route('users.index')->with(['error' => 'Ocurrió un error al modificar la contraseña: ' . $e->getMessage()]);
         }
     }
-
 }

@@ -133,9 +133,9 @@
                                 <tr>
                                     <td class="text-center">{{$detalle->id}}</td>
                                     <td>{{$detalle->relArticulo->descripcion}}</td>
-                                    <td class="text-end">{{$detalle->cantidad}}</td>
-                                    <td class="text-end">${{number_format($detalle->relArticulo->precio_unitario, 2)}}</td>
-                                    <td class="text-end">${{number_format($detalle->cantidad * $detalle->relArticulo->precio_unitario, 2)}}</td>
+                                    <td class="text-end">{{$detalle->cantidad}} {{ $detalle->relArticulo->relUnidad->descripcion }}(s)</td>
+                                    <td class="text-end">{{number_format($detalle->relArticulo->precio_unitario, 2)}} Bs</td>
+                                    <td class="text-end">{{number_format($detalle->cantidad * $detalle->relArticulo->precio_unitario, 2)}} Bs</td>
                                     <td>{{$detalle->relMetodoPago->metodo}}</td>
                                     <td class="text-center">
                                         <div class="btn-group" role="group">

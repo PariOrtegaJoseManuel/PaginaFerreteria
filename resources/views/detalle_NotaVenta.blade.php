@@ -88,7 +88,7 @@
         <div class="cliente-info">
             <h3>Razon Social del Cliente</h3>
             <p> <strong>Cliente:</strong> {{ $venta->relCliente->razon }}</p>
-            <p> <strong>Fecha:</strong> {{ $venta->fecha }}</p>
+            <p> <strong>Fecha:</strong> {{ $venta->fecha}}</p>
             <p> <strong>No. Venta:</strong> {{ $venta->id }}</p>
             <p> <strong>Nit:</strong> {{ $venta->relCliente->nit }}</p>
             <p> <strong>Telefono:</strong> {{ $venta->relCliente->telefono }}</p>
@@ -99,7 +99,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>No. Venta</th>
+
                     <th>Artículo</th>
                     <th>Cantidad</th>
                     <th>Precio Unitario</th>
@@ -114,7 +114,6 @@
                         $total += $subtotal;
                     @endphp
                     <tr>
-                        <td>{{ $venta->id }}</td>
                         <td>{{ $detalle->relArticulo->descripcion }}</td>
                         <td>{{ $detalle->cantidad }}</td>
                         <td>${{ number_format($detalle->relArticulo->precio_unitario, 2) }}</td>
@@ -124,7 +123,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="4" style="text-align: right;"><strong>Total:</strong></td>
+                    <td colspan="3" style="text-align: right;"><strong>Total:</strong></td>
                     <td><strong>${{ number_format($total, 2) }}</strong></td>
                 </tr>
             </tfoot>
@@ -137,7 +136,7 @@
     </main>
 
     <footer style="font-size: 15px;">
-        &copy; {{ date('Y') }} Sistema de Ventas. Todos los derechos reservados.
+        &copy; {{ now()->format('d/m/Y H:i:s') }} Sistema de Ventas. Todos los derechos reservados.
     </footer>
 </body>
 </html>

@@ -139,6 +139,7 @@ class DatabaseSeeder extends Seeder
             "foto" => "martillo.png",
             "unidades_id" => 1,
             "categorias_id" => 1,
+            "alerta_minima" => 10,
         ]);
         Articulo::create([
             "descripcion" => "Clavos (caja)",
@@ -147,6 +148,7 @@ class DatabaseSeeder extends Seeder
             "foto" => "clavos.jpeg",
             "unidades_id" => 1,
             "categorias_id" => 2,
+            "alerta_minima" => 10,
         ]);
         Articulo::create([
             "descripcion" => "Pintura Blanca (galón)",
@@ -155,6 +157,7 @@ class DatabaseSeeder extends Seeder
             "foto" => "pintura_blanca.png",
             "unidades_id" => 2,
             "categorias_id" => 3,
+            "alerta_minima" => 10,
         ]);
         Articulo::create([
             "descripcion" => "Taladro Eléctrico",
@@ -163,6 +166,7 @@ class DatabaseSeeder extends Seeder
             "foto" => "taladro.jpeg",
             "unidades_id" => 1,
             "categorias_id" => 1,
+            "alerta_minima" => 4,
         ]);
         Articulo::create([
             "descripcion" => "Cemento (bolsa 50kg)",
@@ -171,6 +175,7 @@ class DatabaseSeeder extends Seeder
             "foto" => "cemento.png",
             "unidades_id" => 3,
             "categorias_id" => 2,
+            "alerta_minima" => 10,
         ]);
     }
 }

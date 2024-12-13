@@ -29,8 +29,10 @@
                         <div class="col">
                             <div class="card h-100 shadow-sm hover-shadow transition">
                                 <div class="position-relative">
-                                    <img class="card-img-top" src="{{ url("img/$metodo_pago->foto") }}"
-                                        alt="{{ $metodo_pago->metodo }}" style="height: 200px; object-fit: cover;">
+                                    <div style="width: 100%; padding-bottom: 100%; position: relative;">
+                                        <img class="card-img-top position-absolute w-100 h-100" src="{{ url("img/$metodo_pago->foto") }}"
+                                            alt="{{ $metodo_pago->metodo }}" style="object-fit: cover;">
+                                    </div>
                                     <div class="position-absolute top-0 end-0 p-2">
                                         <span class="badge bg-primary">ID: {{ $metodo_pago->id }}</span>
                                     </div>

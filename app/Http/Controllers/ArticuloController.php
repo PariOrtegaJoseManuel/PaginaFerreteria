@@ -12,7 +12,7 @@ class ArticuloController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:articulos.index')->only('index');
+        $this->middleware('can:articulos.index')->only('index','reporteInventario');
         $this->middleware('can:articulos.create')->only('create','store');
         $this->middleware('can:articulos.edit')->only('edit','update');
         $this->middleware('can:articulos.destroy')->only('destroy');
@@ -38,6 +38,11 @@ class ArticuloController extends Controller
         $articulos = Articulo::all();
         $unidades = Unidad::all();
         $categorias = Categoria::all();
+        if ($request->filled("categorias_id")) {
+             $articulos = Articulo::where("categorias_id", $request->categorias_id)->get();
+        } else {
+            $articulos = Articulo::all();
+        }
         return view('articulo_index', ['articulos' => $articulos, 'unidades' => $unidades, 'categorias' => $categorias]);
     }
 

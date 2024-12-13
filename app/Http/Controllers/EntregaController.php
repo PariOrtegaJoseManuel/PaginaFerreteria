@@ -12,10 +12,10 @@ class EntregaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:entregas.index')->only('index');
-        $this->middleware('can:entregas.create')->only('create','store');
-        $this->middleware('can:entregas.edit')->only('edit','update');
-        $this->middleware('can:entregas.destroy')->only('destroy');
+        $this->middleware('can:entregas.index')->only('index','indexVenta');
+        $this->middleware('can:entregas.create')->only('create','store','createEntrega','storeEntrega');
+        $this->middleware('can:entregas.edit')->only('edit','update','editEntrega','updateEntrega');
+        $this->middleware('can:entregas.destroy')->only('destroy','destroyEntrega');
     }
     public function validarForm(Request $request)
     {
@@ -217,7 +217,18 @@ class EntregaController extends Controller
 
         try {
             $encargo = Encargo::findOrFail($request->encargos_id);
+
+            if ($encargo->estado === 'Cancelado') {
+                return redirect()->route('entregas.indexVenta', $ventaId)
+                    ->with(['error' => 'No se puede crear una entrega para un encargo cancelado']);
+            }
+            if ($encargo->estado === 'Completado') {
+                return redirect()->route('entregas.indexVenta', $ventaId)
+                    ->with(['error' => 'No se puede crear una entrega para un encargo completado']);
+            }
+
             $venta = Venta::findOrFail($ventaId);
+
             Entrega::create([
                 'precio' => $request->precio,
                 'encargos_id' => $request->encargos_id,
@@ -227,7 +238,9 @@ class EntregaController extends Controller
                 'metodo_pagos_id' => $request->metodo_pagos_id
             ]);
 
-
+            // Actualizar el estado del encargo a completado
+            $encargo->estado = 'Completado';
+            $encargo->save();
 
             return redirect()->route('entregas.indexVenta', $ventaId)
                 ->with(['mensaje' => 'Entrega creada exitosamente']);

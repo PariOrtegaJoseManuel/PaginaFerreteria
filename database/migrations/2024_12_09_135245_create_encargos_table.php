@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('descripcion_articulo',200);
             $table->integer('cantidad');
             $table->date('fecha_encargo');
-            $table->enum('estado',['pendiente','en_proceso','completado','cancelado']);
+            $table->enum('estado',['Pendiente','Completado','Cancelado']);
             $table->string('observaciones',200);
             $table->date('fecha_entrega');
             $table->string('foto',200);

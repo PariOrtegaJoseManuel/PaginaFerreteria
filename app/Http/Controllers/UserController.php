@@ -12,7 +12,7 @@ class UserController extends Controller
     {
         $this->middleware('can:users.index')->only('index');
         $this->middleware('can:users.create')->only('create', 'store');
-        $this->middleware('can:users.edit')->only('edit', 'update');
+        $this->middleware('can:users.edit')->only('edit', 'update','editPassword','updatePassword');
         $this->middleware('can:users.destroy')->only('destroy');
     }
     public function validarForm(Request $request, $isCreate = true)

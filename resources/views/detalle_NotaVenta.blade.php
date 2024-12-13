@@ -6,104 +6,148 @@
     <title>Nota de Venta</title>
     <style>
         @page {
-            margin: 1cm;
-            font-family: 'Arial', sans-serif;
-            font-size: 10px;
+            margin: 2cm;
+            font-family: 'Times New Roman', serif;
+            font-size: 12px;
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman', serif;
             margin: 0;
+            background-color: #f9f9f9;
         }
 
-        header, footer {
-            background-color: #003366;
-            color: white;
+        .documento {
+            border: 2px solid #000;
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+        }
+
+        .encabezado {
             text-align: center;
-            padding: 10px 0;
-            font-weight: bold;
-
-        }
-
-        main {
-            margin: 20px;
-        }
-
-        .cliente-info {
+            border-bottom: 3px double #000;
+            padding-bottom: 15px;
             margin-bottom: 20px;
         }
 
-        .cliente-info h3 {
-            margin-bottom: 5px;
-            color: #003366;
+        .titulo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #8b0000;
+            margin: 0;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 12px;
+        .numero-venta {
+            font-size: 16px;
+            color: #444;
+            margin-top: 5px;
         }
 
-        th {
-            background-color: #003366;
-            color: white;
-            border: 1px solid #ffffff;
-            padding: 10px;
-            text-align: center;
-        }
-
-        td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
-
-        tr:nth-child(even) {
+        .datos-cliente {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
             background-color: #f5f5f5;
         }
 
-        tr:nth-child(odd) {
-            background-color: #ffffff;
+        .datos-cliente h2 {
+            color: #8b0000;
+            margin-top: 0;
+            font-size: 18px;
+            border-bottom: 1px solid #8b0000;
         }
 
-        tfoot td {
-            background-color: #e6e6e6;
+        .datos-cliente-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .tabla-productos {
+            width: 100%;
+            border: 1px solid #000;
+            margin: 20px 0;
+        }
+
+        .tabla-productos th {
+            background-color: #8b0000;
+            color: white;
+            padding: 10px;
+            border: 1px solid #000;
+        }
+
+        .tabla-productos td {
+            padding: 8px;
+            border: 1px solid #000;
+        }
+
+        .tabla-productos tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 18px;
             font-weight: bold;
+            color: #8b0000;
+            margin: 20px 0;
+            border-top: 2px solid #000;
+            padding-top: 10px;
         }
 
-        .footer {
-            margin-top: 30px;
+        .pie-pagina {
             text-align: center;
-            font-size: 12px;
+            margin-top: 30px;
+            font-style: italic;
+            color: #666;
+            border-top: 1px solid #ccc;
+            padding-top: 15px;
+        }
+
+        .firma {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .linea-firma {
+            width: 200px;
+            border-top: 1px solid #000;
+            margin: 10px auto;
         }
     </style>
 </head>
 <body>
-    <header style="font-size: 25px;">
-        Nota de Venta
-    </header>
-
-    <main>
-        <div class="cliente-info">
-            <h3>Razon Social del Cliente</h3>
-            <p> <strong>Cliente:</strong> {{ $venta->relCliente->razon }}</p>
-            <p> <strong>Fecha:</strong> {{ $venta->fecha}}</p>
-            <p> <strong>No. Venta:</strong> {{ $venta->id }}</p>
-            <p> <strong>Nit:</strong> {{ $venta->relCliente->nit }}</p>
-            <p> <strong>Telefono:</strong> {{ $venta->relCliente->telefono }}</p>
-            <p> <strong>Email:</strong> {{ $venta->relCliente->email }}</p>
-            <p> <strong>Direccion:</strong> {{ $venta->relCliente->direccion }}</p>
+    <div class="documento">
+        <div class="encabezado">
+            <h1 class="titulo">NOTA DE VENTA</h1>
+            <div class="numero-venta">No. {{ $venta->id }}</div>
+            <div>Fecha: {{ date('d/m/Y', strtotime($venta->fecha)) }}</div>
         </div>
 
-        <table>
+        <div class="datos-cliente">
+            <h2>Datos del Cliente</h2>
+            <div class="datos-cliente-grid">
+                <div>
+                    <strong>Razón Social:</strong> {{ $venta->relCliente->razon }}<br>
+                    <strong>NIT:</strong> {{ $venta->relCliente->nit }}<br>
+                    <strong>Teléfono:</strong> {{ $venta->relCliente->telefono }}
+                </div>
+                <div>
+                    <strong>Email:</strong> {{ $venta->relCliente->email }}<br>
+                    <strong>Dirección:</strong> {{ $venta->relCliente->direccion }}
+                </div>
+            </div>
+        </div>
+
+        <table class="tabla-productos">
             <thead>
                 <tr>
-
-                    <th>Artículo</th>
-                    <th>Cantidad</th>
-                    <th>Precio Unitario</th>
-                    <th>Subtotal</th>
+                    <th>DESCRIPCIÓN</th>
+                    <th>CANTIDAD</th>
+                    <th>PRECIO UNIT.</th>
+                    <th>IMPORTE</th>
                 </tr>
             </thead>
             <tbody>
@@ -115,29 +159,28 @@
                     @endphp
                     <tr>
                         <td>{{ $detalle->relArticulo->descripcion }}</td>
-                        <td>{{ $detalle->cantidad }}</td>
-                        <td>${{ number_format($detalle->relArticulo->precio_unitario, 2) }}</td>
-                        <td>${{ number_format($subtotal, 2) }}</td>
+                        <td style="text-align: center;">{{ $detalle->cantidad }}</td>
+                        <td style="text-align: right;">{{ number_format($detalle->relArticulo->precio_unitario, 2) }} Bs</td>
+                        <td style="text-align: right;">{{ number_format($subtotal, 2) }} Bs</td>
                     </tr>
                 @endforeach
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="3" style="text-align: right;"><strong>Total:</strong></td>
-                    <td><strong>${{ number_format($total, 2) }}</strong></td>
-                </tr>
-            </tfoot>
         </table>
 
-        <div class="footer">
-            <p>Vendedor: {{ $venta->relUser->name }}</p>
-            <p>¡Gracias por su compra!</p>
+        <div class="total">
+            TOTAL A PAGAR: {{ number_format($total, 2) }} Bs
         </div>
-    </main>
 
-    <footer style="font-size: 15px;">
-        &copy; {{ now()->format('d/m/Y H:i:s') }} Sistema de Ventas. Todos los derechos reservados.
-    </footer>
+        <div class="firma">
+            <div class="linea-firma"></div>
+            <strong>{{ $venta->relUser->name }}</strong><br>
+            Vendedor Autorizado
+        </div>
+
+        <div class="pie-pagina">
+            <p>¡Gracias por su preferencia!</p>
+            <small>Documento generado el {{ now()->format('d/m/Y H:i:s') }}</small>
+        </div>
+    </div>
 </body>
 </html>
-

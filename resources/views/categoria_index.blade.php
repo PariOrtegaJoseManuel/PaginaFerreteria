@@ -29,8 +29,12 @@
                         <div class="col">
                             <div class="card h-100 shadow-sm hover-shadow transition">
                                 <div class="position-relative">
-                                    <img class="card-img-top" src="{{ url("img/$categoria->foto") }}"
-                                        alt="{{ $categoria->nombre }}" style="height: 200px; object-fit: cover;">
+                                    <div style="width: 100%; padding-bottom: 100%; position: relative;">
+                                        <img class="card-img-top position-absolute w-100 h-100"
+                                            src="{{ url("img/$categoria->foto") }}"
+                                            alt="{{ $categoria->nombre }}"
+                                            style="object-fit: cover;">
+                                    </div>
                                     <div class="position-absolute top-0 end-0 p-2">
                                         <span class="badge bg-primary">ID: {{ $categoria->id }}</span>
                                     </div>

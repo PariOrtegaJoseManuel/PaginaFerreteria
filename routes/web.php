@@ -25,7 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete("entregas/{entrega}/{ventaId}", "App\Http\Controllers\EntregaController@destroyEntrega")->name("entregas.destroyEntrega");
     Route::get("entregas/{entrega}/{ventaId}/edit", "App\Http\Controllers\EntregaController@editEntrega")->name("entregas.editEntrega");
     Route::put("entregas/{entrega}/{ventaId}/update", "App\Http\Controllers\EntregaController@updateEntrega")->name("entregas.updateEntrega");
-
+    Route::put("encargos/{encargo}/estado", "App\Http\Controllers\EncargoController@updateEstado")->name("encargos.updateEstado");
     Route::get("users/{user}/password", "App\Http\Controllers\UserController@editpassword")->name("users.editpassword");
     Route::post("users/{user}/password", "App\Http\Controllers\UserController@updatepassword")->name("users.updatepassword");
     Route::get('ventas/reporteDiario', 'App\Http\Controllers\VentaController@reporteDiario')->name('ventas.reporteDiario');

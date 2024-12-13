@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('foto',30);
             $table->foreignId('unidades_id')->references('id')->on('unidades');
             $table->foreignId('categorias_id')->references('id')->on('categorias');
+            $table->integer('alerta_minima');
             $table->timestamps();
         });
     }

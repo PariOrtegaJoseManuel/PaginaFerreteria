@@ -88,10 +88,12 @@
                                                             <label for="encargos_id" class="form-label">Encargo</label>
                                                             <select name="encargos_id" id="encargos_id" class="form-select" onchange="mostrarImagen(this)">
                                                                 @foreach ($encargos as $encargo)
-                                                                    <option value="{{ $encargo->id }}" data-imagen="{{url("img/$encargo->foto")}}"
-                                                                        {{ $encargo->id == old('encargos_id') ? 'selected' : '' }}>
-                                                                        {{ $encargo->descripcion_articulo }}
-                                                                    </option>
+                                                                    @if($encargo->estado == 'Pendiente')
+                                                                        <option value="{{ $encargo->id }}" data-imagen="{{url("img/$encargo->foto")}}"
+                                                                            {{ $encargo->id == old('encargos_id') ? 'selected' : '' }}>
+                                                                            {{ $encargo->descripcion_articulo }}
+                                                                        </option>
+                                                                    @endif
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -134,8 +136,8 @@
                                     <td class="text-center">{{$entrega->id}}</td>
                                     <td>{{$entrega->relEncargo->descripcion_articulo}}</td>
                                     <td class="text-end">{{$entrega->relVenta->fecha}}</td>
-                                    <td class="text-end">${{number_format($entrega->precio, 2)}}</td>
-                                    <td class="text-end">${{number_format($entrega->total, 2)}}</td>
+                                    <td class="text-end">{{number_format($entrega->precio, 2)}} Bs</td>
+                                    <td class="text-end">{{number_format($entrega->total, 2)}} Bs</td>
                                     <td class="text-end">{{$entrega->fecha_pago}}</td>
                                     <td>{{$entrega->relMetodoPago->metodo}}</td>
                                     <td class="text-center">

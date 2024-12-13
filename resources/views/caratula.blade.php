@@ -13,7 +13,7 @@
                     <p class="lead text-white mb-4 animate__animated animate__fadeInRight animate__delay-1s">Tu socio confiable en herramientas y materiales de construcción</p>
                     <div class="animate__animated animate__fadeInUp animate__delay-2s">
                         <a href="{{ route('articulos.index') }}" class="btn btn-primary btn-lg me-3">
-                            <i class="fas fa-shopping-cart me-2"></i>Ver Productos
+                            <i class="fas fa-shopping-cart me-2"></i>Ver Articulos
                         </a>
                         <a href="#contacto" class="btn btn-outline-light btn-lg">
                             <i class="fas fa-phone me-2"></i>Contáctanos
@@ -68,31 +68,31 @@
                 <div class="col-md-4">
                     <div class="feature-card h-100">
                         <div class="icon-wrapper mb-4">
-                            <i class="fas fa-tools fa-3x text-primary"></i>
+                            <img src="{{ asset('img/logoHerramientas.jpg') }}" alt="Herramientas" class="img-fluid" style="height: 80px;">
                         </div>
                         <h3 class="h4 mb-3">Herramientas Profesionales</h3>
                         <p class="text-muted">Amplia gama de herramientas de las mejores marcas para todo tipo de proyectos</p>
-                        <a href="#" class="btn btn-outline-primary mt-3">Ver más</a>
+                        <a href="{{route('articulos.index', ['categorias_id' => 1])}}" class="btn btn-outline-primary mt-3">Ver más</a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="feature-card h-100">
                         <div class="icon-wrapper mb-4">
-                            <i class="fas fa-hard-hat fa-3x text-primary"></i>
+                            <img src="{{ asset('img/logoMateriales.jpg') }}" alt="Materiales" class="img-fluid" style="height: 80px;">
                         </div>
                         <h3 class="h4 mb-3">Materiales de Construcción</h3>
                         <p class="text-muted">Los mejores materiales para construcción y remodelación de calidad garantizada</p>
-                        <a href="#" class="btn btn-outline-primary mt-3">Ver más</a>
+                        <a href="{{route('articulos.index', ['categorias_id' => 3])}}" class="btn btn-outline-primary mt-3">Ver más</a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="feature-card h-100">
                         <div class="icon-wrapper mb-4">
-                            <i class="fas fa-cogs fa-3x text-primary"></i>
+                            <img src="{{ asset('img/logoMaquinaria.png') }}" alt="Maquinaria" class="img-fluid" style="height: 80px;">
                         </div>
                         <h3 class="h4 mb-3">Maquinaria Especializada</h3>
                         <p class="text-muted">Equipos y maquinaria de última generación para trabajos profesionales</p>
-                        <a href="#" class="btn btn-outline-primary mt-3">Ver más</a>
+                        <a href="{{route('articulos.index', ['categorias_id' => 2])}}" class="btn btn-outline-primary mt-3">Ver más</a>
                     </div>
                 </div>
             </div>

@@ -1,18 +1,18 @@
 @extends("layouts.app")
 
 @section("content")
-    <div class="container py-4">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white py-3">
+    <div class="container py-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white py-4">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h1 class="h3 mb-0">Nuevo Encargo</h1>
+                    <h1 class="h2 mb-0 fw-bold">Nuevo Encargo</h1>
                 </div>
             </div>
 
             @if($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
-                    <i class="fas fa-exclamation-circle me-2"></i>
-                    <ul class="mb-0">
+                <div class="alert alert-danger alert-dismissible fade show mx-4 mt-4 mb-0" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <ul class="list-unstyled mb-0">
                         @foreach($errors->all() as $error)
                             <li>{{$error}}</li>
                         @endforeach
@@ -21,14 +21,14 @@
                 </div>
             @endif
 
-            <div class="card-body p-4">
+            <div class="card-body p-5">
                 <form action="{{ route('encargos.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row g-4">
-                        <div class="col-md-6">
+                        <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="clientes_id" class="form-label fw-bold">Cliente</label>
-                                <select name="clientes_id" id="clientes_id" class="form-select">
+                                <label for="clientes_id" class="form-label fw-bold mb-3">Cliente</label>
+                                <select name="clientes_id" id="clientes_id" class="form-select form-select-lg">
                                     @foreach($clientes as $cliente)
                                         <option value="{{$cliente->id}}" {{$cliente->id==old("clientes_id")?"selected":""}}>
                                             {{$cliente->razon}}
@@ -38,66 +38,54 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="descripcion_articulo" class="form-label fw-bold">Descripción del Artículo</label>
-                                <input type="text" name="descripcion_articulo" id="descripcion_articulo" value="{{old("descripcion_articulo")}}" class="form-control">
+                                <label for="descripcion_articulo" class="form-label fw-bold mb-3">Descripción del Artículo</label>
+                                <input type="text" name="descripcion_articulo" id="descripcion_articulo" value="{{old("descripcion_articulo")}}" class="form-control form-control-lg">
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="cantidad" class="form-label fw-bold">Cantidad</label>
-                                <input type="number" name="cantidad" id="cantidad" value="{{old("cantidad")}}" class="form-control">
+                                <label for="cantidad" class="form-label fw-bold mb-3">Cantidad</label>
+                                <input type="number" name="cantidad" id="cantidad" value="{{old("cantidad")}}" class="form-control form-control-lg">
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="fecha_encargo" class="form-label fw-bold">Fecha de Encargo</label>
-                                <input type="date" name="fecha_encargo" id="fecha_encargo" value="{{old("fecha_encargo")}}" class="form-control">
+                                <label for="fecha_encargo" class="form-label fw-bold mb-3">Fecha de Encargo</label>
+                                <input type="date" name="fecha_encargo" id="fecha_encargo" value="{{old("fecha_encargo")}}" class="form-control form-control-lg">
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="estado" class="form-label fw-bold">Estado</label>
-                                <select name="estado" id="estado" class="form-select">
-                                    <option value="pendiente" {{old("estado")=="pendiente"?"selected":""}} class="text-warning">Pendiente</option>
-                                    <option value="en_proceso" {{old("estado")=="en_proceso"?"selected":""}} class="text-info">En Proceso</option>
-                                    <option value="completado" {{old("estado")=="completado"?"selected":""}} class="text-success">Completado</option>
-                                    <option value="cancelado" {{old("estado")=="cancelado"?"selected":""}} class="text-danger">Cancelado</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="observaciones" class="form-label fw-bold">Observaciones</label>
-                                <textarea name="observaciones" id="observaciones" class="form-control" rows="3">{{old("observaciones")}}</textarea>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="fecha_entrega" class="form-label fw-bold">Fecha de Entrega</label>
-                                <input type="date" name="fecha_entrega" id="fecha_entrega" value="{{old("fecha_entrega")}}" class="form-control">
+                                <label for="fecha_entrega" class="form-label fw-bold mb-3">Fecha de Entrega</label>
+                                <input type="date" name="fecha_entrega" id="fecha_entrega" value="{{old("fecha_entrega")}}" class="form-control form-control-lg">
                             </div>
                         </div>
 
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="foto" class="form-label fw-bold">Foto</label>
-                                <input type="file" id="foto" name="foto" class="form-control">
+                                <label for="observaciones" class="form-label fw-bold mb-3">Observaciones</label>
+                                <textarea name="observaciones" id="observaciones" class="form-control form-control-lg" rows="4">{{old("observaciones")}}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="foto" class="form-label fw-bold mb-3">Foto</label>
+                                <input type="file" id="foto" name="foto" class="form-control form-control-lg">
                             </div>
                         </div>
                     </div>
 
-                    <div class="d-flex justify-content-center gap-3 mt-4">
-                        <a href="{{route("encargos.index")}}" class="btn btn-lg btn-danger">
+                    <div class="d-flex justify-content-center gap-4 mt-5">
+                        <a href="{{route("encargos.index")}}" class="btn btn-danger btn-lg px-5">
                             <i class="fas fa-times me-2"></i>Cancelar
                         </a>
-                        <button type="submit" class="btn btn-lg btn-primary">
+                        <button type="submit" class="btn btn-primary btn-lg px-5">
                             <i class="fas fa-save me-2"></i>Guardar
                         </button>
                     </div>

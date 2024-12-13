@@ -46,6 +46,10 @@
                                 <label for="cantidad" class="form-label fw-bold">Cantidad</label>
                                 <input type="number" name="cantidad" id="cantidad" value="{{old("cantidad",$articulo->cantidad)}}" class="form-control">
                             </div>
+                            <div class="form-group">
+                                <label for="alerta_minima" class="form-label fw-bold">Alerta Mínima</label>
+                                <input type="number" name="alerta_minima" id="alerta_minima" value="{{old("alerta_minima",$articulo->alerta_minima)}}" class="form-control">
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">

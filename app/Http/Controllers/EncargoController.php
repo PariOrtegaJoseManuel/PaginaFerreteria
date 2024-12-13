@@ -21,7 +21,7 @@ class EncargoController extends Controller
             'clientes_id' => 'required|numeric|min:1',
             'descripcion_articulo' => 'required|string|max:255',
             'cantidad' => 'required|numeric|min:1',
-            'estado' => 'required|string|max:255',
+            'estado' => 'nullable|string|max:255',
             'observaciones' => 'nullable|string|max:255',
             // La fecha del encargo debe ser igual o anterior a la fecha de entrega
             'fecha_encargo' => 'required|date|before_or_equal:fecha_entrega',
@@ -59,6 +59,7 @@ class EncargoController extends Controller
         //
         $this->validarForm($request);
         try {
+            $request->merge(['estado' => 'Pendiente']);
             if (is_null($request->observaciones)) {
                 $request->merge(['observaciones' => 'Sin observaciones']);
             }
@@ -145,6 +146,18 @@ class EncargoController extends Controller
             return redirect()->route('encargos.index')->with(['mensaje' => 'Encargo eliminado']);
         } catch (\Exception $e) {
             return redirect()->route('encargos.index')->with(['error' => 'Ocurrió un error al eliminar el encargo: ' . $e->getMessage()]);
+        }
+    }
+    public function updateEstado(string $id)
+    {
+        //
+        try {
+            $encargo = Encargo::findOrFail($id);
+            $encargo->estado = 'Cancelado';
+            $encargo->save();
+            return redirect()->route('encargos.index')->with(['mensaje' => 'Encargo cancelado']);
+        } catch (\Exception $e) {
+            return redirect()->route('encargos.index')->with(['error' => 'Ocurrió un error al cancelar el encargo: ' . $e->getMessage()]);
         }
     }
 }

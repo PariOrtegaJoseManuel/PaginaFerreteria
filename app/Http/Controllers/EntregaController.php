@@ -217,6 +217,12 @@ class EntregaController extends Controller
 
         try {
             $encargo = Encargo::findOrFail($request->encargos_id);
+            $venta = Venta::findOrFail($ventaId);
+
+            if ($encargo->clientes_id !== $venta->clientes_id) {
+                return redirect()->route('entregas.indexVenta', $ventaId)
+                    ->with(['error' => 'El encargo debe pertenecer al mismo cliente de la venta']);
+            }
 
             if ($encargo->estado === 'Cancelado') {
                 return redirect()->route('entregas.indexVenta', $ventaId)
@@ -227,7 +233,7 @@ class EntregaController extends Controller
                     ->with(['error' => 'No se puede crear una entrega para un encargo completado']);
             }
 
-            $venta = Venta::findOrFail($ventaId);
+            //$venta = Venta::findOrFail($ventaId);
 
             Entrega::create([
                 'precio' => $request->precio,

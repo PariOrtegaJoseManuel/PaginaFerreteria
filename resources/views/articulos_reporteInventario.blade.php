@@ -123,7 +123,7 @@
 </head>
 <body>
 <header>
-    CC2 - Reporte de Inventario
+    Reporte de Inventario
 </header>
 <main>
     <table>

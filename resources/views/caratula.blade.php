@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <div class="services-section py-5 bg-light">
+    <div class="services-section py-5">
         <div class="container">
             <h2 class="text-center mb-5 position-relative">
                 Nuestros Servicios
@@ -204,7 +204,6 @@
         }
 
         .stats-card {
-            background: white;
             padding: 2rem;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -228,7 +227,6 @@
         }
 
         .feature-card {
-            background: white;
             padding: 2.5rem;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);

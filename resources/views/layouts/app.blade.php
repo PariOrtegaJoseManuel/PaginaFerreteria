@@ -64,21 +64,13 @@
                             <a href="{{route("users.index")}}" class="nav-link">Usuarios</a>
                         </li>
                         @endcan
-                       <!-- @can('users.index')
-                        <li class="nav-item">
-                            <a href="{{route("detalles.index")}}" class="nav-link">Detalles</a>
-                        </li>
-                        @endcan-->
+                       
                         @can('roles.index')
                         <li class="nav-item">
                             <a href="{{route("roles.index")}}" class="nav-link">Roles</a>
                         </li>
                         @endcan
-                        <!--@can('users.index')
-                        <li class="nav-item">
-                            <a href="{{route("entregas.index")}}" class="nav-link">Entregas</a>
-                        </li>
-                        @endcan-->
+
                         @can('encargos.index')
                         <li class="nav-item">
                             <a href="{{route("encargos.index")}}" class="nav-link">Encargos</a>

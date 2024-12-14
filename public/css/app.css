@@ -1,0 +1,63 @@
+/* Tema claro (default) */
+:root {
+    --bg-primary: #ffffff;
+    --text-primary: #000000;
+    --card-bg: #ffffff;
+    --border-color: #dee2e6;
+}
+
+/* Tema oscuro */
+[data-theme="dark"] {
+    --bg-primary: #1a1a1a;
+    --text-primary: #ffffff;
+    --card-bg: #2d2d2d;
+    --border-color: #404040;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+/* Ajusta otros elementos según necesites */
+
+/* Estilos para el switch */
+.form-check-input {
+    cursor: pointer;
+    width: 3em;
+    height: 1.5em;
+    margin-right: 0.5em;
+}
+
+.form-check-input:checked {
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
+}
+
+.form-check-label {
+    cursor: pointer;
+}
+
+#theme-icon {
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .navbar {
+    background-color: #2d2d2d !important;
+    border-bottom: 1px solid #404040;
+}
+
+[data-theme="dark"] .nav-link {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .navbar-brand {
+    color: #ffffff !important;
+}

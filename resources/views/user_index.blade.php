@@ -34,7 +34,7 @@
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header bg-primary text-white">
-                                    <h5 class="modal-title" id="createUserModalLabel">
+                                    <h5 class="modal-title text-center" id="createUserModalLabel">
                                         <i class="fas fa-plus-circle me-2"></i>Nuevo Usuario
                                     </h5>
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -52,21 +52,21 @@
 
                                     <form action="{{route('users.store')}}" method="post">
                                         @csrf
-                                        <div class="mb-3">
+                                        <div class="mb-3 text-center">
                                             <label for="name" class="form-label">Nombre</label>
                                             <input type="text" class="form-control" id="name" name="name" value="{{old('name')}}">
                                         </div>
-                                        <div class="mb-3">
+                                        <div class="mb-3 text-center">
                                             <label for="email" class="form-label">Email</label>
                                             <input type="email" class="form-control" id="email" name="email" value="{{old('email')}}">
                                         </div>
-                                        <div class="mb-3">
+                                        <div class="mb-3 text-center">
                                             <label for="password" class="form-label">Password</label>
                                             <input type="password" class="form-control" id="password" name="password">
                                         </div>
-                                        <div class="mb-3">
+                                        <div class="mb-3 text-center">
                                             <label class="form-label">Roles</label>
-                                            <div class="row g-3">
+                                            <div class="row g-3 justify-content-center">
                                                 @foreach($roles as $role)
                                                     <div class="col-md-4">
                                                         <div class="form-check">
@@ -78,8 +78,12 @@
                                             </div>
                                         </div>
                                         <div class="text-end">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-save me-2"></i>Guardar
+                                            </button>
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                                <i class="fas fa-times me-2"></i>Cancelar
+                                            </button>
                                         </div>
                                     </form>
                                 </div>
@@ -121,9 +125,51 @@
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
                                             @can('users.edit')
-                                            <a href="{{route("users.editpassword",$user)}}" class="btn btn-outline-warning">
+                                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#passwordModal{{ $user->id }}">
                                                 <i class="fas fa-key me-1"></i>Password
-                                            </a>
+                                            </button>
+
+                                            <!-- Modal para cambiar contraseña -->
+                                            <div class="modal fade" id="passwordModal{{ $user->id }}" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header bg-primary text-white">
+                                                            <h5 class="modal-title" id="passwordModalLabel">Cambiar Contraseña</h5>
+                                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            @if($errors->any())
+                                                                <div class="alert alert-danger">
+                                                                    <ul>
+                                                                        @foreach($errors->all() as $error)
+                                                                            <li>{{$error}}</li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
+                                                            @endif
+                                                            <form action="{{route("users.updatepassword",$user)}}" method="post">
+                                                                @csrf
+                                                                <div class="mb-3">
+                                                                    <label for="password" class="form-label">Nueva Contraseña</label>
+                                                                    <input type="password" id="password" name="password" class="form-control" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="password_confirmation" class="form-label">Confirmar Contraseña</label>
+                                                                    <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" required>
+                                                                </div>
+                                                                <div class="text-center">
+                                                                    <button type="submit" class="btn btn-primary">
+                                                                        <i class="fas fa-save me-2"></i>Guardar
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                                                        <i class="fas fa-times me-2"></i>Cancelar
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $user->id }}">
                                                 <i class="fas fa-edit me-1"></i>Editar
                                             </button>
@@ -164,9 +210,11 @@
                                                                     <label class="form-label">Roles</label>
                                                                     <div class="row ps-3">
                                                                         @foreach($roles as $role)
-                                                                            <div class="form-check">
-                                                                                <input type="checkbox" id="role{{ $role->id }}{{ $user->id }}" name="roles[]" value="{{$role->id}}" class="form-check-input" {{$user->hasRole($role->name) ? 'checked' : ''}}>
-                                                                                <label for="role{{ $role->id }}{{ $user->id }}" class="form-check-label">{{$role->name}}</label>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-check">
+                                                                                    <input type="checkbox" id="role{{ $role->id }}{{ $user->id }}" name="roles[]" value="{{$role->id}}" class="form-check-input" {{$user->hasRole($role->name) ? 'checked' : ''}}>
+                                                                                    <label for="role{{ $role->id }}{{ $user->id }}" class="form-check-label">{{$role->name}}</label>
+                                                                                </div>
                                                                             </div>
                                                                         @endforeach
                                                                     </div>

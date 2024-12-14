@@ -23,8 +23,8 @@ class RoleController extends Controller
     public function validarForm(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string|min:4|max:100',
-            
+            'name' => 'required|string|min:4|max:100',
+
             // Agrega otras validaciones según sea necesario
         ]);
     }

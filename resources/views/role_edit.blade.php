@@ -25,8 +25,8 @@
                     @csrf
                     @method('PUT')
                     <div class="mb-4">
-                        <label for="nombre" class="form-label fw-bold">Nombre</label>
-                        <input type="text" name="nombre" id="nombre" value="{{ old('nombre', $role->name) }}"
+                        <label for="name" class="form-label fw-bold">Nombre</label>
+                        <input type="text" name="name" id="name" value="{{ old('name', $role->name) }}"
                             class="form-control form-control-lg" placeholder="Ingrese el nombre del rol">
                     </div>
                     <div class="mb-4">

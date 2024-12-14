@@ -33,17 +33,29 @@ class ArticuloController extends Controller
      */
     public function index(Request $request)
     {
-        //
         session()->flashInput($request->input());
-        $articulos = Articulo::all();
         $unidades = Unidad::all();
         $categorias = Categoria::all();
-        if ($request->filled("categorias_id")) {
-            $articulos = Articulo::where("categorias_id", $request->categorias_id)->get();
-        } else {
-            $articulos = Articulo::all();
+
+        $query = Articulo::query();
+
+        // Filtro por descripción (siempre se aplica si existe)
+        if ($request->filled("descripcion")) {
+            $query = $query->where("descripcion", "LIKE", "%" . $request->descripcion . "%");
         }
-        return view('articulo_index', ['articulos' => $articulos, 'unidades' => $unidades, 'categorias' => $categorias]);
+
+        // Filtro por categoría (solo si se seleccionó una categoría específica)
+        if ($request->filled("categorias_id") && $request->categorias_id != "") {
+            $query = $query->where("categorias_id", $request->categorias_id);
+        }
+
+        $articulos = $query->get();
+
+        return view('articulo_index', [
+            'articulos' => $articulos,
+            'unidades' => $unidades,
+            'categorias' => $categorias
+        ]);
     }
 
     /**

@@ -43,7 +43,7 @@
                                     <h5 class="card-title text-center mb-3">{{ $encargo->descripcion_articulo }}</h5>
                                     <div class="mb-3">
                                         <p class="mb-1"><strong>Cliente:</strong> {{ $encargo->relCliente->razon }}</p>
-                                        <p class="mb-1"><strong>Cantidad:</strong>{{ $encargo->cantidad }}</p>
+                                        <p class="mb-1"><strong>Cantidad:</strong> {{ $encargo->cantidad }}</p>
                                         <p class="mb-1"><strong>Fecha Encargo:</strong> {{ $encargo->fecha_encargo }}</p>
                                         <p class="mb-1"><strong>Estado:</strong>
                                             <span

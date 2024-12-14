@@ -35,10 +35,24 @@
                 <div class="mb-4">
                 </div>
                 <form action="{{ route('articulos.index') }}" method="get">
-                    <div class="d-flex justify-content-center align-items-center gap-3">
+
+                    <div>
+                        <div class="container col-5">
+                            <label for="descripcion" class="form-label">Artículo:</label>
+                            <input type="text" list="articulos-list" id="descripcion" class="form-control"
+                                placeholder="Ingrese el nombre del artículo" name="descripcion"
+                                value="{{ old('descripcion') }}">
+                            <datalist id="articulos-list">
+                                @foreach ($articulos as $articulo)
+                                    <option value="{{ $articulo->descripcion }}"></option>
+                                @endforeach
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center gap-3 mt-3">
                         <label class="form-label fw-bold mb-0">Categoría:</label>
                         <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-outline-dark">Todos</button>
+                            <button type="submit" name="categorias_id" value="" class="btn btn-outline-dark">Todos</button>
                             @foreach ($categorias as $categoria)
                                 @php
                                     $colors = [

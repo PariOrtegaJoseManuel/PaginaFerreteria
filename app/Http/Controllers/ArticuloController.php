@@ -138,8 +138,8 @@ class ArticuloController extends Controller
         try {
             $articulo = Articulo::findOrFail($id);
             // Verificar si tiene actividades relacionadas
-            if ($articulo->RelVenta()->count() > 0) {
-                return redirect()->route('articulos.index')->with(['error' => 'No se puede eliminar un articulo con ventas relacionadas']);
+            if ($articulo->RelDetalle()->count() > 0) {
+                return redirect()->route('articulos.index')->with(['error' => 'No se puede eliminar un articulo con detalles relacionadas']);
             }
             /*if ($articulo->RelEncargo()->count() > 0){
             return redirect()->route('articulos.index')->with(['error' => 'No se puede eliminar un articulo con encargos relacionados']);

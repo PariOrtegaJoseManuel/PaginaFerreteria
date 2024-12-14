@@ -28,17 +28,16 @@ class DatabaseSeeder extends Seeder
 
         $admin = User::create(["name" => "admin", "email" => "admin@admin.com", "password" => "12345678"]);
         $vendedor = User::create(["name" => "vendedor", "email" => "vendedor@vendedor.com", "password" => "12345678"]);
-        $cliente = User::create(["name" => "cliente", "email" => "cliente@cliente.com", "password" => "12345678"]);
 
         $rolAdmin = Role::create(["name" => "admin"]);
         $rolVendedor = Role::create(["name" => "vendedor"]);
-        $rolCliente = Role::create(["name" => "cliente"]);
+
 
         Permission::create(["name" => "detalles.index"]);
         Permission::create(["name" => "detalles.create"]);
         Permission::create(["name" => "detalles.edit"]);
         Permission::create(["name" => "detalles.destroy"]);
-        Permission::create(["name" => "detalles.notaVenta"]);
+
         Permission::create(["name" => "clientes.index"]);
         Permission::create(["name" => "clientes.create"]);
         Permission::create(["name" => "clientes.edit"]);
@@ -91,10 +90,9 @@ class DatabaseSeeder extends Seeder
 
         $admin->syncRoles($rolAdmin);
         $vendedor->syncRoles($rolVendedor);
-        $cliente->syncRoles($rolCliente);
 
         $rolAdmin->syncPermissions([
-            "detalles.index", "detalles.create", "detalles.edit", "detalles.destroy", "detalles.notaVenta",
+            "detalles.index", "detalles.create", "detalles.edit", "detalles.destroy",
             "clientes.index", "clientes.create", "clientes.edit", "clientes.destroy",
             "articulos.index", "articulos.create", "articulos.edit", "articulos.destroy",
             "ventas.index", "ventas.create", "ventas.edit", "ventas.destroy",
@@ -108,7 +106,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $rolVendedor->syncPermissions([
-            "detalles.index", "detalles.create", "detalles.edit", "detalles.destroy", "detalles.notaVenta",
+            "detalles.index", "detalles.create", "detalles.edit", "detalles.destroy",
             "ventas.index", "ventas.create", "ventas.edit", "ventas.destroy",
             "entregas.index", "entregas.create", "entregas.edit", "entregas.destroy",
             "encargos.index", "encargos.create", "encargos.edit", "encargos.destroy",
@@ -116,13 +114,6 @@ class DatabaseSeeder extends Seeder
             "articulos.index",
         ]);
 
-        $rolCliente->syncPermissions([
-            /*"detalles.index", "detalles.notaVenta",
-            "ventas.index",
-            "entregas.index",
-            "encargos.index",*/
-            "articulos.index",
-        ]);
 
         Unidad::create(['descripcion' => 'Pieza', 'foto' => 'pieza.png']);
         Unidad::create(['descripcion' => 'Bidon', 'foto' => 'bidon.png']);

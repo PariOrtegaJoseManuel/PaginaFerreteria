@@ -19,7 +19,7 @@
                                 <label for="clientes_id" class="form-label fw-bold mb-3">Cliente</label>
                                 <select name="clientes_id" id="clientes_id" class="form-select form-select-lg @error('clientes_id') is-invalid @enderror">
                                     @foreach($clientes as $cliente)
-                                        <option value="{{$cliente->id}}" {{$cliente->id==old("clientes_id",$encargo->cliente_id)?"selected":""}}>
+                                        <option value="{{$cliente->id}}" {{$cliente->id==old("clientes_id",$encargo->clientes_id)?"selected":""}}>
                                             {{$cliente->razon}}
                                         </option>
                                     @endforeach

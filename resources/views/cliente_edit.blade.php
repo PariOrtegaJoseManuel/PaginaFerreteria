@@ -26,7 +26,7 @@
                         </div>
                         <div class="col-md-6 mb-4">
                             <label for="nit" class="form-label fw-bold">NIT/CI</label>
-                            <input type="text" name="nit" id="nit" value="{{ old('nit', $cliente->nit) }}"
+                            <input type="number" name="nit" id="nit" value="{{ old('nit', $cliente->nit) }}"
                                 class="form-control form-control-lg @error('nit') is-invalid @enderror" placeholder="Ingrese el NIT o CI">
                             @error('nit')
                                 <div class="invalid-feedback">

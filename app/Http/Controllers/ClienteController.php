@@ -18,8 +18,8 @@ class ClienteController extends Controller
     {
         $request->validate([
             'razon' => 'required|string|min:4|max:100',
-            'nit' => 'required|string|min:8|max:14',
-            'telefono' => 'nullable|string|min:7|max:8',
+            'nit' => 'required|numeric|min:10000000|max:99999999999999',
+            'telefono' => 'nullable|numeric|min:1000000|max:999999999',
             'direccion' => 'nullable|string|min:4|max:100',
             'email' => 'nullable|email'
         ]);
@@ -58,7 +58,7 @@ class ClienteController extends Controller
                 $request->merge(['direccion' => 'Sin dirección registrada']);
             }
             if (is_null($request->email)) {
-                $request->merge(['email' => 'Sin email registrado']);
+                $request->merge(['email' => 'SinEmailRegistrado@example.com']);
             }
             Cliente::create($request->all());
             return redirect()->route('clientes.index')->with(['mensaje' => 'Cliente creado']);

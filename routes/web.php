@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('ventas/reporteDiario', 'App\Http\Controllers\VentaController@reporteDiario')->name('ventas.reporteDiario');
     Route::get('articulos/reporteInventario', 'App\Http\Controllers\ArticuloController@reporteInventario')->name('articulos.reporteInventario');
     Route::resource('clientes', 'App\Http\Controllers\ClienteController');
-    Route::resource('articulos', 'App\Http\Controllers\ArticuloController');
+    //Route::resource('articulos', 'App\Http\Controllers\ArticuloController');
     Route::resource('detalles', 'App\Http\Controllers\DetalleController');
     Route::resource('unidades', 'App\Http\Controllers\UnidadController');
     Route::resource('users', 'App\Http\Controllers\UserController');
@@ -39,6 +39,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource("roles", "App\Http\Controllers\RoleController");
     Route::resource("categorias", "App\Http\Controllers\CategoriaController");
     Route::resource("encargos", "App\Http\Controllers\EncargoController");
-    Route::resource("entregas", "App\Http\Controllers\EntregaController");
+    //Route::resource("entregas", "App\Http\Controllers\EntregaController");
     Route::resource("metodo_pagos", "App\Http\Controllers\MetodoPagoController");
 });

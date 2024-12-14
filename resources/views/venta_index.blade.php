@@ -163,7 +163,7 @@
                                                         <i class="fas fa-truck me-1"></i>Entregas
                                                     </a>
                                                 @endcan
-                                                @can('detalles.notaVenta')
+                                                @can('detalles.index')
                                                     <a href="{{ route('detalles.notaVenta', $venta) }}"
                                                         class="btn btn-outline-warning shadow-sm">
                                                         <i class="fas fa-file-alt me-1"></i>Nota

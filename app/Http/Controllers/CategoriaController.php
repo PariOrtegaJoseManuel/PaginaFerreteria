@@ -14,11 +14,11 @@ class CategoriaController extends Controller
         $this->middleware('can:categorias.edit')->only('edit', 'update');
         $this->middleware('can:categorias.destroy')->only('destroy');
     }
-    public function validarForm(Request $request)
+    public function validarForm(Request $request, bool $isUpdate)
     {
         $request->validate([
             'nombre' => 'required|string|min:4|max:100',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            "foto" => $isUpdate ? "image|mimes:jpg,jpeg,png,gif|max:2048" : "required|mimes:jpg,jpeg,png,gif|max:2048"
         ]);
     }
     /**
@@ -46,7 +46,7 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validarForm($request);
+        $this->validarForm($request, false);
         try {
             if ($foto = $request->file("foto")) {
                 $input = $request->all();
@@ -91,7 +91,7 @@ class CategoriaController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $this->validarForm($request);
+        $this->validarForm($request, true);
         try {
             $categoria = Categoria::findOrFail($id);
             if ($foto = $request->file("foto")) {

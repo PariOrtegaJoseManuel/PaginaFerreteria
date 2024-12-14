@@ -13,11 +13,10 @@ class DetalleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:detalles.index')->only('indexVenta');
+        $this->middleware('can:detalles.index')->only('indexVenta, notaVenta');
         $this->middleware('can:detalles.create')->only('createVentaDetalle','storeVentaDetalle');
         $this->middleware('can:detalles.edit')->only('editVenta','updateVenta');
         $this->middleware('can:detalles.destroy')->only('destroyVenta');
-        $this->middleware('can:detalles.notaVenta')->only('notaVenta');
     }
     public function validarForm(Request $request)
     {
@@ -30,31 +29,31 @@ class DetalleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    /*public function index()
     {
         $detalles = Detalle::all();
         $articulos = Articulo::all();
         $ventas = Venta::all();
         $metodo_pagos = MetodoPago::all();
         return view('detalle_index', ['detalles' => $detalles, 'articulos' => $articulos, 'metodo_pagos' => $metodo_pagos ,'ventas' => $ventas]);
-    }
+    }*/
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    /*public function create()
     {
         //
         $ventas = Venta::all();
         $articulos = Articulo::all();
         $metodo_pagos = MetodoPago::all();
         return view('detalle_create', ['ventas' => $ventas, 'articulos' => $articulos,'metodo_pagos' => $metodo_pagos]);
-    }
+    }*/
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    /*public function store(Request $request)
     {
         //
         $this->validarForm($request);
@@ -64,7 +63,7 @@ class DetalleController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('detalles.index')->with(['error' => 'Ocurrió un error al crear el detalle: '.$e->getMessage()]);
         }
-    }
+    }/*
 
     /**
      * Display the specified resource.
@@ -75,7 +74,7 @@ class DetalleController extends Controller
     }
 
 
-    public function edit(string $id)
+    /*public function edit(string $id)
     {
         //
         $articulos = Articulo::all();
@@ -93,7 +92,7 @@ class DetalleController extends Controller
      * Update the specified resource in storage.
      */
 
-    public function update(Request $request, string $id)
+    /*public function update(Request $request, string $id)
     {
         //
         $this->validarForm($request);
@@ -104,12 +103,12 @@ class DetalleController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('detalles.index')->with(['error' => 'Ocurrió un error al editar el detalle: '.$e->getMessage()]);
         }
-    }
+    }*/
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    /*public function destroy(string $id)
     {
         //
         try {
@@ -119,7 +118,8 @@ class DetalleController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('detalles.index')->with(['error' => 'Ocurrió un error al eliminar el detalle: '.$e->getMessage()]);
         }
-    }
+    }*/
+    
     public function indexVenta(string $ventaId)
     {
         $ventaId = $ventaId;

@@ -121,10 +121,7 @@
     </table>
 </main>
 <footer>
-    CC2 - Reporte generado el {{ now()->format('d/m/Y H:i') }}
+    Reporte generado el {{ now()->format('d/m/Y H:i') }}
 </footer>
 </body>
 </html>
-
-
-

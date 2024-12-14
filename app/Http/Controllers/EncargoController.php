@@ -15,7 +15,7 @@ class EncargoController extends Controller
         $this->middleware('can:encargos.edit')->only('edit', 'update');
         $this->middleware('can:encargos.destroy')->only('destroy');
     }
-    public function validarForm(Request $request)
+    public function validarForm(Request $request, bool $isUpdate)
     {
         $request->validate([
             'clientes_id' => 'required|numeric|min:1',
@@ -27,7 +27,7 @@ class EncargoController extends Controller
             'fecha_encargo' => 'required|date|before_or_equal:fecha_entrega',
             // La fecha de entrega debe ser igual o posterior a la fecha del encargo
             'fecha_entrega' => 'required|date|after_or_equal:fecha_encargo',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            "foto" => $isUpdate ? "image|mimes:jpg,jpeg,png,gif|max:2048" : "required|mimes:jpg,jpeg,png,gif|max:2048",
         ]);
     }
     /**
@@ -57,7 +57,7 @@ class EncargoController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validarForm($request);
+        $this->validarForm($request,false);
         try {
             $request->merge(['estado' => 'Pendiente']);
             if (is_null($request->observaciones)) {
@@ -106,7 +106,7 @@ class EncargoController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $this->validarForm($request);
+        $this->validarForm($request, true);
         try {
             $encargo = Encargo::findOrFail($id);
             if ($foto = $request->file("foto")) {
@@ -141,7 +141,6 @@ class EncargoController extends Controller
             $archivoAEliminar = "img/$encargo->foto";
             if (file_exists($archivoAEliminar))
                 unlink($archivoAEliminar);
-
             $encargo->delete();
             return redirect()->route('encargos.index')->with(['mensaje' => 'Encargo eliminado']);
         } catch (\Exception $e) {

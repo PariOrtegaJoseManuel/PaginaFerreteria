@@ -51,6 +51,9 @@ class UserController extends Controller
         //
         $this->validarForm($request, true);
         try {
+            if (!$request->has('roles')) {
+                return redirect()->route("users.index")->with(['error' => 'Debe seleccionar al menos un rol']);
+            }
             $user = User::create($request->all());
             $user->syncRoles($request->roles);
             return redirect()->route("users.index")->with(["mensaje" => "Usuario creado"]);
@@ -90,6 +93,9 @@ class UserController extends Controller
         //
         $this->validarForm($request, false);
         try {
+            if (!$request->has('roles')) {
+                return redirect()->route("users.index")->with(['error' => 'Debe seleccionar al menos un rol']);
+            }
             $user = User::find($id);
             $user->update($request->all());
             $user->syncRoles($request->roles);

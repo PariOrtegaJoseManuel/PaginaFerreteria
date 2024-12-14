@@ -55,6 +55,9 @@ class RoleController extends Controller
     {
         $this->validarForm($request);
         try {
+            if (!$request->has('permissions')) {
+                return redirect()->route("roles.index")->with(['error' => 'Debe seleccionar al menos un permiso']);
+            }
             $role = Role::create($request->all());
             $role->syncPermissions($request->permissions);
             return redirect()->route('roles.index')->with(['mensaje' => 'Rol creado']);
@@ -93,6 +96,9 @@ class RoleController extends Controller
     {
         $this->validarForm($request);
         try {
+            if (!$request->has('permissions')) {
+                return redirect()->route("roles.index")->with(['error' => 'Debe seleccionar al menos un permiso']);
+            }
             $role = Role::findOrFail($id);
             $role->update($request->all());
             $role->syncPermissions($request->permissions);

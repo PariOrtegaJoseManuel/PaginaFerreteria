@@ -43,7 +43,7 @@
                         </div>
                         @error('permissions')
                             <div class="text-danger mt-2">
-                                {{ $message }}
+                                Debe seleccionar al menos un permiso
                             </div>
                         @enderror
                     </div>

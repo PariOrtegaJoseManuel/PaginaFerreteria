@@ -7,9 +7,12 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <h1 class="h3 mb-0">Categorías</h1>
                     @can('categorias.create')
-                    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modalCrear">
-                        <i class="fas fa-plus me-2"></i>Nueva Categoría
-                    </button>
+                        <!-- <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modalCrear">
+                                <i class="fas fa-plus me-2"></i>Nueva Categoría
+                            </button> -->
+                        <a href="{{ route('categorias.create') }}" class="btn btn-light">
+                            <i class="fas fa-plus me-2"></i>Nueva Categoría
+                        </a>
                     @endcan
                 </div>
             </div>
@@ -33,8 +36,7 @@
                                 <div class="position-relative">
                                     <div style="width: 100%; padding-bottom: 100%; position: relative;">
                                         <img class="card-img-top position-absolute w-100 h-100"
-                                            src="{{ url("img/$categoria->foto") }}"
-                                            alt="{{ $categoria->nombre }}"
+                                            src="{{ url("img/$categoria->foto") }}" alt="{{ $categoria->nombre }}"
                                             style="object-fit: cover;">
                                     </div>
                                     <div class="position-absolute top-0 end-0 p-2">
@@ -45,16 +47,20 @@
                                     <h5 class="card-title text-center mb-3">{{ $categoria->nombre }}</h5>
                                     <div class="d-flex justify-content-center gap-2">
                                         @can('categorias.edit')
-                                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
-                                            data-bs-target="#modalEditar{{ $categoria->id }}">
-                                            <i class="fas fa-edit me-1"></i>Editar
-                                        </button>
+                                            <!-- <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#modalEditar{{ $categoria->id }}">
+                                                    <i class="fas fa-edit me-1"></i>Editar
+                                                </button> -->
+                                            <a href="{{ route('categorias.edit', [$categoria]) }}"
+                                                class="btn btn-outline-primary">
+                                                <i class="fas fa-edit me-1"></i>Editar
+                                            </a>
                                         @endcan
                                         @can('categorias.destroy')
-                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal{{ $categoria->id }}">
-                                            <i class="fas fa-trash-alt me-1"></i>Eliminar
-                                        </button>
+                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal{{ $categoria->id }}">
+                                                <i class="fas fa-trash-alt me-1"></i>Eliminar
+                                            </button>
                                         @endcan
                                     </div>
                                 </div>
@@ -64,8 +70,7 @@
                 </div>
 
                 <!-- Modal Crear -->
-                <div class="modal fade" id="modalCrear" tabindex="-1" aria-labelledby="modalCrearLabel"
-                    aria-hidden="true">
+                <div class="modal fade" id="modalCrear" tabindex="-1" aria-labelledby="modalCrearLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header bg-primary text-white">
@@ -83,7 +88,8 @@
                                                 <li>{{ $error }}</li>
                                             @endforeach
                                         </ul>
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
                                     </div>
                                 @endif
                                 <form action="{{ route('categorias.store') }}" method="POST" enctype="multipart/form-data">
@@ -100,8 +106,8 @@
                                         <label for="foto" class="form-label fw-bold">Imagen</label>
                                         <div class="input-group input-group-lg">
                                             <span class="input-group-text bg-light"><i class="fas fa-image"></i></span>
-                                            <input type="file" id="foto" name="foto"
-                                                class="form-control" accept="image/*">
+                                            <input type="file" id="foto" name="foto" class="form-control"
+                                                accept="image/*">
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-end gap-2">
@@ -140,10 +146,12 @@
                                                     <li>{{ $error }}</li>
                                                 @endforeach
                                             </ul>
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
                                         </div>
                                     @endif
-                                    <form action="{{ route('categorias.update', $categoria) }}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{ route('categorias.update', $categoria) }}" method="POST"
+                                        enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
                                         <div class="mb-4">
@@ -151,29 +159,27 @@
                                             <div class="input-group input-group-lg">
                                                 <span class="input-group-text bg-light"><i class="fas fa-tag"></i></span>
                                                 <input type="text" name="nombre" id="nombre"
-                                                    value="{{ old('nombre', $categoria->nombre) }}"
-                                                    class="form-control" placeholder="Ingrese el nombre">
+                                                    value="{{ old('nombre', $categoria->nombre) }}" class="form-control"
+                                                    placeholder="Ingrese el nombre">
                                             </div>
                                         </div>
                                         <div class="mb-4">
                                             <label for="foto" class="form-label fw-bold">Nueva Imagen</label>
                                             <div class="input-group input-group-lg">
                                                 <span class="input-group-text bg-light"><i class="fas fa-image"></i></span>
-                                                <input type="file" id="foto" name="foto"
-                                                    class="form-control" accept="image/*">
+                                                <input type="file" id="foto" name="foto" class="form-control"
+                                                    accept="image/*">
                                             </div>
                                         </div>
                                         <div class="mb-4">
                                             <p class="fw-bold text-center mb-2">Imagen Actual</p>
                                             <div class="text-center">
-                                                <img src="{{url("img/$categoria->foto")}}"
-                                                    alt="{{$categoria->nombre}}"
+                                                <img src="{{ url("img/$categoria->foto") }}" alt="{{ $categoria->nombre }}"
                                                     class="img-thumbnail" style="max-height: 150px;">
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-end gap-2">
-                                            <button type="button" class="btn btn-lg btn-danger"
-                                                data-bs-dismiss="modal">
+                                            <button type="button" class="btn btn-lg btn-danger" data-bs-dismiss="modal">
                                                 <i class="fas fa-times me-2"></i>Cancelar
                                             </button>
                                             <button type="submit" class="btn btn-lg btn-primary">
@@ -202,11 +208,10 @@
                                     <i class="fas fa-exclamation-triangle text-warning fa-3x mb-3"></i>
                                     <h5 class="mb-3">¿Está seguro que desea eliminar esta categoría?</h5>
                                     <h2 class="text-danger mb-4">{{ $categoria->nombre }}</h2>
-                                    <img src="{{url("img/$categoria->foto")}}" alt="{{$categoria->nombre}}"
+                                    <img src="{{ url("img/$categoria->foto") }}" alt="{{ $categoria->nombre }}"
                                         class="img-thumbnail mb-3" style="max-height: 150px;">
                                     <div class="d-flex justify-content-center gap-2">
-                                        <button type="button" class="btn btn-lg btn-light"
-                                            data-bs-dismiss="modal">
+                                        <button type="button" class="btn btn-lg btn-light" data-bs-dismiss="modal">
                                             <i class="fas fa-times me-2"></i>Cancelar
                                         </button>
                                         <form action="{{ route('categorias.destroy', $categoria) }}" method="post">
@@ -230,6 +235,7 @@
         .hover-shadow {
             transition: all 0.3s ease;
         }
+
         .hover-shadow:hover {
             transform: translateY(-5px);
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;

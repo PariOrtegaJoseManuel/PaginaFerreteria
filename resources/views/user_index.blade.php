@@ -24,9 +24,12 @@
 
                 <div class="text-end mb-3">
                     @can('users.create')
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">
+                    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">
                         <i class="fas fa-plus-circle me-2"></i>Nuevo Usuario
-                    </button>
+                    </button> -->
+                    <a href="{{ route('users.create') }}" class="btn btn-primary">
+                        <i class="fas fa-plus-circle me-2"></i>Nuevo Usuario
+                    </a>
                     @endcan
 
                     <!-- Modal de creación -->
@@ -125,9 +128,12 @@
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
                                             @can('users.edit')
-                                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#passwordModal{{ $user->id }}">
+                                            <a href="{{ route('users.editpassword', $user) }}" class="btn btn-outline-warning">
                                                 <i class="fas fa-key me-1"></i>Password
-                                            </button>
+                                            </a>
+                                            <!-- <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#passwordModal{{ $user->id }}">
+                                                <i class="fas fa-key me-1"></i>Password
+                                            </button> -->
 
                                             <!-- Modal para cambiar contraseña -->
                                             <div class="modal fade" id="passwordModal{{ $user->id }}" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
@@ -170,9 +176,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $user->id }}">
+                                            <a href="{{ route('users.edit', $user) }}" class="btn btn-outline-primary">
                                                 <i class="fas fa-edit me-1"></i>Editar
-                                            </button>
+                                            </a>
+
+                                            <!-- <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $user->id }}">
+                                                <i class="fas fa-edit me-1"></i>Editar
+                                            </button> -->
                                             @endcan
 
                                             <!-- Modal de edición -->

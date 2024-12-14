@@ -9,17 +9,6 @@
                     <h1 class="h3 mb-0">Editar Rol</h1>
                 </div>
             </div>
-            @if ($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
-                    <i class="fas fa-exclamation-circle me-2"></i>
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
             <div class="card-body p-4">
                 <form action="{{ route('roles.update', [$role]) }}" method="POST">
                     @csrf
@@ -27,7 +16,13 @@
                     <div class="mb-4">
                         <label for="name" class="form-label fw-bold">Nombre</label>
                         <input type="text" name="name" id="name" value="{{ old('name', $role->name) }}"
-                            class="form-control form-control-lg" placeholder="Ingrese el nombre del rol">
+                            class="form-control form-control-lg @error('name') is-invalid @enderror"
+                            placeholder="Ingrese el nombre del rol">
+                        @error('name')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="mb-4">
                         <label class="form-label fw-bold mb-3">Permisos</label>
@@ -35,8 +30,11 @@
                             @foreach ($permissions as $permission)
                                 <div class="col">
                                     <div class="form-check custom-checkbox">
-                                        <input type="checkbox" class="form-check-input" id="permission_{{ $permission->id }}"
-                                            name="permissions[]" value="{{$permission->name}}"
+                                        <input type="checkbox"
+                                            class="form-check-input @error('permissions') is-invalid @enderror"
+                                            id="permission_{{ $permission->id }}"
+                                            name="permissions[]"
+                                            value="{{$permission->name}}"
                                             {{$role->hasPermissionTo($permission->name) ? 'checked' : ''}}>
                                         <label class="form-check-label" for="permission_{{ $permission->id }}">
                                             {{ $permission->name }}
@@ -45,6 +43,11 @@
                                 </div>
                             @endforeach
                         </div>
+                        @error('permissions')
+                            <div class="text-danger mt-2">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="d-flex justify-content-center gap-3">
                         <button type="submit" class="btn btn-primary btn-lg px-4">

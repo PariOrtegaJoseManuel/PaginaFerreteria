@@ -2,42 +2,56 @@
 
 @section("content")
 
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                Nueva Venta
+    <div class="container py-4">
+        <div class="card shadow-lg border-0 rounded-3">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-plus me-2"></i>Nueva Venta
+                </h5>
             </div>
-            @if($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach($errors->all() as $error)
-                            <li>{{$error}}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            <div class="card-body">
+            <div class="card-body p-4">
                 <form action="{{route("ventas.store")}}" method="POST">
                     @csrf
-                    {{--<input type="hidden" name="fecha" value="{{ now()->format('Y-m-d') }}">--}}
                     <div class="mb-3">
-                        <label for="fecha" class="form-label">Fecha</label>
-                        <input type="date" name="fecha" id="fecha" value="{{ old('fecha', now()->format('Y-m-d')) }}" class="form-control">
+                        <label for="fecha" class="form-label fw-bold">
+                            <i class="fas fa-calendar-alt me-1"></i>Fecha
+                        </label>
+                        <input type="date" name="fecha" id="fecha"
+                            value="{{ old('fecha', now()->format('Y-m-d')) }}"
+                            class="form-control shadow-sm @error('fecha') is-invalid @enderror">
+                        @error('fecha')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="clientes_id" class="form-label">Cliente</label>
-                        <select name="clientes_id" id="clientes_id" class="form-select">
+                        <label for="clientes_id" class="form-label fw-bold">
+                            <i class="fas fa-user me-1"></i>Cliente
+                        </label>
+                        <select name="clientes_id" id="clientes_id"
+                            class="form-select shadow-sm @error('clientes_id') is-invalid @enderror">
+                            <option value="">Seleccione un cliente</option>
                             @foreach($clientes as $cliente)
-                                <option value="{{$cliente->id}}" {{$cliente->id==old("clientes_id")?"selected":""}}>
+                                <option value="{{$cliente->id}}"
+                                    {{$cliente->id==old("clientes_id")?"selected":""}}>
                                     {{$cliente->razon}}
                                 </option>
                             @endforeach
                         </select>
+                        @error('clientes_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
-                    {{--<input type="hidden" name="users_id" value="{{ Auth::id() }}">--}}
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                        <a href="{{route("ventas.index")}}" class="btn btn-danger">Cancelar</a>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="{{route("ventas.index")}}" class="btn btn-danger">
+                            <i class="fas fa-times me-1"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i>Guardar
+                        </button>
                     </div>
                 </form>
             </div>
@@ -45,4 +59,3 @@
     </div>
 
 @endsection
-

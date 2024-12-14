@@ -23,7 +23,7 @@
                     </div>
                 @endif
 
-                <div class="bg-light p-4 rounded mb-4">
+                <div class=" p-4 rounded mb-4">
                     <div class="row">
                         <div class="col-md-3">
                             <h5 class="text-muted mb-2">Cliente</h5>
@@ -56,9 +56,9 @@
                                 <th>Metodo de Pago</th>
                                 @can('detalles.create')
                                 <th>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                                    <a href="{{ route('detalles.createVenta', $venta->id) }}" class="btn btn-primary">
                                         <i class="fas fa-plus me-2"></i>Añadir Articulo
-                                    </button>
+                                    </a>
 
                                     <!-- Modal de Creación -->
                                     <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
@@ -146,9 +146,9 @@
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
                                             @can('detalles.edit')
-                                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $detalle->id }}">
+                                            <a href="{{ route('detalles.editVenta', [$detalle, $venta->id]) }}" class="btn btn-outline-primary">
                                                 <i class="fas fa-edit me-1"></i>Editar
-                                            </button>
+                                            </a>
                                             @endcan
                                             @can('detalles.destroy')
                                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $detalle->id, $venta->id}}">

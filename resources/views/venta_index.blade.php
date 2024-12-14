@@ -68,10 +68,11 @@
                                 @can('ventas.create')
                                     <th>
                                         @can('ventas.create')
-                                            <button type="button" class="btn btn-primary shadow-sm" data-bs-toggle="modal"
-                                                data-bs-target="#createModal">
-                                                <i class="fas fa-plus me-1"></i>Nueva Venta
-                                            </button>
+                                            @can('ventas.create')
+                                                <a href="{{ route('ventas.create') }}" class="btn btn-primary shadow-sm">
+                                                    <i class="fas fa-plus me-1"></i>Nueva Venta
+                                                </a>
+                                            @endcan
                                         @endcan
                                         <!-- Modal Crear -->
                                         <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
@@ -169,10 +170,9 @@
                                                     </a>
                                                 @endcan
                                                 @can('ventas.edit')
-                                                    <button type="button" class="btn btn-outline-primary shadow-sm"
-                                                        data-bs-toggle="modal" data-bs-target="#editModal{{ $venta->id }}">
+                                                    <a href="{{ route('ventas.edit', $venta) }}" class="btn btn-outline-primary shadow-sm">
                                                         <i class="fas fa-edit me-1"></i>Editar
-                                                    </button>
+                                                    </a>
                                                 @endcan
                                                 <!-- Modal Editar -->
                                                 <div class="modal fade" id="editModal{{ $venta->id }}" tabindex="-1"

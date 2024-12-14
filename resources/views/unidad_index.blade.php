@@ -7,9 +7,12 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <h1 class="h3 mb-0">Unidades</h1>
                     @can('unidades.create')
-                    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modalCrear">
+                    <!-- <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modalCrear">
                         <i class="fas fa-plus me-2"></i>Nueva Unidad
-                    </button>
+                    </button> -->
+                    <a href="{{ route('unidades.create') }}" class="btn btn-light">
+                        <i class="fas fa-plus me-2"></i>Nueva Unidad
+                    </a>
                     @endcan
                 </div>
             </div>
@@ -45,10 +48,13 @@
                                     <h5 class="card-title text-center mb-3">{{ $unidad->descripcion }}</h5>
                                     <div class="d-flex justify-content-center gap-2">
                                         @can('unidades.edit')
-                                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
-                                            data-bs-target="#editModal{{ $unidad->id }}">
+                                        <!-- <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                            data-bs-target="#editModal{{$unidad->id}}">
                                             <i class="fas fa-edit me-1"></i>Editar
-                                        </button>
+                                        </button> -->
+                                        <a href="{{ route('unidades.edit', $unidad) }}" class="btn btn-outline-primary">
+                                            <i class="fas fa-edit me-1"></i>Editar
+                                        </a>
                                         @endcan
                                         @can('unidades.destroy')
                                         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"

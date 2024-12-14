@@ -23,7 +23,7 @@
                     </div>
                 @endif
 
-                <div class="bg-light p-4 rounded mb-4">
+                <div class=" p-4 rounded mb-4">
                     <div class="row">
                         <div class="col-md-3">
                             <h5 class="text-muted mb-2">Cliente</h5>
@@ -57,9 +57,9 @@
                                 <th>Metodo</th>
                                 @can('entregas.create')
                                 <th>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                                    <a href="{{ route('entregas.createEntrega', $venta->id) }}" class="btn btn-primary">
                                         <i class="fas fa-plus me-2"></i>Nueva Entrega
-                                    </button>
+                                    </a>
 
                                     <!-- Modal de Creación -->
                                     <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
@@ -148,9 +148,9 @@
                                     @can('entregas.edit')
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
-                                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $entrega->id }}">
+                                            <a href="{{ route('entregas.editEntrega', [$entrega, $venta->id]) }}" class="btn btn-outline-primary">
                                                 <i class="fas fa-edit me-1"></i>Editar
-                                            </button>
+                                            </a>
                                             @can('entregas.destroy')
                                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $entrega->id , $venta->id }}">
                                                 <i class="fas fa-trash-alt me-1"></i>Eliminar

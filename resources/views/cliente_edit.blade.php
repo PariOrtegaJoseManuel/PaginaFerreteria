@@ -9,17 +9,6 @@
                     <h1 class="h3 mb-0">Editar Cliente</h1>
                 </div>
             </div>
-            @if ($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
-                    <i class="fas fa-exclamation-circle me-2"></i>
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
             <div class="card-body p-4">
                 <form action="{{ route('clientes.update', [$cliente]) }}" method="POST">
                     @csrf
@@ -28,24 +17,44 @@
                         <div class="col-md-6 mb-4">
                             <label for="razon" class="form-label fw-bold">Razón Social</label>
                             <input type="text" name="razon" id="razon" value="{{ old('razon', $cliente->razon) }}"
-                                class="form-control form-control-lg" placeholder="Ingrese la razón social">
+                                class="form-control form-control-lg @error('razon') is-invalid @enderror" placeholder="Ingrese la razón social">
+                            @error('razon')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="col-md-6 mb-4">
                             <label for="nit" class="form-label fw-bold">NIT/CI</label>
                             <input type="text" name="nit" id="nit" value="{{ old('nit', $cliente->nit) }}"
-                                class="form-control form-control-lg" placeholder="Ingrese el NIT o CI">
+                                class="form-control form-control-lg @error('nit') is-invalid @enderror" placeholder="Ingrese el NIT o CI">
+                            @error('nit')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="col-md-12 mb-4">
                             <label for="direccion" class="form-label fw-bold">Dirección</label>
                             <input type="text" name="direccion" id="direccion" value="{{ old('direccion', $cliente->direccion) }}"
-                                class="form-control form-control-lg" placeholder="Ingrese la dirección">
+                                class="form-control form-control-lg @error('direccion') is-invalid @enderror" placeholder="Ingrese la dirección">
+                            @error('direccion')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="col-md-6 mb-4">
                             <label for="telefono" class="form-label fw-bold">Teléfono</label>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                 <input type="number" name="telefono" id="telefono" value="{{ old('telefono', $cliente->telefono) }}"
-                                    class="form-control" placeholder="Ingrese el teléfono">
+                                    class="form-control @error('telefono') is-invalid @enderror" placeholder="Ingrese el teléfono">
+                                @error('telefono')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-6 mb-4">
@@ -53,7 +62,12 @@
                             <div class="input-group input-group-lg">
                                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                 <input type="email" name="email" id="email" value="{{ old('email', $cliente->email) }}"
-                                    class="form-control" placeholder="Ingrese el correo electrónico">
+                                    class="form-control @error('email') is-invalid @enderror" placeholder="Ingrese el correo electrónico">
+                                @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
                     </div>

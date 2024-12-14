@@ -7,85 +7,123 @@
     <title>Reporte de Inventario</title>
     <style>
         @page {
-            margin: 1cm;
-            font-family: 'Arial', sans-serif;
-            font-size: 10px;
+            margin: 1.5cm;
+            font-family: 'Times New Roman', serif;
+            font-size: 11px;
+            counter-increment: page;
         }
 
         header, footer {
             position: fixed;
             right: 0;
             left: 0;
-            height: 2cm;
-            background-color: #003366;
+            width: 100%;
+            height: 90px;
+            background-color: #1a4d80;
             color: white;
             text-align: center;
-            line-height: 1.5cm;
+            line-height: 90px;
             font-weight: bold;
-            font-size: 25px;
-            border-radius: 10px;
+            font-size: 32px;
+            border-radius: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         header {
             top: 0;
-            border-bottom: 2px solid #ffffff;
+            border-bottom: 3px solid #gold;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 80px;
+            height: 80px;
+            background-image: url('img/logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
         }
 
         footer {
             bottom: 0;
-            border-top: 2px solid #ffffff;
+            border-top: 3px solid #gold;
+            font-size: 16px;
+        }
+
+        footer::after {
+            content: 'Página ' counter(page);
+            position: absolute;
+            right: 20px;
+            bottom: 10px;
+            font-size: 14px;
         }
 
         main {
-            margin: 3cm 1cm 3cm 1cm;
+            margin: 5cm 1cm 3.5cm 1cm;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 1cm;
-            font-size: 15px;
+            margin-bottom: 1.5cm;
+            font-size: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
 
         th {
-            background-color: #003366;
+            background-color: #1a4d80;
             color: white;
-            border: 1px solid #ffffff;
-            padding: 8px;
+            border: 2px solid #ffffff;
+            padding: 12px;
             text-align: center;
+            text-transform: uppercase;
+            font-weight: bold;
         }
 
         td {
-            border: 1px solid #ddd;
-            padding: 8px;
+            border: 1px solid #ccc;
+            padding: 10px;
             text-align: center;
         }
 
         tr:nth-child(even) {
-            background-color: #f5f5f5;
+            background-color: #f0f5fa;
         }
 
         tr:nth-child(odd) {
             background-color: #ffffff;
         }
 
+        tr:hover {
+            background-color: #e6f3ff;
+        }
+
         .total-row {
             font-weight: bold;
-            background-color: #e6e6e6;
+            background-color: #dde6f3;
         }
 
         img {
-            max-width: 50px;
+            max-width: 80px;
             height: auto;
-            border: 1px solid #ddd;
-            padding: 2px;
-            background-color: #f9f9f9;
+            border: 2px solid #1a4d80;
+            padding: 3px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        img:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
 <header>
-    Reporte de Inventario
+    CC2 - Reporte de Inventario
 </header>
 <main>
     <table>
@@ -95,7 +133,8 @@
             <th>Cantidad</th>
             <th>Precio Unitario</th>
             <th>Precio Total</th>
-            <th>Unidades_Id</th>
+            <th>Unidades</th>
+            <th>Categoria</th>
             <th>Foto</th>
         </tr>
         </thead>
@@ -107,11 +146,10 @@
                 <td>{{ $articulo->cantidad }}</td>
                 <td>{{ number_format($articulo->precio_unitario, 2) }}</td>
                 <td>{{ number_format($articulo->precio_unitario * $articulo->cantidad, 2) }}</td>
-                <td>{{ $articulo->unidades_id }}</td>
+                <td>{{ $articulo->relUnidad->descripcion }}</td>
+                <td>{{ $articulo->relCategoria->nombre }}</td>
                 <td>
-                    @if($articulo->foto)
-                        {{ $articulo->foto }}
-                    @endif
+                    <img src="{{ public_path('img/' . $articulo->foto) }}" alt="Foto del artículo">
                 </td>
             </tr>
         @endforeach
@@ -119,7 +157,7 @@
     </table>
 </main>
 <footer>
-    Generado el {{ now()->format('d/m/Y H:i') }}
+    CC2 - Reporte generado el {{ now()->format('d/m/Y H:i') }}
 </footer>
 </body>
 </html>

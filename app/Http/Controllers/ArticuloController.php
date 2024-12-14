@@ -12,9 +12,9 @@ class ArticuloController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:articulos.index')->only('index','reporteInventario');
-        $this->middleware('can:articulos.create')->only('create','store');
-        $this->middleware('can:articulos.edit')->only('edit','update');
+        $this->middleware('can:articulos.index')->only('index', 'reporteInventario');
+        $this->middleware('can:articulos.create')->only('create', 'store');
+        $this->middleware('can:articulos.edit')->only('edit', 'update');
         $this->middleware('can:articulos.destroy')->only('destroy');
     }
     public function validarForm(Request $request, $isUpdate)
@@ -39,7 +39,7 @@ class ArticuloController extends Controller
         $unidades = Unidad::all();
         $categorias = Categoria::all();
         if ($request->filled("categorias_id")) {
-             $articulos = Articulo::where("categorias_id", $request->categorias_id)->get();
+            $articulos = Articulo::where("categorias_id", $request->categorias_id)->get();
         } else {
             $articulos = Articulo::all();
         }
@@ -77,7 +77,7 @@ class ArticuloController extends Controller
                 Articulo::create($request->all());
             return redirect()->route("articulos.index")->with(["mensaje", "Articulo creado con exito"]);
         } catch (\Exception $e) {
-            return redirect()->route('articulos.index')->with(['error' => 'Ocurrió un error al crear el articulo: '.$e->getMessage()]);
+            return redirect()->route('articulos.index')->with(['error' => 'Ocurrió un error al crear el articulo: ' . $e->getMessage()]);
         }
     }
 
@@ -98,10 +98,10 @@ class ArticuloController extends Controller
         $unidades = Unidad::all();
         $categorias = Categoria::all();
         try {
-        $articulo = Articulo::findOrFail($id);
-        return view('articulo_edit', ['unidades' => $unidades, 'articulo' => $articulo, 'categorias' => $categorias]);
+            $articulo = Articulo::findOrFail($id);
+            return view('articulo_edit', ['unidades' => $unidades, 'articulo' => $articulo, 'categorias' => $categorias]);
         } catch (\Exception $e) {
-            return redirect()->route('articulos.index')->with(['error' => 'Ocurrió un error al mostrar el articulo: '.$e->getMessage()]);
+            return redirect()->route('articulos.index')->with(['error' => 'Ocurrió un error al mostrar el articulo: ' . $e->getMessage()]);
         }
     }
 
@@ -114,18 +114,18 @@ class ArticuloController extends Controller
         $this->validarForm($request, true);
         $articulo = Articulo::findOrFail($id);
         try {
-        if ($foto = $request->file("foto")) {
-            $input = $request->all();
-            $fotoNombre = date("YmdHis") . "." . $foto->getClientOriginalExtension();
-            $fotoRuta = "img";
-            $foto->move($fotoRuta, $fotoNombre);
-            $input["foto"] = $fotoNombre;
-            $articulo->update($input);
-        } else
-            $articulo->update($request->all());
-        return redirect()->route('articulos.index')->with(['mensaje' => 'Articulo editado']);
+            if ($foto = $request->file("foto")) {
+                $input = $request->all();
+                $fotoNombre = date("YmdHis") . "." . $foto->getClientOriginalExtension();
+                $fotoRuta = "img";
+                $foto->move($fotoRuta, $fotoNombre);
+                $input["foto"] = $fotoNombre;
+                $articulo->update($input);
+            } else
+                $articulo->update($request->all());
+            return redirect()->route('articulos.index')->with(['mensaje' => 'Articulo editado']);
         } catch (\Exception $e) {
-            return redirect()->route('articulos.index')->with(['error' => 'Ocurrió un error al editar el articulo: '.$e->getMessage()]);
+            return redirect()->route('articulos.index')->with(['error' => 'Ocurrió un error al editar el articulo: ' . $e->getMessage()]);
         }
     }
 
@@ -136,30 +136,38 @@ class ArticuloController extends Controller
     {
         //
         try {
-        $articulo = Articulo::findOrFail($id);
-        // Verificar si tiene actividades relacionadas
-        if ($articulo->RelVenta()->count() > 0){
-            return redirect()->route('articulos.index')->with(['error' => 'No se puede eliminar un articulo con ventas relacionadas']);
-        }
-        /*if ($articulo->RelEncargo()->count() > 0){
+            $articulo = Articulo::findOrFail($id);
+            // Verificar si tiene actividades relacionadas
+            if ($articulo->RelVenta()->count() > 0) {
+                return redirect()->route('articulos.index')->with(['error' => 'No se puede eliminar un articulo con ventas relacionadas']);
+            }
+            /*if ($articulo->RelEncargo()->count() > 0){
             return redirect()->route('articulos.index')->with(['error' => 'No se puede eliminar un articulo con encargos relacionados']);
         }*/
-        $archivoAEliminar = "img/$articulo->foto";
-        if (file_exists($archivoAEliminar))
-            unlink($archivoAEliminar);
-        $articulo->delete();
-        return redirect()->route("articulos.index")->with(["mensaje", "Articulo eliminado con exito"]);
+            $archivoAEliminar = "img/$articulo->foto";
+            if (file_exists($archivoAEliminar))
+                unlink($archivoAEliminar);
+            $articulo->delete();
+            return redirect()->route("articulos.index")->with(["mensaje", "Articulo eliminado con exito"]);
         } catch (\Exception $e) {
-            return redirect()->route('articulos.index')->with(['error' => 'Ocurrió un error al eliminar el articulo: '.$e->getMessage()]);
+            return redirect()->route('articulos.index')->with(['error' => 'Ocurrió un error al eliminar el articulo: ' . $e->getMessage()]);
         }
     }
     public function reporteInventario()
     {
+        // Obtiene todos los artículos de la base de datos
         $articulos = Articulo::all();
+
+        // Crea una instancia del generador de PDF usando dompdf
         $pdf = App::make("dompdf.wrapper");
+
+        // Carga la vista articulos_reporteInventario.blade.php y le pasa los artículos
         $pdf->loadView("articulos_reporteInventario", ["articulos" => $articulos]);
+
+        // Configura el PDF en tamaño carta, orientación vertical y desactiva advertencias
         $pdf->setPaper("letter", "portrait")->setWarnings(false);
+
+        // Devuelve el PDF como stream para visualización en el navegador
         return $pdf->stream();
     }
 }
-
